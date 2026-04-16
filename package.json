@@ -1,0 +1,12 @@
+{
+  "name": "co-track-root",
+  "private": true,
+  "scripts": {
+    "frontend:install": "npm --prefix frontend install",
+    "frontend:dev": "npm --prefix frontend run dev --",
+    "frontend:build": "npm --prefix frontend run build --",
+    "frontend:preview": "npm --prefix frontend run preview --",
+    "backend:sync": "cd backend && uv sync",
+    "backend:dev": "if exist backend\\.venv\\Scripts\\python.exe (cd backend && .venv\\Scripts\\python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload) else (cd backend && uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload)"
+  }
+}
