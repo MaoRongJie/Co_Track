@@ -1,0 +1,68 @@
+<svg width="1100" height="760" viewBox="0 0 1100 760" role="img" aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg">
+  <title id="title">用户画像：远程交通外观协作设计师</title>
+  <desc id="desc">用于论文呈现的简洁正式用户画像 SVG，包含目标、场景、痛点、需求、偏好和设计机会。</desc>
+
+  <defs>
+    <style>
+      .title { font: 700 30px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #1f2933; }
+      .subtitle { font: 400 16px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #4b5563; }
+      .meta-label { font: 700 13px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #64717d; }
+      .meta-text { font: 400 15px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #1f2933; }
+      .section-title { font: 700 20px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #1f2933; }
+      .body { font: 400 16px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #2f3a44; }
+      .note { font: 400 15px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #4b5563; }
+    </style>
+  </defs>
+
+  <rect width="1100" height="760" fill="#ffffff" />
+  <rect x="36" y="36" width="1028" height="688" fill="#ffffff" stroke="#cfd8df" stroke-width="1.2" />
+
+  <text x="64" y="86" class="title">用户画像：远程交通外观协作设计师</text>
+  <text x="64" y="116" class="subtitle">面向交通工具外观方案共创场景的代表性用户</text>
+  <line x1="64" y1="142" x2="1036" y2="142" stroke="#cfd8df" stroke-width="1" />
+
+  <text x="64" y="178" class="meta-label">年龄与阶段</text>
+  <text x="64" y="204" class="meta-text">20-25 岁，工业设计专业学生或初级设计师</text>
+  <text x="392" y="178" class="meta-label">主要任务</text>
+  <text x="392" y="204" class="meta-text">交通工具外观图案发散、验证与评审沟通</text>
+  <text x="720" y="178" class="meta-label">协作方式</text>
+  <text x="720" y="204" class="meta-text">线上会议、异步文件共享与阶段性评审</text>
+
+  <line x1="64" y1="238" x2="1036" y2="238" stroke="#e1e7eb" stroke-width="1" />
+  <line x1="550" y1="238" x2="550" y2="648" stroke="#e1e7eb" stroke-width="1" />
+  <line x1="64" y1="375" x2="1036" y2="375" stroke="#e1e7eb" stroke-width="1" />
+  <line x1="64" y1="512" x2="1036" y2="512" stroke="#e1e7eb" stroke-width="1" />
+
+  <rect x="64" y="266" width="6" height="26" fill="#2f5f73" />
+  <text x="84" y="288" class="section-title">目标</text>
+  <text x="84" y="322" class="body">· 在远程协作中保持设计意图一致</text>
+  <text x="84" y="350" class="body">· 尽早验证二维图案与三维载体的适配性</text>
+
+  <rect x="578" y="266" width="6" height="26" fill="#2f5f73" />
+  <text x="598" y="288" class="section-title">场景</text>
+  <text x="598" y="322" class="body">· 通过会议确定方向，再由成员分别发散方案</text>
+  <text x="598" y="350" class="body">· 评审前将方案置于车身模型中进行对比</text>
+
+  <rect x="64" y="403" width="6" height="26" fill="#2f5f73" />
+  <text x="84" y="425" class="section-title">痛点</text>
+  <text x="84" y="459" class="body">· 目标、参考与约束分散在会议记录和文件中</text>
+  <text x="84" y="487" class="body">· 多角色反馈介入较晚，导致后期返工成本高</text>
+
+  <rect x="578" y="403" width="6" height="26" fill="#2f5f73" />
+  <text x="598" y="425" class="section-title">需求</text>
+  <text x="598" y="459" class="body">· 结构化保存共同意图、约束条件和参考资料</text>
+  <text x="598" y="487" class="body">· 支持 2D 创作、AI 参考与 3D 预览的连续流程</text>
+
+  <rect x="64" y="540" width="6" height="26" fill="#2f5f73" />
+  <text x="84" y="562" class="section-title">偏好</text>
+  <text x="84" y="596" class="body">· 偏好可编辑、可比较、可追溯的方案表达</text>
+  <text x="84" y="624" class="body">· 接受 AI 提供参考，不接受替代最终判断</text>
+
+  <rect x="578" y="540" width="6" height="26" fill="#2f5f73" />
+  <text x="598" y="562" class="section-title">设计机会</text>
+  <text x="598" y="596" class="body">· 构建贯穿目标设定、方案生成与评审的协作工作台</text>
+  <text x="598" y="624" class="body">· 提前引入工程、品牌与用户视角，辅助方案收敛</text>
+
+  <line x1="64" y1="674" x2="1036" y2="674" stroke="#cfd8df" stroke-width="1" />
+  <text x="64" y="706" class="note">概括：该用户需要的不是更多独立工具，而是一个能持续承载共同意图、验证真实载体效果并支持早期反馈的协作流程。</text>
+</svg>

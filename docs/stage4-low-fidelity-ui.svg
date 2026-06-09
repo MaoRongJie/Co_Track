@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1320" viewBox="0 0 1440 1320" role="img" aria-labelledby="title desc">
+  <title id="title">Co-Track 第四阶段低保真界面图</title>
+  <desc id="desc">基于现有 Co-Track 第四阶段真实界面的低保真线框图，包含最终 3D 大预览、基础模型信息、灯光切换、媒体智能体生成图片和视频、候选方案、工程和乘客指标、决策建议以及导出区。</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .top { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1; }
+      .panel { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+      .panel-soft { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.2; }
+      .line { stroke: #94a3b8; stroke-width: 1.4; fill: none; }
+      .dash { stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 7 7; fill: none; }
+      .muted { fill: #e2e8f0; stroke: #cbd5e1; stroke-width: 1; }
+      .active { fill: #dbeafe; stroke: #64748b; stroke-width: 1.2; }
+      .button { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 1.2; }
+      .primary { fill: #cbd5e1; stroke: #64748b; stroke-width: 1.2; }
+      .text { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #334155; font-size: 16px; }
+      .small { font-size: 13px; fill: #64748b; }
+      .tiny { font-size: 11px; fill: #64748b; letter-spacing: 1px; }
+      .title { font-size: 19px; font-weight: 700; fill: #1e293b; }
+      .section { font-size: 15px; font-weight: 700; fill: #334155; }
+      .label { font-size: 12px; fill: #64748b; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="1320"/>
+
+  <!-- App header -->
+  <rect class="top" x="0.5" y="0.5" width="1439" height="70"/>
+  <text class="title" x="32" y="31">Co-Track 协同涂装设计会议</text>
+  <text class="small" x="32" y="52">第四阶段：最终三维预览与导出</text>
+
+  <g transform="translate(500 20)">
+    <rect class="active" x="0" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="22" y="20">S1 简报</text>
+    <line class="line" x1="100" y1="15" x2="122" y2="15"/>
+    <rect class="active" x="130" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="151" y="20">S2 设计</text>
+    <line class="line" x1="230" y1="15" x2="252" y2="15"/>
+    <rect class="active" x="260" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="281" y="20">S3 评审</text>
+    <line class="line" x1="360" y1="15" x2="382" y2="15"/>
+    <rect class="active" x="390" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="411" y="20">S4 预览</text>
+  </g>
+
+  <g transform="translate(1176 16)">
+    <rect class="button" x="0" y="0" width="40" height="40" rx="10"/>
+    <text class="small" x="11" y="26">设</text>
+    <rect class="button" x="54" y="0" width="116" height="40" rx="12"/>
+    <text class="small" x="80" y="25">返回评审</text>
+    <rect class="primary" x="184" y="0" width="116" height="40" rx="12"/>
+    <text class="small" x="224" y="25">导出</text>
+  </g>
+
+  <!-- Stage 4 preview workspace -->
+  <g transform="translate(0 70)">
+    <rect class="bg" x="0" y="0" width="1056" height="1250"/>
+    <rect class="panel" x="16" y="16" width="1024" height="1098" rx="28"/>
+
+    <rect class="top" x="40" y="40" width="210" height="116" rx="16"/>
+    <text class="tiny" x="64" y="72">基础模型</text>
+    <text class="label" x="64" y="102">ID：base_model_id</text>
+    <text class="label" x="64" y="126">来源：上传 / 模型库</text>
+    <text class="label" x="64" y="150">精度：标准 / 精确</text>
+
+    <rect class="top" x="806" y="40" width="210" height="126" rx="16"/>
+    <text class="section" x="830" y="76">灯光</text>
+    <rect class="active" x="830" y="94" width="70" height="28" rx="8"/>
+    <text class="label" x="848" y="113">日光</text>
+    <rect class="button" x="910" y="94" width="70" height="28" rx="8"/>
+    <text class="label" x="928" y="113">阴天</text>
+    <rect class="button" x="830" y="130" width="70" height="28" rx="8"/>
+    <text class="label" x="848" y="149">站台</text>
+    <rect class="button" x="910" y="130" width="70" height="28" rx="8"/>
+    <text class="label" x="928" y="149">影棚</text>
+
+    <path class="dash" d="M210 776 C360 410, 664 392, 846 756"/>
+    <rect class="muted" x="380" y="638" width="280" height="76" rx="38"/>
+    <text class="title" x="470" y="684">最终 3D 预览</text>
+    <line class="line" x1="160" y1="884" x2="898" y2="884"/>
+    <text class="small" x="424" y="928">旋转 / 缩放 / 平移 / 截图</text>
+  </g>
+
+  <!-- Right final preview sidebar -->
+  <g transform="translate(1056 70)">
+    <rect class="top" x="0" y="0" width="384" height="1250"/>
+    <g transform="translate(24 28)">
+      <text class="tiny" x="0" y="0">S4</text>
+      <text class="section" x="0" y="30">最终预览</text>
+      <rect class="button" x="258" y="-16" width="78" height="34" rx="10"/>
+      <text class="label" x="282" y="6">返回</text>
+    </g>
+
+    <rect class="panel-soft" x="16" y="94" width="352" height="310" rx="18"/>
+    <text class="tiny" x="40" y="130">媒体智能体</text>
+    <text class="label" x="40" y="162">场景描述</text>
+    <rect class="top" x="40" y="178" width="304" height="72" rx="12"/>
+    <line class="line" x1="58" y1="206" x2="316" y2="206"/>
+    <line class="line" x1="58" y1="232" x2="276" y2="232"/>
+    <rect class="primary" x="40" y="266" width="304" height="38" rx="12"/>
+    <text class="section" x="144" y="291">生成图片</text>
+    <rect class="panel" x="40" y="320" width="142" height="60" rx="12"/>
+    <text class="label" x="72" y="354">3D 截图</text>
+    <rect class="panel" x="202" y="320" width="142" height="60" rx="12"/>
+    <text class="label" x="238" y="354">场景图</text>
+
+    <rect class="panel-soft" x="16" y="426" width="352" height="158" rx="18"/>
+    <text class="section" x="40" y="462">已保存媒体</text>
+    <rect class="panel" x="40" y="486" width="142" height="70" rx="12"/>
+    <text class="label" x="84" y="526">图片</text>
+    <rect class="panel" x="202" y="486" width="142" height="70" rx="12"/>
+    <text class="label" x="246" y="526">视频</text>
+
+    <rect class="panel-soft" x="16" y="606" width="352" height="196" rx="18"/>
+    <text class="section" x="40" y="642">候选方案</text>
+    <rect class="active" x="40" y="664" width="304" height="56" rx="14"/>
+    <line class="line" x1="62" y1="688" x2="214" y2="688"/>
+    <rect class="muted" x="250" y="678" width="72" height="24" rx="12"/>
+    <rect class="panel" x="40" y="734" width="304" height="46" rx="14"/>
+    <line class="line" x1="62" y1="758" x2="214" y2="758"/>
+    <rect class="muted" x="250" y="748" width="72" height="24" rx="12"/>
+
+    <rect class="panel-soft" x="16" y="824" width="352" height="104" rx="18"/>
+    <text class="section" x="40" y="858">工程指标</text>
+    <rect class="muted" x="40" y="878" width="132" height="24" rx="12"/>
+    <rect class="muted" x="196" y="878" width="132" height="24" rx="12"/>
+    <rect class="muted" x="40" y="908" width="132" height="24" rx="12"/>
+    <rect class="muted" x="196" y="908" width="132" height="24" rx="12"/>
+
+    <rect class="panel-soft" x="16" y="950" width="352" height="112" rx="18"/>
+    <text class="section" x="40" y="984">乘客印象 / 决策</text>
+    <line class="line" x1="40" y1="1012" x2="282" y2="1012"/>
+    <rect class="muted" x="286" y="992" width="52" height="46" rx="12"/>
+    <text class="small" x="300" y="1020">8.6</text>
+    <rect class="active" x="40" y="1032" width="116" height="24" rx="12"/>
+    <text class="label" x="66" y="1049">建议推进</text>
+
+    <rect class="panel" x="16" y="1082" width="352" height="116" rx="18"/>
+    <text class="section" x="40" y="1118">导出</text>
+    <rect class="button" x="40" y="1138" width="142" height="32" rx="10"/>
+    <text class="label" x="78" y="1159">UV PNG</text>
+    <rect class="button" x="202" y="1138" width="142" height="32" rx="10"/>
+    <text class="label" x="244" y="1159">报告 PDF</text>
+    <rect class="button" x="40" y="1180" width="142" height="32" rx="10"/>
+    <text class="label" x="78" y="1201">3D 截图</text>
+    <rect class="button" x="202" y="1180" width="142" height="32" rx="10"/>
+    <text class="label" x="242" y="1201">预览包</text>
+  </g>
+
+  <g transform="translate(24 1264)">
+    <rect class="panel-soft" x="0" y="0" width="1010" height="36" rx="8"/>
+    <text class="small" x="18" y="24">低保真说明：第四阶段以最终 3D 预览为主视图，侧栏集中承载媒体生成、候选方案切换、评审摘要和导出操作。</text>
+  </g>
+</svg>

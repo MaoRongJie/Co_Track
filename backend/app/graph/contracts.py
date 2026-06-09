@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from app.agents.creative_dialogue_and_image_agent import CreativeRoutePlan, SessionAiContext
 from app.agents.intent_and_3d_generation_agent import (
     IntentRecognitionResult,
     ThreeDModelGenerationPlan,
@@ -32,16 +31,3 @@ class Stage2PlanThreeDInput:
 @dataclass(slots=True)
 class Stage2PlanThreeDOutput:
     plan: ThreeDModelGenerationPlan
-
-
-@dataclass(slots=True)
-class Stage3CreativeChatInput:
-    mode: str
-    message: str
-    context: SessionAiContext
-
-
-@dataclass(slots=True)
-class Stage3CreativeChatOutput:
-    plan: CreativeRoutePlan
-

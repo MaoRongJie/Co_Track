@@ -13,7 +13,7 @@ interface PreJoinPanelProps {
 const roleText: Record<MeetingRole, string> = {
   host: '主持人',
   designer: '设计师',
-  observer: '观察者',
+  observer: '观察员',
 };
 
 const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack, onJoin, joining }) => {
@@ -150,7 +150,7 @@ const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack,
         return;
       }
 
-      // 对主持人/设计师预取音视频轨道，避免入会后首次开麦/开摄像头再次触发权限弹窗。
+      // Preload media permissions before entering the room.
       const constraints: MediaStreamConstraints = {
         audio: selectedAudioDeviceId ? { deviceId: { exact: selectedAudioDeviceId } } : true,
         video: selectedVideoDeviceId ? { deviceId: { exact: selectedVideoDeviceId } } : true,
@@ -172,7 +172,7 @@ const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack,
       setCheckDone(true);
     } catch (error) {
       console.error(error);
-      setPermissionError('设备权限被拒绝或设备不可用，请检查浏览器权限后重试。');
+      setPermissionError('设备不可用。');
     } finally {
       setChecking(false);
     }
@@ -198,13 +198,13 @@ const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack,
   return (
     <div className="w-full max-w-3xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-slate-800">入会前设备检测</h3>
+        <h3 className="text-lg font-semibold text-slate-800">设备检查</h3>
         <button
           type="button"
           onClick={onBack}
           className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 hover:bg-slate-50"
         >
-          返回邀请码页面
+          返回
         </button>
       </div>
 
@@ -226,7 +226,7 @@ const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack,
             <div className="mb-2 flex items-center justify-between text-xs text-slate-600">
               <span className="inline-flex items-center gap-1">
                 <Mic size={12} />
-                麦克风电平
+                麦克风
               </span>
               <span>{audioLevel}%</span>
             </div>
@@ -238,7 +238,7 @@ const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack,
 
         <div className="space-y-3">
           <label className="block text-sm text-slate-700">
-            会议角色
+            角色
             <select
               value={role}
               onChange={(event) => onRoleChange(event.target.value as MeetingRole)}
@@ -272,7 +272,7 @@ const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack,
           </label>
 
           <label className="block text-sm text-slate-700">
-            摄像头设备
+            摄像头
             <select
               value={selectedVideoDeviceId}
               onChange={(event) => {
@@ -323,7 +323,7 @@ const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack,
             <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-700">
               <div className="mb-1 inline-flex items-center gap-1">
                 <ShieldAlert size={12} />
-                检测失败
+                检查失败
               </div>
               <p>{permissionError}</p>
             </div>
@@ -339,7 +339,7 @@ const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack,
               className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 disabled:opacity-50"
             >
               <RefreshCw size={12} />
-              {checking ? '检测中...' : '重新检测设备'}
+              {checking ? '检查中...' : '检查'}
             </button>
             <button
               type="button"
@@ -350,13 +350,10 @@ const PreJoinPanel: React.FC<PreJoinPanelProps> = ({ role, onRoleChange, onBack,
               className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white disabled:opacity-50"
             >
               <CheckCircle2 size={12} />
-              {joining ? '加入中...' : '加入会议'}
+              {joining ? '进入中...' : '进入'}
             </button>
           </div>
 
-          <p className="text-xs text-slate-500">
-            主持人/设计师默认“摄像头开、麦克风静音”；Observer 默认仅收听收看，可在入会后申请发言。
-          </p>
         </div>
       </div>
     </div>

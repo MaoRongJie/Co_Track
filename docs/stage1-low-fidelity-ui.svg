@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1200" viewBox="0 0 1440 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Co-Track 第一阶段低保真界面图</title>
+  <desc id="desc">基于现有 Co-Track 第一阶段真实界面的低保真线框图，包含会议顶栏、阶段导航、设计目标输入、AI 解析结果、产品与基准模型配置、基础模型预览和成员面板折叠入口。</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .top { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1; }
+      .panel { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+      .panel-soft { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.2; }
+      .line { stroke: #94a3b8; stroke-width: 1.4; fill: none; }
+      .dash { stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 7 7; fill: none; }
+      .muted { fill: #e2e8f0; stroke: #cbd5e1; stroke-width: 1; }
+      .active { fill: #dbeafe; stroke: #64748b; stroke-width: 1.2; }
+      .text { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #334155; font-size: 16px; }
+      .small { font-size: 13px; fill: #64748b; }
+      .tiny { font-size: 11px; fill: #64748b; letter-spacing: 1px; }
+      .title { font-size: 19px; font-weight: 700; fill: #1e293b; }
+      .section { font-size: 15px; font-weight: 700; fill: #334155; }
+      .label { font-size: 12px; fill: #64748b; }
+      .button { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 1.2; }
+      .primary { fill: #cbd5e1; stroke: #64748b; stroke-width: 1.2; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="1200"/>
+
+  <!-- App header -->
+  <rect class="top" x="0.5" y="0.5" width="1439" height="70"/>
+  <text class="title" x="32" y="31">Co-Track 协同涂装设计会议</text>
+  <text class="small" x="32" y="52">会议名称 / 邀请码 / 当前角色</text>
+
+  <g transform="translate(500 20)">
+    <rect class="active" x="0" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="22" y="20">S1 简报</text>
+    <line class="line" x1="100" y1="15" x2="122" y2="15"/>
+    <rect class="muted" x="130" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="151" y="20">S2 设计</text>
+    <line class="line" x1="230" y1="15" x2="252" y2="15"/>
+    <rect class="muted" x="260" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="281" y="20">S3 评审</text>
+    <line class="line" x1="360" y1="15" x2="382" y2="15"/>
+    <rect class="muted" x="390" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="411" y="20">S4 预览</text>
+  </g>
+
+  <g transform="translate(1176 16)">
+    <rect class="button" x="0" y="0" width="40" height="40" rx="10"/>
+    <text class="small" x="11" y="26">设</text>
+    <rect class="primary" x="54" y="0" width="116" height="40" rx="12"/>
+    <text class="small" x="76" y="25">进入下一阶段</text>
+    <rect class="button" x="184" y="0" width="40" height="40" rx="10"/>
+    <text class="small" x="196" y="26">退</text>
+  </g>
+
+  <!-- Stage body -->
+  <rect class="bg" x="0" y="70" width="1440" height="1130"/>
+  <text class="tiny" x="64" y="106">当前画面：阶段 1 / 会议发起、设计目标设定、基准模型确认</text>
+
+  <!-- Main two-column layout -->
+  <g transform="translate(64 124)">
+    <!-- left column -->
+    <g>
+      <rect class="panel" x="0" y="0" width="760" height="250" rx="16"/>
+      <text class="tiny" x="26" y="34">S1</text>
+      <text class="section" x="26" y="62">设计目标输入</text>
+      <rect class="panel-soft" x="26" y="86" width="708" height="105" rx="10"/>
+      <line class="line" x1="50" y1="115" x2="500" y2="115"/>
+      <line class="line" x1="50" y1="142" x2="690" y2="142"/>
+      <line class="line" x1="50" y1="169" x2="612" y2="169"/>
+      <rect class="primary" x="586" y="207" width="148" height="32" rx="8"/>
+      <text class="small" x="617" y="228">AI 解析简报</text>
+
+      <rect class="panel" x="0" y="274" width="760" height="780" rx="16"/>
+      <text class="section" x="26" y="312">AI 解析结果 / Brief</text>
+      <rect class="panel-soft" x="26" y="336" width="708" height="128" rx="12"/>
+      <rect class="muted" x="46" y="358" width="88" height="26" rx="13"/>
+      <rect class="muted" x="146" y="358" width="120" height="26" rx="13"/>
+      <rect class="muted" x="278" y="358" width="96" height="26" rx="13"/>
+      <rect class="muted" x="386" y="358" width="112" height="26" rx="13"/>
+      <text class="label" x="46" y="414">开放叙事 / 主题摘要</text>
+      <line class="line" x1="46" y1="438" x2="690" y2="438"/>
+
+      <g transform="translate(26 492)">
+        <rect class="panel-soft" x="0" y="0" width="220" height="210" rx="12"/>
+        <rect class="muted" x="16" y="18" width="58" height="24" rx="12"/>
+        <text class="tiny" x="30" y="35">WHY</text>
+        <text class="section" x="16" y="68">目标与体验意图</text>
+        <line class="line" x1="16" y1="104" x2="190" y2="104"/>
+        <line class="line" x1="16" y1="130" x2="178" y2="130"/>
+        <line class="line" x1="16" y1="168" x2="198" y2="168"/>
+      </g>
+      <g transform="translate(270 492)">
+        <rect class="panel-soft" x="0" y="0" width="220" height="210" rx="12"/>
+        <rect class="muted" x="16" y="18" width="58" height="24" rx="12"/>
+        <text class="tiny" x="29" y="35">WHAT</text>
+        <text class="section" x="16" y="68">视觉风格与元素</text>
+        <line class="line" x1="16" y1="104" x2="190" y2="104"/>
+        <rect class="muted" x="16" y="126" width="64" height="24" rx="12"/>
+        <rect class="muted" x="88" y="126" width="72" height="24" rx="12"/>
+        <rect class="muted" x="16" y="160" width="96" height="24" rx="12"/>
+      </g>
+      <g transform="translate(514 492)">
+        <rect class="panel-soft" x="0" y="0" width="220" height="210" rx="12"/>
+        <rect class="muted" x="16" y="18" width="58" height="24" rx="12"/>
+        <text class="tiny" x="32" y="35">HOW</text>
+        <text class="section" x="16" y="68">工艺与约束</text>
+        <rect class="muted" x="16" y="96" width="188" height="34" rx="8"/>
+        <rect class="muted" x="16" y="142" width="188" height="34" rx="8"/>
+      </g>
+
+      <g transform="translate(26 730)">
+        <rect class="panel-soft" x="0" y="0" width="342" height="284" rx="12"/>
+        <text class="section" x="18" y="34">锁定项</text>
+        <rect class="muted" x="18" y="58" width="306" height="44" rx="10"/>
+        <rect class="muted" x="18" y="116" width="306" height="44" rx="10"/>
+        <rect class="muted" x="18" y="174" width="306" height="44" rx="10"/>
+      </g>
+      <g transform="translate(392 730)">
+        <rect class="panel-soft" x="0" y="0" width="342" height="284" rx="12"/>
+        <text class="section" x="18" y="34">可探索方向</text>
+        <rect class="muted" x="18" y="58" width="306" height="44" rx="10"/>
+        <rect class="muted" x="18" y="116" width="306" height="44" rx="10"/>
+        <rect class="muted" x="18" y="174" width="306" height="44" rx="10"/>
+      </g>
+    </g>
+
+    <!-- right column -->
+    <g transform="translate(784 0)">
+      <rect class="panel" x="0" y="0" width="520" height="408" rx="16"/>
+      <text class="section" x="24" y="38">产品与基准模型配置</text>
+      <text class="label" x="24" y="76">产品类别</text>
+      <rect class="panel-soft" x="24" y="90" width="472" height="42" rx="8"/>
+      <text class="small" x="44" y="117">高铁 / 城际 / 地铁 / 汽车 / 家电 / 其他</text>
+
+      <text class="label" x="24" y="162">基准模型来源</text>
+      <rect class="active" x="24" y="176" width="472" height="42" rx="8"/>
+      <circle class="muted" cx="46" cy="197" r="7"/>
+      <text class="small" x="66" y="202">上传模型</text>
+      <text class="label" x="404" y="202">已选</text>
+      <rect class="muted" x="24" y="228" width="472" height="42" rx="8"/>
+      <circle class="muted" cx="46" cy="249" r="7"/>
+      <text class="small" x="66" y="254">模型库选择</text>
+      <text class="label" x="390" y="254">暂未开放</text>
+      <rect class="muted" x="24" y="280" width="472" height="42" rx="8"/>
+      <circle class="muted" cx="46" cy="301" r="7"/>
+      <text class="small" x="66" y="306">自动生成近似模型</text>
+      <text class="label" x="390" y="306">暂未开放</text>
+
+      <rect class="panel-soft" x="24" y="342" width="300" height="42" rx="8"/>
+      <text class="small" x="44" y="368">GLB / GLTF 文件上传入口</text>
+      <rect class="primary" x="340" y="342" width="156" height="42" rx="8"/>
+      <text class="small" x="374" y="368">锁定基准模型</text>
+
+      <rect class="panel" x="0" y="432" width="520" height="622" rx="16"/>
+      <text class="section" x="24" y="470">基础模型预览</text>
+      <text class="label" x="24" y="494">GLB / GLTF / 处理状态</text>
+      <rect class="panel-soft" x="24" y="520" width="472" height="286" rx="12"/>
+      <path class="dash" d="M145 700 C215 590, 320 590, 380 700"/>
+      <rect class="muted" x="178" y="648" width="164" height="46" rx="23"/>
+      <text class="small" x="224" y="676">3D 预览区</text>
+      <line class="line" x1="84" y1="758" x2="436" y2="758"/>
+
+      <g transform="translate(24 832)">
+        <rect class="panel-soft" x="0" y="0" width="222" height="58" rx="10"/>
+        <text class="label" x="14" y="24">base_model_id</text>
+        <line class="line" x1="14" y1="42" x2="130" y2="42"/>
+        <rect class="panel-soft" x="250" y="0" width="222" height="58" rx="10"/>
+        <text class="label" x="264" y="24">来源 / 精度</text>
+        <line class="line" x1="264" y1="42" x2="420" y2="42"/>
+        <rect class="panel-soft" x="0" y="78" width="222" height="58" rx="10"/>
+        <text class="label" x="14" y="102">可喷涂面积</text>
+        <line class="line" x1="14" y1="120" x2="154" y2="120"/>
+        <rect class="panel-soft" x="250" y="78" width="222" height="58" rx="10"/>
+        <text class="label" x="264" y="102">UV 像素 / 网格信息</text>
+        <line class="line" x1="264" y1="120" x2="440" y2="120"/>
+        <rect class="muted" x="0" y="164" width="128" height="30" rx="15"/>
+        <text class="label" x="22" y="184">未锁定状态</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- collapsed participant sidebar handle -->
+  <g transform="translate(1410 590)">
+    <rect class="top" x="-10" y="-50" width="28" height="100" rx="14"/>
+    <path class="line" d="M0 -14 L8 0 L0 14"/>
+  </g>
+
+  <!-- Notes -->
+  <g transform="translate(64 1142)">
+    <rect class="panel-soft" x="0" y="0" width="1304" height="36" rx="8"/>
+    <text class="small" x="18" y="24">低保真说明：保留真实界面的信息层级与布局关系，弱化颜色、阴影、图标和真实内容细节，用于第一阶段交互结构确认。</text>
+  </g>
+</svg>

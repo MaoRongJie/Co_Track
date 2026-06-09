@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <defs>
+    <style>
+      .title {
+        font-family: "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", Arial, sans-serif;
+        font-size: 31px;
+        font-weight: 700;
+        fill: #243447;
+      }
+      .subtitle {
+        font-family: "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", Arial, sans-serif;
+        font-size: 17px;
+        fill: #687381;
+      }
+      .axis, .tick, .label, .value, .note {
+        font-family: "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", Arial, sans-serif;
+      }
+      .axis {
+        font-size: 15px;
+        fill: #52606D;
+      }
+      .tick {
+        font-size: 14px;
+        fill: #6C7682;
+      }
+      .label {
+        font-size: 20px;
+        fill: #2C3742;
+      }
+      .value {
+        font-size: 18px;
+        font-weight: 700;
+        fill: #2C3742;
+      }
+      .note {
+        font-size: 15px;
+        fill: #7B8490;
+      }
+      .grid {
+        stroke: #D9DEE5;
+        stroke-width: 1;
+      }
+      .axis-line {
+        stroke: #9AA5B1;
+        stroke-width: 1.2;
+      }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#FFFFFF"/>
+
+  <text x="600" y="66" class="title" text-anchor="middle">远程设计协作常用工具类型</text>
+  <text x="600" y="101" class="subtitle" text-anchor="middle">多选题，最多选 4 项；有效样本 n=25</text>
+
+  <!-- Chart constants: left=250, top=150, width=820, row=58, scale=32.8 px/person -->
+  <g transform="translate(250 150)">
+    <!-- vertical gridlines for count scale 0,5,10,15,20,25 -->
+    <line class="grid" x1="0" y1="0" x2="0" y2="482"/>
+    <line class="grid" x1="164" y1="0" x2="164" y2="482"/>
+    <line class="grid" x1="328" y1="0" x2="328" y2="482"/>
+    <line class="grid" x1="492" y1="0" x2="492" y2="482"/>
+    <line class="grid" x1="656" y1="0" x2="656" y2="482"/>
+    <line class="grid" x1="820" y1="0" x2="820" y2="482"/>
+
+    <line class="axis-line" x1="0" y1="482" x2="820" y2="482"/>
+    <line class="axis-line" x1="0" y1="0" x2="0" y2="482"/>
+
+    <text class="tick" x="0" y="516" text-anchor="middle">0</text>
+    <text class="tick" x="164" y="516" text-anchor="middle">5</text>
+    <text class="tick" x="328" y="516" text-anchor="middle">10</text>
+    <text class="tick" x="492" y="516" text-anchor="middle">15</text>
+    <text class="tick" x="656" y="516" text-anchor="middle">20</text>
+    <text class="tick" x="820" y="516" text-anchor="middle">25</text>
+    <text class="axis" x="410" y="555" text-anchor="middle">选择人数</text>
+
+    <!-- labels -->
+    <text class="label" x="-22" y="29" text-anchor="end">会议工具</text>
+    <text class="label" x="-22" y="87" text-anchor="end">绘图软件</text>
+    <text class="label" x="-22" y="145" text-anchor="end">文档工具</text>
+    <text class="label" x="-22" y="203" text-anchor="end">AI 生成工具</text>
+    <text class="label" x="-22" y="261" text-anchor="end">在线白板</text>
+    <text class="label" x="-22" y="319" text-anchor="end">3D 软件</text>
+    <text class="label" x="-22" y="377" text-anchor="end">项目管理工具</text>
+    <text class="label" x="-22" y="435" text-anchor="end">其他</text>
+
+    <!-- bars, no rounded corners -->
+    <rect x="0" y="8" width="721.6" height="31" fill="#3F6F9F"/>
+    <rect x="0" y="66" width="688.8" height="31" fill="#3F6F9F"/>
+    <rect x="0" y="124" width="557.6" height="31" fill="#5E7F98"/>
+    <rect x="0" y="182" width="426.4" height="31" fill="#6F8A78"/>
+    <rect x="0" y="240" width="360.8" height="31" fill="#8A7AA6"/>
+    <rect x="0" y="298" width="295.2" height="31" fill="#8D7B61"/>
+    <rect x="0" y="356" width="196.8" height="31" fill="#A26F64"/>
+    <rect x="0" y="414" width="65.6" height="31" fill="#9AA5B1"/>
+
+    <!-- values -->
+    <text class="value" x="739.6" y="29">22（88%）</text>
+    <text class="value" x="706.8" y="87">21（84%）</text>
+    <text class="value" x="575.6" y="145">17（68%）</text>
+    <text class="value" x="444.4" y="203">13（52%）</text>
+    <text class="value" x="378.8" y="261">11（44%）</text>
+    <text class="value" x="313.2" y="319">9（36%）</text>
+    <text class="value" x="214.8" y="377">6（24%）</text>
+    <text class="value" x="83.6" y="435">2（8%）</text>
+  </g>
+
+  <text x="250" y="720" class="note">注：该题为多选题，百分比表示选择该工具类型的人数占有效样本总数的比例，合计不等于 100%。</text>
+</svg>

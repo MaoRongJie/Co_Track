@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520" role="img" aria-labelledby="title desc">
+  <title id="title">双钻模型</title>
+  <desc id="desc">Design Council 双钻模型，展示发现、定义、发展、交付四个阶段，以及问题空间和方案空间中的发散与收敛过程。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#3E5C76"/>
+    </marker>
+    <style>
+      text {
+        font-family: Inter, "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        fill: #263445;
+      }
+      .title {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .stage {
+        font-size: 20px;
+        font-weight: 800;
+      }
+      .stage-en {
+        font-size: 13px;
+        font-weight: 650;
+        fill: #667085;
+      }
+      .label {
+        font-size: 15px;
+        font-weight: 700;
+        fill: #4b5563;
+      }
+      .small {
+        font-size: 13px;
+        font-weight: 600;
+        fill: #667085;
+      }
+      .diamond-line {
+        fill: none;
+        stroke: #3E5C76;
+        stroke-width: 3;
+        stroke-linejoin: round;
+      }
+      .diamond-fill-left {
+        fill: #EDF6FF;
+        stroke: none;
+      }
+      .diamond-fill-right {
+        fill: #F7FBF9;
+        stroke: none;
+      }
+      .axis {
+        stroke: #CBD5E1;
+        stroke-width: 1.2;
+      }
+      .arrow {
+        stroke: #3E5C76;
+        stroke-width: 2;
+        fill: none;
+        marker-end: url(#arrow);
+      }
+      .point {
+        fill: #ffffff;
+        stroke: #3E5C76;
+        stroke-width: 2;
+      }
+      .divider {
+        stroke: #D8DEE6;
+        stroke-width: 1.2;
+        stroke-dasharray: 5 6;
+      }
+    </style>
+  </defs>
+
+  <rect width="1100" height="520" fill="#ffffff"/>
+  <text class="title" x="550" y="58" text-anchor="middle">双钻模型：发散与收敛的设计过程</text>
+
+  <!-- Background areas -->
+  <rect x="90" y="110" width="455" height="285" rx="8" fill="#FBFDFF" stroke="#E2E8F0"/>
+  <rect x="555" y="110" width="455" height="285" rx="8" fill="#FBFDFB" stroke="#E2E8F0"/>
+  <text class="label" x="318" y="136" text-anchor="middle">问题空间</text>
+  <text class="label" x="782" y="136" text-anchor="middle">方案空间</text>
+
+  <!-- Diamonds -->
+  <polygon class="diamond-fill-left" points="120,255 315,150 510,255 315,360"/>
+  <polygon class="diamond-fill-right" points="590,255 785,150 980,255 785,360"/>
+
+  <polyline class="diamond-line" points="120,255 315,150 510,255 315,360 120,255"/>
+  <polyline class="diamond-line" points="590,255 785,150 980,255 785,360 590,255"/>
+
+  <!-- Overall process arrow -->
+  <line class="axis" x1="82" y1="255" x2="1018" y2="255"/>
+  <path class="arrow" d="M80 255 H1028"/>
+
+  <!-- Key points -->
+  <circle class="point" cx="120" cy="255" r="6"/>
+  <circle class="point" cx="315" cy="150" r="6"/>
+  <circle class="point" cx="510" cy="255" r="6"/>
+  <circle class="point" cx="785" cy="150" r="6"/>
+  <circle class="point" cx="980" cy="255" r="6"/>
+
+  <line class="divider" x1="550" y1="104" x2="550" y2="402"/>
+
+  <!-- Stage labels -->
+  <g transform="translate(120 428)">
+    <text class="stage" x="0" y="0" text-anchor="middle">发现</text>
+    <text class="stage-en" x="0" y="22" text-anchor="middle">Discover</text>
+  </g>
+  <g transform="translate(510 428)">
+    <text class="stage" x="0" y="0" text-anchor="middle">定义</text>
+    <text class="stage-en" x="0" y="22" text-anchor="middle">Define</text>
+  </g>
+  <g transform="translate(590 428)">
+    <text class="stage" x="0" y="0" text-anchor="middle">发展</text>
+    <text class="stage-en" x="0" y="22" text-anchor="middle">Develop</text>
+  </g>
+  <g transform="translate(980 428)">
+    <text class="stage" x="0" y="0" text-anchor="middle">交付</text>
+    <text class="stage-en" x="0" y="22" text-anchor="middle">Deliver</text>
+  </g>
+
+  <!-- Diverge/converge labels -->
+  <text class="small" x="220" y="196" text-anchor="middle">发散探索</text>
+  <text class="small" x="410" y="196" text-anchor="middle">收敛定义</text>
+  <text class="small" x="690" y="196" text-anchor="middle">发散生成</text>
+  <text class="small" x="880" y="196" text-anchor="middle">收敛交付</text>
+
+  <text class="small" x="315" y="382" text-anchor="middle">从问题理解到明确设计方向</text>
+  <text class="small" x="785" y="382" text-anchor="middle">从方案探索到最终成果输出</text>
+</svg>

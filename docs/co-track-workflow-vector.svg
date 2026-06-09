@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Co-Track 信息交互逻辑图</title>
+  <desc id="desc">按照用户参考图绘制的三泳道信息交互逻辑图，包含用户输入与协作行为、AI 与系统反馈、共享信息空间三层。</desc>
+  <defs>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#5B8FD9"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2F8068"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#C6A052"/>
+    </marker>
+    <style>
+      text {
+        font-family: Inter, "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        fill: #223044;
+      }
+      .title {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .subtitle {
+        font-size: 14px;
+        font-weight: 500;
+        fill: #667085;
+      }
+      .lane-label {
+        font-size: 24px;
+        font-weight: 800;
+      }
+      .node-title {
+        font-size: 17px;
+        font-weight: 760;
+      }
+      .node-sub {
+        font-size: 13px;
+        font-weight: 560;
+        fill: #5E6B7E;
+      }
+      .small-label {
+        font-size: 13px;
+        font-weight: 650;
+        fill: #6B7280;
+      }
+      .lane-user {
+        fill: #FFFBEA;
+        stroke: #E5D7A3;
+        stroke-width: 1.3;
+      }
+      .lane-ai {
+        fill: #EEF9F2;
+        stroke: #BBDDC8;
+        stroke-width: 1.3;
+      }
+      .lane-shared {
+        fill: #EAF4FF;
+        stroke: #B8D4EE;
+        stroke-width: 1.3;
+      }
+      .node-user {
+        fill: #FFF5D5;
+        stroke: #D9C37D;
+        stroke-width: 1.5;
+      }
+      .node-ai {
+        fill: #DFF2E9;
+        stroke: #8FC4A8;
+        stroke-width: 1.5;
+      }
+      .node-shared {
+        fill: #D9ECFF;
+        stroke: #8DBFEA;
+        stroke-width: 1.5;
+      }
+      .arrow-blue {
+        stroke: #5B8FD9;
+        stroke-width: 2.4;
+        fill: none;
+        marker-end: url(#arrowBlue);
+      }
+      .arrow-green {
+        stroke: #2F8068;
+        stroke-width: 2.3;
+        fill: none;
+        marker-end: url(#arrowGreen);
+      }
+      .arrow-amber {
+        stroke: #C6A052;
+        stroke-width: 2.2;
+        fill: none;
+        marker-end: url(#arrowAmber);
+      }
+      .section-line {
+        stroke: #D7E4F0;
+        stroke-width: 1;
+      }
+      .dash {
+        stroke-dasharray: 5 5;
+      }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <text class="title" x="800" y="44" text-anchor="middle">Co-Track 信息交互逻辑</text>
+  <text class="subtitle" x="800" y="72" text-anchor="middle">从设计任务输入、方案创作、共享评审到渲染导出，展示用户行为、AI 反馈与共享信息空间之间的信息流转</text>
+
+  <!-- Swimlanes -->
+  <rect class="lane-user" x="58" y="92" width="1484" height="210" rx="10"/>
+  <rect class="lane-ai" x="58" y="390" width="1484" height="220" rx="10"/>
+  <rect class="lane-shared" x="58" y="690" width="1484" height="170" rx="10"/>
+
+  <text class="lane-label" x="84" y="130">用户输入与协作行为</text>
+  <text class="lane-label" x="84" y="428">AI 与系统反馈</text>
+  <text class="lane-label" x="84" y="728">共享信息空间</text>
+
+  <!-- Stage guides -->
+  <line class="section-line" x1="360" y1="92" x2="360" y2="860"/>
+  <line class="section-line" x1="660" y1="92" x2="660" y2="860"/>
+  <line class="section-line" x1="960" y1="92" x2="960" y2="860"/>
+  <line class="section-line" x1="1260" y1="92" x2="1260" y2="860"/>
+
+  <!-- User lane nodes -->
+  <g transform="translate(135 156)">
+    <rect class="node-user" width="180" height="72" rx="8"/>
+    <text class="node-title" x="90" y="31" text-anchor="middle">主持人输入</text>
+    <text class="node-sub" x="90" y="53" text-anchor="middle">设计任务</text>
+  </g>
+
+  <g transform="translate(425 156)">
+    <rect class="node-user" width="200" height="72" rx="8"/>
+    <text class="node-title" x="100" y="43" text-anchor="middle">方案创作</text>
+  </g>
+
+  <g transform="translate(715 156)">
+    <rect class="node-user" width="210" height="72" rx="8"/>
+    <text class="node-title" x="105" y="43" text-anchor="middle">共享 / 提交方案</text>
+  </g>
+
+  <g transform="translate(1010 156)">
+    <rect class="node-user" width="200" height="72" rx="8"/>
+    <text class="node-title" x="100" y="43" text-anchor="middle">多人讨论反馈</text>
+  </g>
+
+  <g transform="translate(1305 156)">
+    <rect class="node-user" width="210" height="72" rx="8"/>
+    <text class="node-title" x="105" y="43" text-anchor="middle">渲染与方案导出</text>
+  </g>
+
+  <!-- AI lane nodes -->
+  <g transform="translate(135 490)">
+    <rect class="node-ai" width="180" height="72" rx="8"/>
+    <text class="node-title" x="90" y="43" text-anchor="middle">意图识别 Agent</text>
+  </g>
+
+  <g transform="translate(425 430)">
+    <rect class="node-ai" width="200" height="72" rx="8"/>
+    <text class="node-title" x="100" y="43" text-anchor="middle">图案生成 Agent</text>
+  </g>
+
+  <g transform="translate(425 530)">
+    <rect class="node-ai" width="200" height="72" rx="8"/>
+    <text class="node-title" x="100" y="43" text-anchor="middle">纹理生成 Agent</text>
+  </g>
+
+  <g transform="translate(1010 470)">
+    <rect class="node-ai" width="200" height="72" rx="8"/>
+    <text class="node-title" x="100" y="43" text-anchor="middle">角色评审 Agent</text>
+  </g>
+
+  <g transform="translate(1305 490)">
+    <rect class="node-ai" width="210" height="72" rx="8"/>
+    <text class="node-title" x="105" y="43" text-anchor="middle">效果渲染 Agent</text>
+  </g>
+
+  <!-- Shared lane nodes -->
+  <g transform="translate(120 760)">
+    <rect class="node-shared" width="220" height="82" rx="8"/>
+    <text class="node-title" x="110" y="37" text-anchor="middle">结构化设计简报</text>
+  </g>
+
+  <g transform="translate(410 760)">
+    <rect class="node-shared" width="160" height="82" rx="8"/>
+    <text class="node-title" x="80" y="34" text-anchor="middle">初步纹理</text>
+    <text class="node-title" x="80" y="57" text-anchor="middle">方案</text>
+  </g>
+
+  <g transform="translate(630 760)">
+    <rect class="node-shared" width="160" height="82" rx="8"/>
+    <text class="node-title" x="80" y="34" text-anchor="middle">迭代纹理</text>
+    <text class="node-title" x="80" y="57" text-anchor="middle">方案</text>
+  </g>
+
+  <g transform="translate(860 760)">
+    <rect class="node-shared" width="360" height="82" rx="8"/>
+    <text class="node-title" x="180" y="47" text-anchor="middle">公共方案区</text>
+  </g>
+
+  <g transform="translate(1275 760)">
+    <rect class="node-shared" width="240" height="82" rx="8"/>
+    <text class="node-title" x="120" y="47" text-anchor="middle">最终方案</text>
+  </g>
+
+  <!-- Main shared information flow -->
+  <path class="arrow-blue" d="M340 801 H406"/>
+  <path class="arrow-blue" d="M570 801 H626"/>
+  <path class="arrow-blue" d="M790 801 H856"/>
+  <path class="arrow-blue" d="M1220 801 H1271"/>
+
+  <!-- User input to AI/shared -->
+  <path class="arrow-blue" d="M225 228 V486"/>
+  <path class="arrow-green" d="M225 562 V756"/>
+
+  <path class="arrow-blue" d="M525 228 V426"/>
+  <path class="arrow-blue" d="M525 502 V526"/>
+  <path class="arrow-green" d="M525 602 V756"/>
+  <text class="small-label" x="486" y="705">纹理</text>
+
+  <path class="arrow-green" d="M625 466 H705 V756"/>
+  <text class="small-label" x="716" y="705">图案</text>
+
+  <path class="arrow-blue" d="M820 228 V756 H1040"/>
+  <path class="arrow-blue" d="M1110 228 V756"/>
+
+  <!-- Review feedback loop -->
+  <path class="arrow-amber" d="M1110 760 V546"/>
+  <path class="arrow-green" d="M1110 470 V232"/>
+  <text class="small-label" x="1126" y="626">评审结果</text>
+
+  <!-- Discussion drives iteration -->
+  <path class="arrow-amber dash" d="M1040 760 V700 H525 V606"/>
+  <text class="small-label" x="760" y="692">修改建议</text>
+
+  <!-- Render and export -->
+  <path class="arrow-blue" d="M1410 228 V486"/>
+  <path class="arrow-green" d="M1410 562 V756"/>
+
+  <!-- Legend -->
+  <g transform="translate(80 880)">
+    <line x1="0" y1="0" x2="36" y2="0" class="arrow-blue"/>
+    <text class="small-label" x="48" y="5">用户输入 / 主信息流</text>
+    <line x1="190" y1="0" x2="226" y2="0" class="arrow-green"/>
+    <text class="small-label" x="238" y="5">AI 或系统生成反馈</text>
+    <line x1="415" y1="0" x2="451" y2="0" class="arrow-amber dash"/>
+    <text class="small-label" x="463" y="5">评审与修改建议</text>
+  </g>
+</svg>

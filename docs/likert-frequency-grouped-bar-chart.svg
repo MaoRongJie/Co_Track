@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="540" viewBox="0 0 1220 540" role="img" aria-labelledby="title desc">
+  <title id="title">17 个李克特量表题项的选项人数分布</title>
+  <desc id="desc">13 人作答，统计 Q1 到 Q17 每个题项中选择 1、2、3、4、5 分的人数，并以五色分组柱状图展示。</desc>
+  <rect width="1220" height="540" fill="#ffffff"/>
+
+  <style>
+    text {
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+      fill: #555555;
+      font-size: 14px;
+    }
+    .grid {
+      stroke: #d9d9d9;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+    .axis {
+      stroke: #d9d9d9;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+    .x-label {
+      font-size: 13px;
+    }
+    .y-label {
+      font-size: 14px;
+    }
+    .legend {
+      font-size: 14px;
+    }
+  </style>
+
+  <g id="grid-lines">
+    <line class="grid" x1="36" y1="20" x2="1100" y2="20"/>
+    <line class="grid" x1="36" y1="85" x2="1100" y2="85"/>
+    <line class="grid" x1="36" y1="150" x2="1100" y2="150"/>
+    <line class="grid" x1="36" y1="215" x2="1100" y2="215"/>
+    <line class="grid" x1="36" y1="280" x2="1100" y2="280"/>
+    <line class="grid" x1="36" y1="345" x2="1100" y2="345"/>
+    <line class="grid" x1="36" y1="410" x2="1100" y2="410"/>
+  </g>
+
+  <g id="bars">
+    <rect x="46" y="410" width="8" height="0" fill="#4F81BD"/>
+    <rect x="56" y="410" width="8" height="0" fill="#C0504D"/>
+    <rect x="66" y="377.5" width="8" height="32.5" fill="#9BBB59"/>
+    <rect x="76" y="117.5" width="8" height="292.5" fill="#8064A2"/>
+    <rect x="86" y="312.5" width="8" height="97.5" fill="#4BACC6"/>
+    <rect x="106" y="52.5" width="8" height="357.5" fill="#4F81BD"/>
+    <rect x="116" y="345" width="8" height="65" fill="#C0504D"/>
+    <rect x="126" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="136" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="146" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="166" y="182.5" width="8" height="227.5" fill="#4F81BD"/>
+    <rect x="176" y="247.5" width="8" height="162.5" fill="#C0504D"/>
+    <rect x="186" y="377.5" width="8" height="32.5" fill="#9BBB59"/>
+    <rect x="196" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="206" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="226" y="52.5" width="8" height="357.5" fill="#4F81BD"/>
+    <rect x="236" y="345" width="8" height="65" fill="#C0504D"/>
+    <rect x="246" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="256" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="266" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="286" y="410" width="8" height="0" fill="#4F81BD"/>
+    <rect x="296" y="410" width="8" height="0" fill="#C0504D"/>
+    <rect x="306" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="316" y="280" width="8" height="130" fill="#8064A2"/>
+    <rect x="326" y="117.5" width="8" height="292.5" fill="#4BACC6"/>
+    <rect x="346" y="85" width="8" height="325" fill="#4F81BD"/>
+    <rect x="356" y="312.5" width="8" height="97.5" fill="#C0504D"/>
+    <rect x="366" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="376" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="386" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="406" y="410" width="8" height="0" fill="#4F81BD"/>
+    <rect x="416" y="410" width="8" height="0" fill="#C0504D"/>
+    <rect x="426" y="182.5" width="8" height="227.5" fill="#9BBB59"/>
+    <rect x="436" y="215" width="8" height="195" fill="#8064A2"/>
+    <rect x="446" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="466" y="410" width="8" height="0" fill="#4F81BD"/>
+    <rect x="476" y="410" width="8" height="0" fill="#C0504D"/>
+    <rect x="486" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="496" y="312.5" width="8" height="97.5" fill="#8064A2"/>
+    <rect x="506" y="85" width="8" height="325" fill="#4BACC6"/>
+    <rect x="526" y="52.5" width="8" height="357.5" fill="#4F81BD"/>
+    <rect x="536" y="345" width="8" height="65" fill="#C0504D"/>
+    <rect x="546" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="556" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="566" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="586" y="20" width="8" height="390" fill="#4F81BD"/>
+    <rect x="596" y="377.5" width="8" height="32.5" fill="#C0504D"/>
+    <rect x="606" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="616" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="626" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="646" y="117.5" width="8" height="292.5" fill="#4F81BD"/>
+    <rect x="656" y="280" width="8" height="130" fill="#C0504D"/>
+    <rect x="666" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="676" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="686" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="706" y="410" width="8" height="0" fill="#4F81BD"/>
+    <rect x="716" y="410" width="8" height="0" fill="#C0504D"/>
+    <rect x="726" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="736" y="312.5" width="8" height="97.5" fill="#8064A2"/>
+    <rect x="746" y="85" width="8" height="325" fill="#4BACC6"/>
+    <rect x="766" y="85" width="8" height="325" fill="#4F81BD"/>
+    <rect x="776" y="312.5" width="8" height="97.5" fill="#C0504D"/>
+    <rect x="786" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="796" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="806" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="826" y="52.5" width="8" height="357.5" fill="#4F81BD"/>
+    <rect x="836" y="345" width="8" height="65" fill="#C0504D"/>
+    <rect x="846" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="856" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="866" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="886" y="52.5" width="8" height="357.5" fill="#4F81BD"/>
+    <rect x="896" y="345" width="8" height="65" fill="#C0504D"/>
+    <rect x="906" y="410" width="8" height="0" fill="#9BBB59"/>
+    <rect x="916" y="410" width="8" height="0" fill="#8064A2"/>
+    <rect x="926" y="410" width="8" height="0" fill="#4BACC6"/>
+    <rect x="946" y="410" width="8" height="0" fill="#4F81BD"/>
+    <rect x="956" y="410" width="8" height="0" fill="#C0504D"/>
+    <rect x="966" y="345" width="8" height="65" fill="#9BBB59"/>
+    <rect x="976" y="117.5" width="8" height="292.5" fill="#8064A2"/>
+    <rect x="986" y="345" width="8" height="65" fill="#4BACC6"/>
+    <rect x="1006" y="410" width="8" height="0" fill="#4F81BD"/>
+    <rect x="1016" y="410" width="8" height="0" fill="#C0504D"/>
+    <rect x="1026" y="345" width="8" height="65" fill="#9BBB59"/>
+    <rect x="1036" y="247.5" width="8" height="162.5" fill="#8064A2"/>
+    <rect x="1046" y="215" width="8" height="195" fill="#4BACC6"/>
+  </g>
+
+  <line class="axis" x1="36" y1="410" x2="1100" y2="410"/>
+
+  <g id="x-labels">
+    <text class="x-label" x="70" y="448" text-anchor="end" transform="rotate(-45 70 448)">Q1</text>
+    <text class="x-label" x="130" y="448" text-anchor="end" transform="rotate(-45 130 448)">Q2</text>
+    <text class="x-label" x="190" y="448" text-anchor="end" transform="rotate(-45 190 448)">Q3</text>
+    <text class="x-label" x="250" y="448" text-anchor="end" transform="rotate(-45 250 448)">Q4</text>
+    <text class="x-label" x="310" y="448" text-anchor="end" transform="rotate(-45 310 448)">Q5</text>
+    <text class="x-label" x="370" y="448" text-anchor="end" transform="rotate(-45 370 448)">Q6</text>
+    <text class="x-label" x="430" y="448" text-anchor="end" transform="rotate(-45 430 448)">Q7</text>
+    <text class="x-label" x="490" y="448" text-anchor="end" transform="rotate(-45 490 448)">Q8</text>
+    <text class="x-label" x="550" y="448" text-anchor="end" transform="rotate(-45 550 448)">Q9</text>
+    <text class="x-label" x="610" y="448" text-anchor="end" transform="rotate(-45 610 448)">Q10</text>
+    <text class="x-label" x="670" y="448" text-anchor="end" transform="rotate(-45 670 448)">Q11</text>
+    <text class="x-label" x="730" y="448" text-anchor="end" transform="rotate(-45 730 448)">Q12</text>
+    <text class="x-label" x="790" y="448" text-anchor="end" transform="rotate(-45 790 448)">Q13</text>
+    <text class="x-label" x="850" y="448" text-anchor="end" transform="rotate(-45 850 448)">Q14</text>
+    <text class="x-label" x="910" y="448" text-anchor="end" transform="rotate(-45 910 448)">Q15</text>
+    <text class="x-label" x="970" y="448" text-anchor="end" transform="rotate(-45 970 448)">Q16</text>
+    <text class="x-label" x="1030" y="448" text-anchor="end" transform="rotate(-45 1030 448)">Q17</text>
+  </g>
+
+  <g id="y-labels">
+    <text class="y-label" x="1126" y="415">0</text>
+    <text class="y-label" x="1126" y="350">2</text>
+    <text class="y-label" x="1126" y="285">4</text>
+    <text class="y-label" x="1126" y="220">6</text>
+    <text class="y-label" x="1126" y="155">8</text>
+    <text class="y-label" x="1126" y="90">10</text>
+    <text class="y-label" x="1126" y="25">12</text>
+  </g>
+
+  <g id="legend" transform="translate(1162 215)">
+    <rect x="0" y="-7" width="8" height="8" fill="#4F81BD"/>
+    <text class="legend" x="14" y="0">1</text>
+    <rect x="0" y="20" width="8" height="8" fill="#C0504D"/>
+    <text class="legend" x="14" y="27">2</text>
+    <rect x="0" y="47" width="8" height="8" fill="#9BBB59"/>
+    <text class="legend" x="14" y="54">3</text>
+    <rect x="0" y="74" width="8" height="8" fill="#8064A2"/>
+    <text class="legend" x="14" y="81">4</text>
+    <rect x="0" y="101" width="8" height="8" fill="#4BACC6"/>
+    <text class="legend" x="14" y="108">5</text>
+  </g>
+</svg>

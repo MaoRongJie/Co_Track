@@ -24,27 +24,51 @@ interface TexturePlanningSidebarProps {
   onRemoveImage: () => Promise<void>;
 }
 
-const PANEL = 'rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-900/5 transition-all duration-300';
+const PANEL = 'rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200 transition-all duration-300';
 
 const dedupeKeywords = (keywords: string[]): string[] => Array.from(new Set(keywords.filter((item) => item.trim().length > 0)));
+const SOURCE_LABELS: Record<string, string> = {
+  upload: '上传模型',
+  library: '模型库',
+  generated: '生成模型',
+};
+const PRECISION_LABELS: Record<string, string> = {
+  authoritative: '精确',
+  standard: '标准',
+  approximate: '近似',
+};
 
 const buildBriefTags = (brief: DesignBrief | null, baseModel: BaseModelMeta | null, texturePlan: TexturePlanState | null): string[] => {
   const tags: string[] = [];
-  if (brief?.theme) {
-    tags.push(`Theme: ${brief.theme}`);
+  if (brief?.why?.coreExperienceIntent) {
+    tags.push(`目标: ${brief.why.coreExperienceIntent}`);
   }
-  if (brief?.styleKeywords?.length) {
+  if (brief?.theme) {
+    tags.push(`主题: ${brief.theme}`);
+  }
+  if (brief?.what?.colorTendency) {
+    tags.push(brief.what.colorTendency);
+  }
+  if (brief?.what?.visualStyleKeywords?.length) {
+    tags.push(...brief.what.visualStyleKeywords.slice(0, 3));
+  } else if (brief?.styleKeywords?.length) {
     tags.push(...brief.styleKeywords.slice(0, 3));
   }
+  if (brief?.what?.referenceImagery?.length) {
+    tags.push(...brief.what.referenceImagery.slice(0, 2));
+  }
+  if (brief?.softDirections?.length) {
+    tags.push(...brief.softDirections.slice(0, 2));
+  }
   if (brief?.mainColors?.length) {
-    tags.push(...brief.mainColors.slice(0, 3));
+    tags.push(...brief.mainColors.slice(0, 2));
   }
   if (texturePlan?.briefKeywords?.design_elements?.length) {
     tags.push(...texturePlan.briefKeywords.design_elements.slice(0, 4));
   }
   if (baseModel) {
-    tags.push(baseModel.sourceType);
-    tags.push(baseModel.precisionLevel);
+    tags.push(SOURCE_LABELS[baseModel.sourceType] ?? baseModel.sourceType);
+    tags.push(PRECISION_LABELS[baseModel.precisionLevel] ?? baseModel.precisionLevel);
   }
   return dedupeKeywords(tags).slice(0, 10);
 };
@@ -165,8 +189,7 @@ const TexturePlanningSidebar: React.FC<TexturePlanningSidebarProps> = ({
                 <Sparkles size={15} />
               </div>
               <div>
-                <p className="text-[13px] font-semibold tracking-[0.16em] text-slate-800">TEXTURE PLANNING AGENT</p>
-                <p className="mt-1 text-[11px] text-slate-500">Prepare input and generate three textured model results directly.</p>
+                <p className="text-[13px] font-semibold tracking-[0.16em] text-slate-800">纹理智能体</p>
               </div>
             </div>
             <div className="flex h-4 w-4 items-center justify-center">
@@ -182,18 +205,18 @@ const TexturePlanningSidebar: React.FC<TexturePlanningSidebarProps> = ({
               onClick={() => setBriefPanelOpen((prev) => !prev)}
             >
               <div className="flex items-center gap-2">
-                <p className="text-sm font-semibold tracking-tight text-slate-800">Brief Analysis</p>
+                <p className="text-sm font-semibold tracking-tight text-slate-800">需求摘要</p>
                 <div className="flex h-4 w-4 items-center justify-center">
                   {briefPanelOpen ? <ChevronDown size={14} className="text-slate-400" /> : <ChevronRight size={14} className="text-slate-400" />}
                 </div>
               </div>
               <div className="flex min-w-[50px] justify-end">
-                {saving ? <span className="text-[10px] text-slate-400">Saving...</span> : null}
+                {saving ? <span className="text-[10px] text-slate-400">保存中...</span> : null}
               </div>
             </div>
             {briefPanelOpen ? (
               <div className="mt-3 flex flex-wrap gap-2">
-                {briefTags.length === 0 ? <span className="text-[11px] text-slate-400">No brief keywords yet.</span> : null}
+                {briefTags.length === 0 ? <span className="text-[11px] text-slate-400">暂无关键词。</span> : null}
                 {briefTags.map((tag) => (
                   <StaticChip key={tag} label={tag} />
                 ))}
@@ -204,14 +227,13 @@ const TexturePlanningSidebar: React.FC<TexturePlanningSidebarProps> = ({
           <section className={PANEL}>
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-semibold tracking-tight text-slate-800">Text Or Document</p>
-                <p className="mt-1 text-[11px] text-slate-500">Add text or a document. Image keywords can also help.</p>
+                <p className="text-sm font-semibold tracking-tight text-slate-800">输入</p>
               </div>
               <div className="flex max-w-[52%] flex-wrap justify-end gap-2">
                 {currentDocumentLabel ? <UploadBadge label={currentDocumentLabel} onRemove={handleRemoveDocumentClick} /> : null}
                 <label className="inline-flex cursor-pointer items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-medium text-slate-600 transition hover:border-blue-300 hover:text-blue-700">
                   <FileText size={13} />
-                  Doc
+                  文档
                   <input
                     type="file"
                     accept=".txt,.md,.pdf,.docx"
@@ -228,7 +250,7 @@ const TexturePlanningSidebar: React.FC<TexturePlanningSidebarProps> = ({
             <textarea
               value={sourceText}
               onChange={(event) => setSourceText(event.target.value)}
-              placeholder="Describe the texture direction, constraints, material feeling, brand cues, or visual references..."
+              placeholder="输入纹理方向、限制条件、材料、品牌线索..."
               className="mt-3 min-h-[128px] w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-700 outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:shadow-sm"
             />
           </section>
@@ -236,14 +258,13 @@ const TexturePlanningSidebar: React.FC<TexturePlanningSidebarProps> = ({
           <section className={PANEL}>
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-semibold tracking-tight text-slate-800">Reference Image</p>
-                <p className="mt-1 text-[11px] text-slate-500">Optional. Analyze image keywords before generation when needed.</p>
+                <p className="text-sm font-semibold tracking-tight text-slate-800">参考图</p>
               </div>
               <div className="flex max-w-[56%] flex-wrap justify-end gap-2">
                 {currentImageLabel ? <UploadBadge label={currentImageLabel} onRemove={handleRemoveImageClick} /> : null}
                 <label className="inline-flex cursor-pointer items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-medium text-slate-600 transition hover:border-blue-300 hover:text-blue-700">
                   <ImagePlus size={13} />
-                  Upload
+                  上传
                   <input
                     type="file"
                     accept=".png,.jpg,.jpeg,.webp,.gif"
@@ -278,7 +299,7 @@ const TexturePlanningSidebar: React.FC<TexturePlanningSidebarProps> = ({
                       className="inline-flex items-center gap-1 rounded-full bg-blue-600 px-3 py-1.5 text-[11px] font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {imageAnalyzing ? <LoaderCircle size={12} className="animate-spin" /> : <Sparkles size={12} />}
-                      Start Analysis
+                      分析
                     </button>
                   ) : null}
                 </div>
@@ -287,7 +308,7 @@ const TexturePlanningSidebar: React.FC<TexturePlanningSidebarProps> = ({
                   <div className="mt-3 space-y-3">
                     {contentKeywords.length ? (
                       <div>
-                        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">Content</p>
+                        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">内容</p>
                         <div className="flex flex-wrap gap-2">
                           {contentKeywords.map((keyword) => (
                             <ToggleChip
@@ -304,7 +325,7 @@ const TexturePlanningSidebar: React.FC<TexturePlanningSidebarProps> = ({
 
                     {styleKeywords.length ? (
                       <div>
-                        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">Style</p>
+                        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">风格</p>
                         <div className="flex flex-wrap gap-2">
                           {styleKeywords.map((keyword) => (
                             <ToggleChip
@@ -343,7 +364,7 @@ const TexturePlanningSidebar: React.FC<TexturePlanningSidebarProps> = ({
             className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {generating ? <LoaderCircle size={15} className="animate-spin" /> : <Sparkles size={15} />}
-            Generate Model Textures
+            生成
           </button>
         </div>
       </div>

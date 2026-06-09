@@ -22,7 +22,6 @@ app/
 ├─ stages/
 │  ├─ stage1_extract_concept.py
 │  ├─ stage2_plan_3d_model.py
-│  ├─ stage3_generate_creative_reply.py
 │  └─ stage4_generate_image_assets.py
 ├─ workflow/
 │  └─ controller.py
@@ -58,8 +57,10 @@ curl http://127.0.0.1:8000/health
 - A default host user is created on startup:
   - `email`: `host@co-track.local`
   - `password`: `Host@123456`
-- A default meeting is created:
+- Default meetings are created:
   - `invite_code`: `555555`
+  - `invite_code`: `666666`
+  - `invite_code`: `777777`
 
 ## Key APIs
 

@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1067" viewBox="0 0 1600 1067" role="img" aria-labelledby="title desc">
+  <title id="title">Challenges in Remote Collaborative Design</title>
+  <desc id="desc">Horizontal bar chart showing challenge frequency: Tool Switching 18, Version Tracking 16, Communication Gap 15, Information Loss 14, Interruption 12, Context Confusion 10.</desc>
+  <rect width="1600" height="1000" fill="#ffffff"/>
+
+  <style>
+    text {
+      font-family: "Times New Roman", Times, serif;
+      fill: #000000;
+    }
+    .title {
+      font-size: 38px;
+      font-weight: 700;
+    }
+    .axis-label {
+      font-size: 31px;
+      font-weight: 700;
+    }
+    .tick {
+      font-size: 34px;
+      font-weight: 400;
+    }
+    .category {
+      font-size: 33px;
+      font-weight: 400;
+    }
+    .value {
+      font-size: 30px;
+      font-weight: 700;
+      fill: #333333;
+    }
+    .grid {
+      stroke: #c9c9c9;
+      stroke-width: 2;
+      stroke-dasharray: 8 5;
+    }
+    .axis {
+      stroke: #3d3d3d;
+      stroke-width: 2;
+      shape-rendering: crispEdges;
+    }
+    .bar {
+      stroke: #555555;
+      stroke-width: 2;
+    }
+  </style>
+
+  <text class="title" x="960" y="55" text-anchor="middle">Challenges in Remote Collaborative Design</text>
+
+  <!-- Plot area constants: x0=351, yTop=104, yBottom=939, scale=64.4 px per unit. -->
+  <g id="grid-lines">
+    <line class="grid" x1="512" y1="104" x2="512" y2="939"/>
+    <line class="grid" x1="673" y1="104" x2="673" y2="939"/>
+    <line class="grid" x1="834" y1="104" x2="834" y2="939"/>
+    <line class="grid" x1="995" y1="104" x2="995" y2="939"/>
+    <line class="grid" x1="1156" y1="104" x2="1156" y2="939"/>
+    <line class="grid" x1="1317" y1="104" x2="1317" y2="939"/>
+    <line class="grid" x1="1478" y1="104" x2="1478" y2="939"/>
+  </g>
+
+  <g id="bars">
+    <rect class="bar" x="351" y="142" width="1159" height="87" fill="#66c2a5"/>
+    <rect class="bar" x="351" y="277" width="1030" height="87" fill="#ffd92f"/>
+    <rect class="bar" x="351" y="411" width="966" height="88" fill="#e78ac3"/>
+    <rect class="bar" x="351" y="545" width="902" height="88" fill="#a6d854"/>
+    <rect class="bar" x="351" y="679" width="773" height="88" fill="#fc8d62"/>
+    <rect class="bar" x="351" y="814" width="644" height="88" fill="#8da0cb"/>
+  </g>
+
+  <g id="category-labels">
+    <text class="category" x="333" y="197" text-anchor="end">Tool Switching</text>
+    <text class="category" x="333" y="331" text-anchor="end">Version Tracking</text>
+    <text class="category" x="333" y="466" text-anchor="end">Communication Gap</text>
+    <text class="category" x="333" y="600" text-anchor="end">Information Loss</text>
+    <text class="category" x="333" y="735" text-anchor="end">Interruption</text>
+    <text class="category" x="333" y="869" text-anchor="end">Context Confusion</text>
+  </g>
+
+  <g id="value-labels">
+    <text class="value" x="1536" y="193">18</text>
+    <text class="value" x="1408" y="327">16</text>
+    <text class="value" x="1344" y="462">15</text>
+    <text class="value" x="1280" y="596">14</text>
+    <text class="value" x="1151" y="731">12</text>
+    <text class="value" x="1023" y="865">10</text>
+  </g>
+
+  <g id="axes">
+    <line class="axis" x1="351" y1="103" x2="351" y2="939"/>
+    <line class="axis" x1="351" y1="939" x2="1570" y2="939"/>
+
+    <line class="axis" x1="343" y1="185" x2="351" y2="185"/>
+    <line class="axis" x1="343" y1="320" x2="351" y2="320"/>
+    <line class="axis" x1="343" y1="455" x2="351" y2="455"/>
+    <line class="axis" x1="343" y1="589" x2="351" y2="589"/>
+    <line class="axis" x1="343" y1="723" x2="351" y2="723"/>
+    <line class="axis" x1="343" y1="858" x2="351" y2="858"/>
+
+    <line class="axis" x1="351" y1="939" x2="351" y2="950"/>
+    <line class="axis" x1="512" y1="939" x2="512" y2="950"/>
+    <line class="axis" x1="673" y1="939" x2="673" y2="950"/>
+    <line class="axis" x1="834" y1="939" x2="834" y2="950"/>
+    <line class="axis" x1="995" y1="939" x2="995" y2="950"/>
+    <line class="axis" x1="1156" y1="939" x2="1156" y2="950"/>
+    <line class="axis" x1="1317" y1="939" x2="1317" y2="950"/>
+    <line class="axis" x1="1478" y1="939" x2="1478" y2="950"/>
+  </g>
+
+  <g id="x-tick-labels">
+    <text class="tick" x="351" y="980" text-anchor="middle">0.0</text>
+    <text class="tick" x="512" y="980" text-anchor="middle">2.5</text>
+    <text class="tick" x="673" y="980" text-anchor="middle">5.0</text>
+    <text class="tick" x="834" y="980" text-anchor="middle">7.5</text>
+    <text class="tick" x="995" y="980" text-anchor="middle">10.0</text>
+    <text class="tick" x="1156" y="980" text-anchor="middle">12.5</text>
+    <text class="tick" x="1317" y="980" text-anchor="middle">15.0</text>
+    <text class="tick" x="1478" y="980" text-anchor="middle">17.5</text>
+  </g>
+
+  <text class="axis-label" x="960" y="1032" text-anchor="middle">Frequency (n=26)</text>
+</svg>

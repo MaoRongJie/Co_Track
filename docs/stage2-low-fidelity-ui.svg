@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1200" viewBox="0 0 1440 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Co-Track 第二阶段低保真界面图</title>
+  <desc id="desc">基于现有 Co-Track 第二阶段真实界面的低保真线框图，包含纹理智能体侧栏、画布工具栏、UV 绘制画布、3D 联动预览、纹理方案列表、共享和成员面板折叠入口。</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .top { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1; }
+      .panel { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+      .panel-soft { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.2; }
+      .line { stroke: #94a3b8; stroke-width: 1.4; fill: none; }
+      .dash { stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 7 7; fill: none; }
+      .muted { fill: #e2e8f0; stroke: #cbd5e1; stroke-width: 1; }
+      .active { fill: #dbeafe; stroke: #64748b; stroke-width: 1.2; }
+      .button { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 1.2; }
+      .primary { fill: #cbd5e1; stroke: #64748b; stroke-width: 1.2; }
+      .canvas { fill: #ffffff; stroke: #64748b; stroke-width: 1.4; }
+      .text { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #334155; font-size: 16px; }
+      .small { font-size: 13px; fill: #64748b; }
+      .tiny { font-size: 11px; fill: #64748b; letter-spacing: 1px; }
+      .title { font-size: 19px; font-weight: 700; fill: #1e293b; }
+      .section { font-size: 15px; font-weight: 700; fill: #334155; }
+      .label { font-size: 12px; fill: #64748b; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="1200"/>
+
+  <!-- App header -->
+  <rect class="top" x="0.5" y="0.5" width="1439" height="70"/>
+  <text class="title" x="32" y="31">Co-Track 协同涂装设计会议</text>
+  <text class="small" x="32" y="52">第二阶段：个人纹理方案绘制</text>
+
+  <g transform="translate(500 20)">
+    <rect class="active" x="0" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="22" y="20">S1 简报</text>
+    <line class="line" x1="100" y1="15" x2="122" y2="15"/>
+    <rect class="active" x="130" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="151" y="20">S2 设计</text>
+    <line class="line" x1="230" y1="15" x2="252" y2="15"/>
+    <rect class="muted" x="260" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="281" y="20">S3 评审</text>
+    <line class="line" x1="360" y1="15" x2="382" y2="15"/>
+    <rect class="muted" x="390" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="411" y="20">S4 预览</text>
+  </g>
+
+  <g transform="translate(1176 16)">
+    <rect class="button" x="0" y="0" width="40" height="40" rx="10"/>
+    <text class="small" x="11" y="26">设</text>
+    <rect class="button" x="54" y="0" width="116" height="40" rx="12"/>
+    <text class="small" x="80" y="25">返回简报</text>
+    <rect class="primary" x="184" y="0" width="116" height="40" rx="12"/>
+    <text class="small" x="210" y="25">进入评审</text>
+  </g>
+
+  <!-- Left texture planning sidebar -->
+  <g transform="translate(0 70)">
+    <rect class="panel-soft" x="0" y="0" width="384" height="1130"/>
+    <rect class="top" x="0" y="0" width="384" height="72"/>
+    <rect class="primary" x="24" y="18" width="36" height="36" rx="10"/>
+    <text class="section" x="76" y="42">纹理智能体</text>
+    <circle class="top" cx="384" cy="565" r="13"/>
+    <path class="line" d="M389 557 L381 565 L389 573"/>
+
+    <rect class="panel" x="20" y="94" width="344" height="106" rx="16"/>
+    <text class="section" x="40" y="128">需求摘要</text>
+    <rect class="muted" x="40" y="148" width="74" height="24" rx="12"/>
+    <rect class="muted" x="124" y="148" width="96" height="24" rx="12"/>
+    <rect class="muted" x="230" y="148" width="88" height="24" rx="12"/>
+
+    <rect class="panel" x="20" y="218" width="344" height="236" rx="16"/>
+    <text class="section" x="40" y="252">输入</text>
+    <rect class="button" x="260" y="236" width="76" height="28" rx="14"/>
+    <text class="label" x="284" y="255">文档</text>
+    <rect class="panel-soft" x="40" y="280" width="304" height="130" rx="12"/>
+    <line class="line" x1="58" y1="314" x2="308" y2="314"/>
+    <line class="line" x1="58" y1="342" x2="324" y2="342"/>
+    <line class="line" x1="58" y1="370" x2="278" y2="370"/>
+
+    <rect class="panel" x="20" y="472" width="344" height="286" rx="16"/>
+    <text class="section" x="40" y="506">参考图</text>
+    <rect class="button" x="254" y="490" width="82" height="28" rx="14"/>
+    <text class="label" x="278" y="509">上传</text>
+    <rect class="dash" x="40" y="536" width="304" height="84" rx="12"/>
+    <text class="small" x="126" y="584">参考图上传 / 分析</text>
+    <text class="label" x="40" y="654">内容关键词</text>
+    <rect class="muted" x="40" y="672" width="70" height="24" rx="12"/>
+    <rect class="muted" x="120" y="672" width="84" height="24" rx="12"/>
+    <rect class="muted" x="214" y="672" width="78" height="24" rx="12"/>
+    <text class="label" x="40" y="724">风格关键词</text>
+    <rect class="muted" x="40" y="742" width="92" height="24" rx="12"/>
+    <rect class="muted" x="142" y="742" width="88" height="24" rx="12"/>
+
+    <rect class="primary" x="20" y="788" width="344" height="48" rx="24"/>
+    <text class="section" x="154" y="818">生成</text>
+  </g>
+
+  <!-- Center drawing workspace -->
+  <g transform="translate(384 70)">
+    <rect class="bg" x="0" y="0" width="704" height="1130"/>
+    <rect class="top" x="0" y="0" width="704" height="58"/>
+    <g transform="translate(16 12)">
+      <rect class="active" x="0" y="0" width="70" height="34" rx="12"/>
+      <text class="tiny" x="20" y="22">选择</text>
+      <rect class="button" x="80" y="0" width="70" height="34" rx="12"/>
+      <text class="tiny" x="101" y="22">画笔</text>
+      <rect class="button" x="160" y="0" width="70" height="34" rx="12"/>
+      <text class="tiny" x="181" y="22">矩形</text>
+      <rect class="button" x="240" y="0" width="70" height="34" rx="12"/>
+      <text class="tiny" x="261" y="22">椭圆</text>
+      <rect class="button" x="320" y="0" width="70" height="34" rx="12"/>
+      <text class="tiny" x="344" y="22">线</text>
+      <rect class="button" x="400" y="0" width="70" height="34" rx="12"/>
+      <text class="tiny" x="421" y="22">擦除</text>
+      <rect class="button" x="488" y="0" width="34" height="34" rx="10"/>
+      <text class="tiny" x="499" y="22">AI</text>
+      <rect class="button" x="534" y="0" width="58" height="34" rx="10"/>
+      <text class="tiny" x="549" y="22">描边</text>
+      <rect class="button" x="602" y="0" width="58" height="34" rx="10"/>
+      <text class="tiny" x="618" y="22">填充</text>
+    </g>
+
+    <rect class="panel-soft" x="0" y="58" width="704" height="1072"/>
+    <rect class="canvas" x="62" y="186" width="580" height="360" rx="12"/>
+    <text class="section" x="290" y="376">UV 纹理画布</text>
+    <path class="dash" d="M110 300 H594 M110 408 H594 M190 210 V522 M514 210 V522"/>
+    <path class="line" d="M150 457 C245 377, 348 430, 460 340 C504 304, 548 296, 594 308"/>
+    <rect class="top" x="492" y="90" width="150" height="36" rx="10"/>
+    <text class="label" x="514" y="113">应用纹理 / - 100% +</text>
+    <rect class="top" x="36" y="1010" width="190" height="34" rx="9"/>
+    <text class="label" x="58" y="1032">UV 2048 x 1024</text>
+    <rect class="top" x="544" y="12" width="120" height="26" rx="13"/>
+    <text class="label" x="566" y="30">自动保存</text>
+  </g>
+
+  <!-- Right linked 3D preview sidebar -->
+  <g transform="translate(1088 70)">
+    <rect class="top" x="0" y="0" width="352" height="1130"/>
+    <text class="tiny" x="24" y="36">S2</text>
+    <text class="section" x="24" y="62">3D 联动预览</text>
+    <rect class="panel-soft" x="24" y="88" width="304" height="288" rx="16"/>
+    <path class="dash" d="M70 272 C122 178, 226 166, 284 266"/>
+    <rect class="muted" x="108" y="226" width="136" height="42" rx="21"/>
+    <text class="small" x="140" y="253">3D 模型</text>
+    <rect class="top" x="42" y="396" width="268" height="54" rx="14"/>
+    <text class="label" x="60" y="428">网格：-     UV：-</text>
+
+    <text class="section" x="24" y="492">纹理方案</text>
+    <text class="label" x="24" y="518">生成批次 / 手动上传 / 共享导入</text>
+    <g transform="translate(24 536)">
+      <rect class="active" x="0" y="0" width="92" height="92" rx="14"/>
+      <rect class="muted" x="27" y="18" width="38" height="30" rx="8"/>
+      <text class="label" x="24" y="72">方案 A</text>
+      <rect class="panel-soft" x="106" y="0" width="92" height="92" rx="14"/>
+      <rect class="muted" x="133" y="18" width="38" height="30" rx="8"/>
+      <text class="label" x="130" y="72">方案 B</text>
+      <rect class="panel-soft" x="212" y="0" width="92" height="92" rx="14"/>
+      <rect class="muted" x="239" y="18" width="38" height="30" rx="8"/>
+      <text class="label" x="236" y="72">方案 C</text>
+      <rect class="dash" x="0" y="110" width="92" height="92" rx="14"/>
+      <text class="label" x="22" y="162">上传</text>
+    </g>
+
+    <rect class="panel-soft" x="24" y="768" width="304" height="146" rx="16"/>
+    <text class="section" x="44" y="802">共享</text>
+    <rect class="button" x="244" y="784" width="64" height="30" rx="10"/>
+    <text class="label" x="266" y="804">选择</text>
+    <rect class="muted" x="44" y="832" width="112" height="26" rx="13"/>
+    <rect class="muted" x="166" y="832" width="112" height="26" rx="13"/>
+    <line class="line" x1="44" y1="884" x2="290" y2="884"/>
+
+    <circle class="top" cx="0" cy="565" r="13"/>
+    <path class="line" d="M-5 557 L3 565 L-5 573"/>
+  </g>
+
+  <!-- Collapsed participant sidebar handle -->
+  <g transform="translate(1410 635)">
+    <rect class="top" x="-10" y="-50" width="28" height="100" rx="14"/>
+    <path class="line" d="M0 -14 L8 0 L0 14"/>
+  </g>
+
+  <g transform="translate(24 1144)">
+    <rect class="panel-soft" x="0" y="0" width="1392" height="36" rx="8"/>
+    <text class="small" x="18" y="24">低保真说明：第二阶段强调左侧 AI 纹理规划、中心 UV 绘制、右侧 3D 联动预览和候选纹理方案管理的并行工作流。</text>
+  </g>
+</svg>

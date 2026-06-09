@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="540" viewBox="0 0 1120 540" role="img" aria-labelledby="title desc">
+  <title id="title">效果渲染 Agent 信息处理流程</title>
+  <desc id="desc">Co-Track 第四阶段效果渲染 Agent 的信息处理流程。Agent 根据最终方案截图和用户场景描述调用场景图生成模型，并可继续基于场景图调用视频生成模型，后端保存媒体结果并输出展示素材。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#334155"/>
+    </marker>
+    <marker id="plainArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#64748b"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .core { fill: #53689c; stroke: #1f2f55; stroke-width: 1.3; }
+      .input { fill: #f1f5f9; stroke: #64748b; stroke-width: 1.2; }
+      .service { fill: #eef2f7; stroke: #506783; stroke-width: 1.2; }
+      .output { fill: #eef6f5; stroke: #3f7f7a; stroke-width: 1.2; }
+      .model { fill: #f3f0fa; stroke: #8b78b7; stroke-width: 1.2; }
+      .tool { fill: #f5f2ea; stroke: #8a7447; stroke-width: 1.2; }
+      .title { font: 700 28px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 500 14px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #64748b; }
+      .h { font: 700 18px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #111827; }
+      .t { font: 500 13px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #475569; }
+      .small { font: 500 12px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #64748b; }
+      .core-title { font: 700 19px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #ffffff; }
+      .core-text { font: 500 13px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #dbe4f0; }
+      .line { stroke: #334155; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+      .side-line { stroke: #64748b; stroke-width: 1.25; fill: none; marker-end: url(#plainArrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="540"/>
+
+  <text x="64" y="58" class="title">效果渲染 Agent 信息处理流程</text>
+  <text x="64" y="84" class="subtitle">将最终方案的三维预览转化为场景渲染图，并进一步生成展示视频</text>
+
+  <!-- Main flow -->
+  <rect x="48" y="218" width="204" height="126" rx="10" class="input"/>
+  <text x="86" y="260" class="h">输入</text>
+  <text x="86" y="290" class="t">最终方案与预览截图</text>
+  <text x="86" y="316" class="small">场景描述、视频描述、方案名称</text>
+
+  <rect x="322" y="190" width="276" height="182" rx="10" class="core"/>
+  <text x="362" y="242" class="core-title">效果渲染 Agent</text>
+  <text x="362" y="276" class="core-text">组织：场景图生成提示词</text>
+  <text x="362" y="304" class="core-text">保留：车型、涂装、视角</text>
+  <text x="362" y="332" class="core-text">扩展：运行场景与视频镜头</text>
+
+  <rect x="690" y="218" width="204" height="126" rx="10" class="service"/>
+  <text x="728" y="260" class="h">后端保存</text>
+  <text x="728" y="290" class="t">下载与缓存媒体</text>
+  <text x="728" y="316" class="small">写入媒体资源与历史记录</text>
+
+  <rect x="958" y="218" width="132" height="126" rx="10" class="output"/>
+  <text x="988" y="260" class="h">输出</text>
+  <text x="988" y="290" class="t">场景图 / 视频</text>
+  <text x="988" y="316" class="small">预览、展示、导出</text>
+
+  <!-- Model calls owned by agent -->
+  <rect x="290" y="106" width="246" height="62" rx="9" class="model"/>
+  <text x="324" y="134" class="h">调用模型 1</text>
+  <text x="324" y="156" class="small">Seedream 场景图生成</text>
+
+  <rect x="568" y="106" width="246" height="62" rx="9" class="model"/>
+  <text x="602" y="134" class="h">调用模型 2</text>
+  <text x="602" y="156" class="small">Seedance 视频生成</text>
+
+  <!-- Provider -->
+  <rect x="384" y="408" width="224" height="66" rx="9" class="tool"/>
+  <text x="422" y="437" class="h">媒体服务接入</text>
+  <text x="422" y="459" class="small">AiHubMixMediaProvider</text>
+
+  <!-- Lines -->
+  <path d="M252 281 L322 281" class="line"/>
+  <path d="M598 281 L690 281" class="line"/>
+  <path d="M894 281 L958 281" class="line"/>
+
+  <path d="M413 190 L413 168" class="side-line"/>
+  <path d="M439 168 L439 190" class="side-line"/>
+  <path d="M690 168 L540 190" class="side-line"/>
+  <path d="M460 372 L496 408" class="side-line"/>
+</svg>

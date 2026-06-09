@@ -1,0 +1,233 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980">
+  <defs>
+    <style>
+      text {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+        fill: #1f2937;
+      }
+      .title {
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+      .subtitle {
+        font-size: 18px;
+        fill: #64748b;
+      }
+      .section-title {
+        font-size: 21px;
+        font-weight: 800;
+      }
+      .card-title {
+        font-size: 18px;
+        font-weight: 800;
+      }
+      .small-title {
+        font-size: 15px;
+        font-weight: 800;
+      }
+      .body {
+        font-size: 14px;
+        fill: #475569;
+      }
+      .caption {
+        font-size: 13px;
+        fill: #64748b;
+      }
+      .tag {
+        font-size: 12px;
+        font-weight: 800;
+        fill: #ffffff;
+      }
+      .rq {
+        font-size: 12px;
+        font-weight: 800;
+      }
+      .panel {
+        fill: #ffffff;
+        stroke: #cbd5e1;
+        stroke-width: 1.5;
+      }
+      .soft-panel {
+        fill: #f8fafc;
+        stroke: #dbe4ef;
+        stroke-width: 1.3;
+      }
+      .stage {
+        fill: #ffffff;
+        stroke-width: 2;
+      }
+      .stage1 { stroke: #2563eb; }
+      .stage2 { stroke: #0891b2; }
+      .stage3 { stroke: #7c3aed; }
+      .stage4 { stroke: #059669; }
+      .agent {
+        fill: #fff7ed;
+        stroke: #fdba74;
+        stroke-width: 1.5;
+      }
+      .memory {
+        fill: #f1f5f9;
+        stroke: #94a3b8;
+        stroke-width: 1.5;
+      }
+      .arrow {
+        stroke: #64748b;
+        stroke-width: 2.2;
+        fill: none;
+        marker-end: url(#arrowhead);
+      }
+      .arrow-light {
+        stroke: #94a3b8;
+        stroke-width: 1.8;
+        fill: none;
+        marker-end: url(#arrowhead-light);
+      }
+      .dashed {
+        stroke-dasharray: 7 6;
+      }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#64748b" />
+    </marker>
+    <marker id="arrowhead-light" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#94a3b8" />
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.10" />
+    </filter>
+  </defs>
+
+  <rect width="1600" height="980" fill="#f8fafc" />
+
+  <text x="80" y="64" class="title">Co-Track 系统框架图</text>
+  <text x="80" y="96" class="subtitle">面向交通工具外观涂层的约束驱动式 AI 协同设计工作流</text>
+
+  <!-- Left: participants and inputs -->
+  <rect x="70" y="140" width="255" height="610" rx="24" class="panel" filter="url(#shadow)" />
+  <text x="105" y="180" class="section-title">分布式设计团队</text>
+  <text x="105" y="207" class="caption">人类成员在同一协作空间中工作</text>
+
+  <circle cx="128" cy="260" r="25" fill="#2563eb" />
+  <text x="128" y="266" text-anchor="middle" class="tag">H</text>
+  <text x="170" y="256" class="small-title">主持人</text>
+  <text x="170" y="278" class="body">设定目标、推进阶段、锁定结果</text>
+
+  <circle cx="128" cy="345" r="25" fill="#0891b2" />
+  <text x="128" y="351" text-anchor="middle" class="tag">D</text>
+  <text x="170" y="341" class="small-title">设计师</text>
+  <text x="170" y="363" class="body">生成方案、绘制编辑、共享方案</text>
+
+  <circle cx="128" cy="430" r="25" fill="#64748b" />
+  <text x="128" y="436" text-anchor="middle" class="tag">O</text>
+  <text x="170" y="426" class="small-title">观察者 / 评审者</text>
+  <text x="170" y="448" class="body">查看过程、参与讨论与反馈</text>
+
+  <rect x="100" y="510" width="195" height="172" rx="18" class="soft-panel" />
+  <text x="125" y="542" class="small-title">多模态输入</text>
+  <text x="125" y="573" class="body">设计目标文本</text>
+  <text x="125" y="600" class="body">参考图片 / 文档</text>
+  <text x="125" y="627" class="body">产品类别与参数</text>
+  <text x="125" y="654" class="body">三维基准模型</text>
+
+  <!-- Top: collaboration space -->
+  <rect x="375" y="135" width="980" height="86" rx="24" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" filter="url(#shadow)" />
+  <text x="415" y="171" class="section-title">共享协作空间</text>
+  <text x="415" y="199" class="body">实时会议、参与者状态、方案共享、公共评审区与阶段状态共同构成团队的协作觉察界面</text>
+
+  <!-- Main workflow container -->
+  <rect x="375" y="255" width="980" height="495" rx="28" class="panel" filter="url(#shadow)" />
+  <text x="415" y="297" class="section-title">阶段脚手架：从意图到方案收敛</text>
+  <text x="415" y="326" class="caption">系统用阶段结构组织团队注意力，并把 AI 支持嵌入每个关键转换点</text>
+
+  <!-- Stage cards -->
+  <rect x="415" y="370" width="210" height="230" rx="20" class="stage stage1" />
+  <rect x="435" y="390" width="58" height="24" rx="12" fill="#2563eb" />
+  <text x="464" y="407" text-anchor="middle" class="tag">Stage 1</text>
+  <text x="435" y="440" class="card-title">意图外显</text>
+  <text x="435" y="468" class="body">WHY / WHAT / HOW</text>
+  <text x="435" y="494" class="body">Locked Items</text>
+  <text x="435" y="520" class="body">Soft Directions</text>
+  <text x="435" y="546" class="body">基准模型确认与锁定</text>
+  <text x="435" y="578" class="rq" fill="#2563eb">回应 RQ1</text>
+
+  <rect x="655" y="370" width="210" height="230" rx="20" class="stage stage2" />
+  <rect x="675" y="390" width="58" height="24" rx="12" fill="#0891b2" />
+  <text x="704" y="407" text-anchor="middle" class="tag">Stage 2</text>
+  <text x="675" y="440" class="card-title">方案生成与绘制</text>
+  <text x="675" y="468" class="body">AI 纹理方案生成</text>
+  <text x="675" y="494" class="body">UV 画布绘制与编辑</text>
+  <text x="675" y="520" class="body">图案生成与插入</text>
+  <text x="675" y="546" class="body">二维-三维联动预览</text>
+  <text x="675" y="578" class="rq" fill="#0891b2">回应 RQ1 / RQ3</text>
+
+  <rect x="895" y="370" width="210" height="230" rx="20" class="stage stage3" />
+  <rect x="915" y="390" width="58" height="24" rx="12" fill="#7c3aed" />
+  <text x="944" y="407" text-anchor="middle" class="tag">Stage 3</text>
+  <text x="915" y="440" class="card-title">共享评审</text>
+  <text x="915" y="468" class="body">方案发布到公共区</text>
+  <text x="915" y="494" class="body">工程代理评审</text>
+  <text x="915" y="520" class="body">用户 / 乘客代理评审</text>
+  <text x="915" y="546" class="body">评分、评论与风险提示</text>
+  <text x="915" y="578" class="rq" fill="#7c3aed">回应 RQ2</text>
+
+  <rect x="1135" y="370" width="180" height="230" rx="20" class="stage stage4" />
+  <rect x="1155" y="390" width="58" height="24" rx="12" fill="#059669" />
+  <text x="1184" y="407" text-anchor="middle" class="tag">Stage 4</text>
+  <text x="1155" y="440" class="card-title">预览与收敛</text>
+  <text x="1155" y="468" class="body">候选方案对比</text>
+  <text x="1155" y="494" class="body">三维外观预览</text>
+  <text x="1155" y="520" class="body">评审结果汇总</text>
+  <text x="1155" y="546" class="body">导出预览包</text>
+  <text x="1155" y="578" class="rq" fill="#059669">回应 RQ3</text>
+
+  <path d="M625 485 L655 485" class="arrow" />
+  <path d="M865 485 L895 485" class="arrow" />
+  <path d="M1105 485 L1135 485" class="arrow" />
+
+  <!-- Embedded AI agent strip -->
+  <rect x="415" y="635" width="900" height="82" rx="18" class="agent" />
+  <text x="445" y="667" class="small-title">嵌入式 AI 支持</text>
+  <text x="445" y="695" class="body">意图解析 Agent  |  纹理规划 Agent  |  图案生成 Agent  |  工程评审 Agent  |  用户/乘客评审 Agent</text>
+
+  <!-- Right: output -->
+  <rect x="1410" y="255" width="130" height="495" rx="28" class="panel" filter="url(#shadow)" />
+  <text x="1475" y="305" text-anchor="middle" class="section-title">协作产出</text>
+  <rect x="1433" y="348" width="84" height="68" rx="16" fill="#ecfeff" stroke="#67e8f9" />
+  <text x="1475" y="376" text-anchor="middle" class="small-title">涂层</text>
+  <text x="1475" y="398" text-anchor="middle" class="body">方案</text>
+  <rect x="1433" y="445" width="84" height="68" rx="16" fill="#f5f3ff" stroke="#c4b5fd" />
+  <text x="1475" y="473" text-anchor="middle" class="small-title">角色</text>
+  <text x="1475" y="495" text-anchor="middle" class="body">评审</text>
+  <rect x="1433" y="542" width="84" height="68" rx="16" fill="#ecfdf5" stroke="#86efac" />
+  <text x="1475" y="570" text-anchor="middle" class="small-title">三维</text>
+  <text x="1475" y="592" text-anchor="middle" class="body">预览</text>
+  <rect x="1433" y="639" width="84" height="68" rx="16" fill="#fff7ed" stroke="#fdba74" />
+  <text x="1475" y="667" text-anchor="middle" class="small-title">最终</text>
+  <text x="1475" y="689" text-anchor="middle" class="body">决策</text>
+
+  <path d="M1355 500 L1410 500" class="arrow" />
+
+  <!-- Shared memory -->
+  <rect x="220" y="805" width="1135" height="110" rx="26" class="memory" filter="url(#shadow)" />
+  <text x="260" y="845" class="section-title">共享设计记忆</text>
+  <text x="260" y="878" class="body">Brief 约束、统一基准模型、UV 模板、纹理方案、画布编辑、共享结果、角色评审与推荐结论被持续保存并回流到后续阶段</text>
+
+  <rect x="1010" y="828" width="120" height="44" rx="14" fill="#dbeafe" />
+  <text x="1070" y="856" text-anchor="middle" class="small-title">可共享</text>
+  <rect x="1145" y="828" width="120" height="44" rx="14" fill="#ede9fe" />
+  <text x="1205" y="856" text-anchor="middle" class="small-title">可复用</text>
+  <rect x="1280" y="828" width="120" height="44" rx="14" fill="#dcfce7" />
+  <text x="1340" y="856" text-anchor="middle" class="small-title">可追溯</text>
+
+  <!-- Arrows from inputs and memory -->
+  <path d="M325 560 L375 560" class="arrow" />
+  <path d="M520 600 C520 690, 520 740, 610 805" class="arrow-light dashed" />
+  <path d="M760 600 C760 690, 760 740, 790 805" class="arrow-light dashed" />
+  <path d="M1000 600 C1000 690, 1000 740, 970 805" class="arrow-light dashed" />
+  <path d="M1225 600 C1225 690, 1225 740, 1130 805" class="arrow-light dashed" />
+  <path d="M790 805 C790 770, 790 740, 790 717" class="arrow-light dashed" />
+
+  <!-- Design implication footer -->
+  <text x="80" y="945" class="caption">图示重点：Co-Track 不是单一 AI 绘图工具，而是将意图约束、统一基准模型、AI 生成编辑、角色化评审与阶段脚手架整合到同一协作工作流中。</text>
+</svg>

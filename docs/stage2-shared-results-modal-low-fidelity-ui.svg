@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1200" viewBox="0 0 1440 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Co-Track 第二阶段共享方案弹窗低保真界面图</title>
+  <desc id="desc">第二阶段打开他人共享方案弹窗后的低保真线框图：背景为阶段二纹理工作台，中央弹窗左侧列出他人共享方案，右侧显示当前共享方案 3D 预览、场景渲染图生成入口、已生成渲染图缩略图，以及底部导入到我的工作区按钮。</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .top { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1; }
+      .panel { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+      .panel-soft { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.2; }
+      .line { stroke: #94a3b8; stroke-width: 1.4; fill: none; }
+      .dash { stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 7 7; fill: none; }
+      .muted { fill: #e2e8f0; stroke: #cbd5e1; stroke-width: 1; }
+      .active { fill: #dbeafe; stroke: #64748b; stroke-width: 1.2; }
+      .button { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 1.2; }
+      .primary { fill: #cbd5e1; stroke: #64748b; stroke-width: 1.2; }
+      .canvas { fill: #ffffff; stroke: #64748b; stroke-width: 1.4; }
+      .overlay { fill: #0f172a; fill-opacity: 0.32; }
+      .modal { fill: #ffffff; stroke: #64748b; stroke-width: 1.6; }
+      .modal-side { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.2; }
+      .shadow { fill: #0f172a; fill-opacity: 0.10; }
+      .text { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #334155; font-size: 16px; }
+      .small { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 13px; fill: #64748b; }
+      .tiny { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 11px; fill: #64748b; letter-spacing: 1px; }
+      .title { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 19px; font-weight: 700; fill: #1e293b; }
+      .section { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #334155; }
+      .label { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 12px; fill: #64748b; }
+      .key { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 13px; font-weight: 700; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="1200"/>
+
+  <!-- App header -->
+  <rect class="top" x="0.5" y="0.5" width="1439" height="70"/>
+  <text class="title" x="32" y="31">Co-Track 协同涂装设计会议</text>
+  <text class="small" x="32" y="52">第二阶段：查看他人共享方案弹窗</text>
+
+  <g transform="translate(500 20)">
+    <rect class="active" x="0" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="22" y="20">S1 简报</text>
+    <line class="line" x1="100" y1="15" x2="122" y2="15"/>
+    <rect class="active" x="130" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="151" y="20">S2 设计</text>
+    <line class="line" x1="230" y1="15" x2="252" y2="15"/>
+    <rect class="muted" x="260" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="281" y="20">S3 评审</text>
+    <line class="line" x1="360" y1="15" x2="382" y2="15"/>
+    <rect class="muted" x="390" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="411" y="20">S4 预览</text>
+  </g>
+
+  <g transform="translate(1176 16)">
+    <rect class="button" x="0" y="0" width="40" height="40" rx="10"/>
+    <text class="small" x="11" y="26">设</text>
+    <rect class="button" x="54" y="0" width="116" height="40" rx="12"/>
+    <text class="small" x="80" y="25">返回简报</text>
+    <rect class="primary" x="184" y="0" width="116" height="40" rx="12"/>
+    <text class="small" x="210" y="25">进入评审</text>
+  </g>
+
+  <!-- Background Stage 2 workspace, kept visible behind modal -->
+  <g transform="translate(0 70)" opacity="0.74">
+    <rect class="panel-soft" x="0" y="0" width="352" height="1130"/>
+    <rect class="top" x="0" y="0" width="352" height="72"/>
+    <text class="section" x="28" y="44">纹理智能体</text>
+    <rect class="panel" x="20" y="96" width="312" height="118" rx="16"/>
+    <text class="label" x="42" y="132">需求摘要 / 关键词</text>
+    <rect class="muted" x="42" y="154" width="72" height="24" rx="12"/>
+    <rect class="muted" x="124" y="154" width="92" height="24" rx="12"/>
+    <rect class="muted" x="226" y="154" width="72" height="24" rx="12"/>
+    <rect class="panel" x="20" y="234" width="312" height="226" rx="16"/>
+    <text class="label" x="42" y="270">提示词 / 参考图</text>
+    <rect class="panel-soft" x="42" y="294" width="268" height="106" rx="12"/>
+    <line class="line" x1="62" y1="326" x2="276" y2="326"/>
+    <line class="line" x1="62" y1="354" x2="294" y2="354"/>
+    <rect class="primary" x="42" y="414" width="268" height="34" rx="17"/>
+    <text class="small" x="154" y="436">生成</text>
+
+    <g transform="translate(352 0)">
+      <rect class="bg" x="0" y="0" width="736" height="1130"/>
+      <rect class="top" x="0" y="0" width="736" height="58"/>
+      <rect class="active" x="24" y="12" width="68" height="34" rx="12"/>
+      <text class="tiny" x="43" y="34">选择</text>
+      <rect class="button" x="104" y="12" width="68" height="34" rx="12"/>
+      <text class="tiny" x="125" y="34">画笔</text>
+      <rect class="button" x="184" y="12" width="68" height="34" rx="12"/>
+      <text class="tiny" x="205" y="34">矩形</text>
+      <rect class="button" x="264" y="12" width="68" height="34" rx="12"/>
+      <text class="tiny" x="285" y="34">椭圆</text>
+      <rect class="button" x="344" y="12" width="68" height="34" rx="12"/>
+      <text class="tiny" x="368" y="34">线</text>
+      <rect class="panel-soft" x="0" y="58" width="736" height="1072"/>
+      <rect class="canvas" x="74" y="204" width="588" height="370" rx="12"/>
+      <text class="section" x="324" y="398">UV 纹理画布</text>
+      <path class="dash" d="M124 326 H612 M124 438 H612 M208 236 V544 M528 236 V544"/>
+      <path class="line" d="M150 492 C244 408, 360 464, 478 360 C530 316, 578 310, 618 332"/>
+    </g>
+
+    <g transform="translate(1088 0)">
+      <rect class="top" x="0" y="0" width="352" height="1130"/>
+      <text class="tiny" x="24" y="36">S2</text>
+      <text class="section" x="24" y="62">3D 联动预览</text>
+      <rect class="panel-soft" x="24" y="90" width="304" height="280" rx="16"/>
+      <path class="dash" d="M70 266 C126 176, 226 168, 284 260"/>
+      <rect class="muted" x="108" y="222" width="136" height="42" rx="21"/>
+      <text class="small" x="140" y="249">3D 模型</text>
+      <text class="section" x="24" y="430">纹理方案</text>
+      <rect class="active" x="24" y="454" width="92" height="108" rx="14"/>
+      <rect class="panel-soft" x="130" y="454" width="92" height="108" rx="14"/>
+      <rect class="panel-soft" x="236" y="454" width="92" height="108" rx="14"/>
+      <rect class="panel-soft" x="24" y="820" width="304" height="146" rx="16"/>
+      <text class="section" x="44" y="854">共享</text>
+    </g>
+  </g>
+
+  <!-- Modal scrim -->
+  <rect class="overlay" x="0" y="70" width="1440" height="1130"/>
+
+  <!-- Shared results modal -->
+  <rect class="shadow" x="104" y="138" width="1232" height="932" rx="30"/>
+  <g transform="translate(88 118)">
+    <rect class="modal" x="0" y="0" width="1232" height="932" rx="30"/>
+
+    <!-- Left shared scheme list -->
+    <rect class="modal-side" x="0" y="0" width="340" height="932" rx="30"/>
+    <path class="modal-side" d="M310 0 H340 V932 H310 Z"/>
+    <rect class="top" x="0" y="0" width="340" height="82" rx="30"/>
+    <path class="top" d="M0 52 H340 V82 H0 Z"/>
+    <text class="tiny" x="28" y="32">实时同步</text>
+    <text class="section" x="28" y="58">查看 Bob 共享方案</text>
+    <rect class="button" x="284" y="22" width="34" height="34" rx="10"/>
+    <text class="key" x="296" y="45">×</text>
+
+    <g transform="translate(22 108)">
+      <rect class="active" x="0" y="0" width="296" height="112" rx="18"/>
+      <text class="section" x="20" y="32">方案 A：蓝白速度线</text>
+      <text class="label" x="20" y="56">来自 Bob / generated-001</text>
+      <rect class="primary" x="20" y="72" width="74" height="26" rx="13"/>
+      <text class="tiny" x="38" y="90">已选择</text>
+      <rect class="muted" x="210" y="72" width="66" height="26" rx="13"/>
+      <text class="tiny" x="230" y="90">高亮</text>
+
+      <rect class="panel" x="0" y="132" width="296" height="112" rx="18"/>
+      <text class="section" x="20" y="164">方案 B：雪花纹理</text>
+      <text class="label" x="20" y="188">来自 Bob / generated-002</text>
+      <rect class="button" x="20" y="204" width="62" height="26" rx="13"/>
+      <text class="tiny" x="40" y="222">选择</text>
+
+      <rect class="panel" x="0" y="264" width="296" height="112" rx="18"/>
+      <text class="section" x="20" y="296">方案 C：银灰渐变</text>
+      <text class="label" x="20" y="320">来自 Bob / generated-003</text>
+      <rect class="button" x="20" y="336" width="62" height="26" rx="13"/>
+      <text class="tiny" x="40" y="354">选择</text>
+
+      <rect class="panel" x="0" y="396" width="296" height="112" rx="18"/>
+      <text class="section" x="20" y="428">方案 D：深蓝腰线</text>
+      <text class="label" x="20" y="452">来自 Bob / uploaded-004</text>
+      <rect class="button" x="20" y="468" width="62" height="26" rx="13"/>
+      <text class="tiny" x="40" y="486">选择</text>
+    </g>
+
+    <g transform="translate(22 826)">
+      <rect class="primary" x="0" y="0" width="296" height="52" rx="18"/>
+      <text class="section" x="82" y="33">添加到我的工作区</text>
+      <text class="label" x="94" y="74">所选共享方案会变成自己的导入方案</text>
+    </g>
+
+    <!-- Right preview + scene render -->
+    <g transform="translate(340 0)">
+      <rect class="top" x="0" y="0" width="892" height="82" rx="30"/>
+      <path class="top" d="M0 52 H892 V82 H0 Z"/>
+      <text class="tiny" x="34" y="32">预览</text>
+      <text class="section" x="34" y="58">当前高亮：方案 A / 蓝白速度线</text>
+      <rect class="button" x="720" y="22" width="138" height="34" rx="17"/>
+      <text class="small" x="752" y="44">同步最新</text>
+
+      <g transform="translate(34 112)">
+        <rect class="panel-soft" x="0" y="0" width="824" height="472" rx="24"/>
+        <rect class="canvas" x="22" y="22" width="780" height="428" rx="20"/>
+        <path class="dash" d="M140 330 C244 172, 566 164, 684 318"/>
+        <rect class="muted" x="322" y="274" width="180" height="54" rx="27"/>
+        <text class="section" x="374" y="308">共享 3D 预览</text>
+        <rect class="top" x="44" y="44" width="148" height="34" rx="12"/>
+        <text class="label" x="68" y="66">Orbit / 截图视角</text>
+        <rect class="top" x="628" y="44" width="138" height="34" rx="12"/>
+        <text class="label" x="652" y="66">非远程 Meshy</text>
+      </g>
+
+      <g transform="translate(34 612)">
+        <rect class="panel" x="0" y="0" width="824" height="246" rx="24"/>
+        <text class="tiny" x="24" y="32">场景渲染图</text>
+        <text class="section" x="24" y="58">截图共享预览并生成场景图</text>
+        <text class="label" x="24" y="82">生成结果按 resultId 保存，阶段三和阶段四可继续展示。</text>
+
+        <rect class="panel-soft" x="24" y="104" width="486" height="88" rx="16"/>
+        <text class="label" x="44" y="132">场景描述 Prompt</text>
+        <line class="line" x1="44" y1="156" x2="468" y2="156"/>
+        <line class="line" x1="44" y1="178" x2="390" y2="178"/>
+        <rect class="primary" x="530" y="126" width="118" height="46" rx="18"/>
+        <text class="section" x="574" y="155">生成</text>
+
+        <g transform="translate(674 94)">
+          <text class="tiny" x="0" y="0">已生成</text>
+          <rect class="panel-soft" x="0" y="18" width="64" height="54" rx="10"/>
+          <path class="dash" d="M12 55 C22 32, 48 34, 56 54"/>
+          <rect class="active" x="74" y="18" width="64" height="54" rx="10"/>
+          <path class="dash" d="M86 55 C98 31, 124 34, 130 54"/>
+          <rect class="panel-soft" x="0" y="82" width="64" height="54" rx="10"/>
+          <path class="dash" d="M12 119 C24 94, 48 98, 56 118"/>
+          <rect class="dash" x="74" y="82" width="64" height="54" rx="10"/>
+          <text class="tiny" x="94" y="113">空</text>
+        </g>
+
+        <rect class="panel-soft" x="24" y="208" width="776" height="22" rx="11"/>
+        <text class="tiny" x="40" y="224">错误/加载状态区域：生成中、远程预览不可截图、加载历史渲染图失败等</text>
+      </g>
+    </g>
+  </g>
+
+  <g transform="translate(24 1144)">
+    <rect class="panel-soft" x="0" y="0" width="1392" height="36" rx="8"/>
+    <text class="small" x="18" y="24">低保真说明：该状态强调“他人共享方案列表 + 共享 3D 预览 + 场景渲染图生成 + 导入工作区”的弹窗工作流。</text>
+  </g>
+</svg>

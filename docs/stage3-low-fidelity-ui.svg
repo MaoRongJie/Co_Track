@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1200" viewBox="0 0 1440 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Co-Track 第三阶段低保真界面图</title>
+  <desc id="desc">基于当前 Co-Track 第三阶段真实界面的低保真线框图，包含左侧方案分组列表、选中方案信息、场景渲染图入口、判断摘要、3D 评审预览、灯光控制、右侧乘客/工程评审面板，以及打开后的场景渲染图窗口。</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .top { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1; }
+      .panel { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+      .panel-soft { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.2; }
+      .line { stroke: #94a3b8; stroke-width: 1.4; fill: none; }
+      .dash { stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 7 7; fill: none; }
+      .muted { fill: #e2e8f0; stroke: #cbd5e1; stroke-width: 1; }
+      .active { fill: #dbeafe; stroke: #64748b; stroke-width: 1.2; }
+      .button { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 1.2; }
+      .primary { fill: #cbd5e1; stroke: #64748b; stroke-width: 1.2; }
+      .overlay { fill: #0f172a; fill-opacity: 0.30; }
+      .modal { fill: #ffffff; stroke: #64748b; stroke-width: 1.6; }
+      .shadow { fill: #0f172a; fill-opacity: 0.10; }
+      .text { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #334155; font-size: 16px; }
+      .small { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 13px; fill: #64748b; }
+      .tiny { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 11px; fill: #64748b; letter-spacing: 1px; }
+      .title { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 19px; font-weight: 700; fill: #1e293b; }
+      .section { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #334155; }
+      .label { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 12px; fill: #64748b; }
+      .key { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 13px; font-weight: 700; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="1200"/>
+
+  <!-- App header -->
+  <rect class="top" x="0.5" y="0.5" width="1439" height="70"/>
+  <text class="title" x="32" y="31">Co-Track 协同涂装设计会议</text>
+  <text class="small" x="32" y="52">第三阶段：方案评审 / 场景渲染图窗口</text>
+
+  <g transform="translate(500 20)">
+    <rect class="active" x="0" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="22" y="20">S1 简报</text>
+    <line class="line" x1="100" y1="15" x2="122" y2="15"/>
+    <rect class="active" x="130" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="151" y="20">S2 设计</text>
+    <line class="line" x1="230" y1="15" x2="252" y2="15"/>
+    <rect class="active" x="260" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="281" y="20">S3 评审</text>
+    <line class="line" x1="360" y1="15" x2="382" y2="15"/>
+    <rect class="muted" x="390" y="0" width="92" height="30" rx="15"/>
+    <text class="tiny" x="411" y="20">S4 预览</text>
+  </g>
+
+  <g transform="translate(1176 16)">
+    <rect class="button" x="0" y="0" width="40" height="40" rx="10"/>
+    <text class="small" x="11" y="26">设</text>
+    <rect class="button" x="54" y="0" width="116" height="40" rx="12"/>
+    <text class="small" x="80" y="25">返回设计</text>
+    <rect class="primary" x="184" y="0" width="116" height="40" rx="12"/>
+    <text class="small" x="210" y="25">最终预览</text>
+  </g>
+
+  <!-- Stage 3 base view -->
+  <g transform="translate(0 70)" opacity="0.78">
+    <!-- Scheme list -->
+    <rect class="top" x="0" y="0" width="288" height="1130"/>
+    <rect class="top" x="0" y="0" width="288" height="82"/>
+    <text class="tiny" x="28" y="32">S3</text>
+    <text class="section" x="28" y="58">评审</text>
+
+    <g transform="translate(18 106)">
+      <text class="tiny" x="0" y="0">分组</text>
+      <text class="section" x="0" y="25">流线科技组</text>
+      <text class="label" x="0" y="47">3 个方案 | Alice / Bob</text>
+      <rect class="active" x="0" y="68" width="252" height="116" rx="16"/>
+      <rect class="muted" x="18" y="94" width="136" height="18" rx="9"/>
+      <rect class="muted" x="18" y="124" width="76" height="16" rx="8"/>
+      <rect class="muted" x="18" y="152" width="88" height="22" rx="11"/>
+      <rect class="button" x="202" y="88" width="34" height="26" rx="13"/>
+      <text class="label" x="214" y="106">★</text>
+
+      <rect class="panel-soft" x="0" y="204" width="252" height="116" rx="16"/>
+      <rect class="muted" x="18" y="230" width="118" height="18" rx="9"/>
+      <rect class="muted" x="18" y="260" width="88" height="16" rx="8"/>
+      <rect class="muted" x="18" y="288" width="108" height="22" rx="11"/>
+
+      <rect class="panel-soft" x="0" y="340" width="252" height="116" rx="16"/>
+      <rect class="muted" x="18" y="366" width="148" height="18" rx="9"/>
+      <rect class="muted" x="18" y="396" width="92" height="16" rx="8"/>
+      <rect class="muted" x="18" y="424" width="94" height="22" rx="11"/>
+
+      <text class="tiny" x="0" y="506">分组</text>
+      <text class="section" x="0" y="531">共享导入组</text>
+      <text class="label" x="0" y="553">2 个方案 | Bob</text>
+      <rect class="panel-soft" x="0" y="574" width="252" height="96" rx="16"/>
+      <rect class="muted" x="18" y="600" width="126" height="18" rx="9"/>
+      <rect class="muted" x="18" y="630" width="74" height="16" rx="8"/>
+      <rect class="panel-soft" x="0" y="690" width="252" height="96" rx="16"/>
+      <rect class="muted" x="18" y="716" width="142" height="18" rx="9"/>
+      <rect class="muted" x="18" y="746" width="84" height="16" rx="8"/>
+    </g>
+
+    <rect class="button" x="18" y="1046" width="252" height="42" rx="10"/>
+    <text class="small" x="112" y="1073">返回</text>
+
+    <!-- Main review area -->
+    <rect class="bg" x="288" y="0" width="1152" height="1130"/>
+
+    <g transform="translate(320 34)">
+      <text class="tiny" x="0" y="0">已选择</text>
+      <text class="title" x="0" y="34">方案 A / 流线科技涂装</text>
+      <text class="small" x="0" y="58">流线科技组 | 设计师 Alice</text>
+      <rect class="active" x="640" y="6" width="132" height="34" rx="17"/>
+      <text class="small" x="670" y="28">场景渲染图</text>
+      <circle class="top" cx="760" cy="22" r="10"/>
+      <text class="tiny" x="756" y="26">3</text>
+      <rect class="button" x="786" y="6" width="88" height="34" rx="17"/>
+      <text class="small" x="814" y="28">刷新</text>
+      <rect class="primary" x="888" y="6" width="132" height="34" rx="17"/>
+      <text class="small" x="920" y="28">建议推进</text>
+    </g>
+
+    <rect class="panel" x="320" y="124" width="1048" height="120" rx="24"/>
+    <text class="tiny" x="348" y="158">判断</text>
+    <line class="line" x1="348" y1="188" x2="1296" y2="188"/>
+    <line class="line" x1="348" y1="216" x2="1176" y2="216"/>
+
+    <rect class="panel" x="320" y="272" width="1048" height="650" rx="28"/>
+    <path class="dash" d="M454 740 C628 500, 894 492, 1062 724"/>
+    <rect class="muted" x="646" y="648" width="240" height="62" rx="31"/>
+    <text class="section" x="728" y="686">3D 评审预览</text>
+
+    <rect class="top" x="344" y="296" width="292" height="176" rx="18"/>
+    <text class="section" x="368" y="330">灯光</text>
+    <rect class="active" x="368" y="352" width="72" height="26" rx="8"/>
+    <text class="label" x="388" y="370">日光</text>
+    <rect class="button" x="450" y="352" width="72" height="26" rx="8"/>
+    <text class="label" x="470" y="370">阴天</text>
+    <rect class="button" x="532" y="352" width="72" height="26" rx="8"/>
+    <text class="label" x="552" y="370">影棚</text>
+    <line class="line" x1="368" y1="418" x2="604" y2="418"/>
+    <rect class="muted" x="368" y="444" width="74" height="22" rx="11"/>
+    <rect class="muted" x="452" y="444" width="54" height="22" rx="11"/>
+
+    <rect class="top" x="1000" y="272" width="368" height="650"/>
+    <text class="section" x="1028" y="314">评审面板</text>
+    <rect class="active" x="1028" y="340" width="132" height="36" rx="16"/>
+    <text class="small" x="1070" y="363">乘客</text>
+    <rect class="button" x="1170" y="340" width="132" height="36" rx="16"/>
+    <text class="small" x="1212" y="363">工程</text>
+    <rect class="panel-soft" x="1028" y="404" width="312" height="126" rx="18"/>
+    <text class="label" x="1050" y="436">总体评价</text>
+    <line class="line" x1="1050" y1="466" x2="1238" y2="466"/>
+    <rect class="muted" x="1260" y="430" width="58" height="58" rx="14"/>
+    <text class="small" x="1274" y="466">8.6</text>
+    <rect class="panel-soft" x="1028" y="558" width="312" height="168" rx="18"/>
+    <text class="label" x="1050" y="590">雷达 / 指标</text>
+    <circle class="dash" cx="1184" cy="652" r="52"/>
+    <path class="line" d="M1184 598 L1230 632 L1214 702 L1158 702 L1138 636 Z"/>
+    <rect class="panel-soft" x="1028" y="754" width="312" height="124" rx="18"/>
+    <text class="label" x="1050" y="786">优点 / 问题 / 建议</text>
+    <line class="line" x1="1050" y1="816" x2="1318" y2="816"/>
+    <line class="line" x1="1050" y1="846" x2="1272" y2="846"/>
+
+    <rect class="panel" x="320" y="948" width="338" height="82" rx="20"/>
+    <text class="section" x="346" y="990">材料成本 / 工时</text>
+    <rect class="panel" x="676" y="948" width="338" height="82" rx="20"/>
+    <text class="section" x="702" y="990">风险 / 耐久</text>
+    <rect class="panel" x="1030" y="948" width="338" height="82" rx="20"/>
+    <text class="section" x="1056" y="990">推荐结论</text>
+  </g>
+
+  <!-- Collapsed participant handle -->
+  <g transform="translate(1410 635)" opacity="0.78">
+    <rect class="top" x="-10" y="-50" width="28" height="100" rx="14"/>
+    <path class="line" d="M0 -14 L8 0 L0 14"/>
+  </g>
+
+  <!-- Scene render modal open state -->
+  <rect class="overlay" x="0" y="70" width="1440" height="1130"/>
+  <rect class="shadow" x="238" y="164" width="964" height="812" rx="30"/>
+  <g transform="translate(220 144)">
+    <rect class="modal" x="0" y="0" width="1000" height="812" rx="30"/>
+    <rect class="top" x="0" y="0" width="1000" height="98" rx="30"/>
+    <path class="top" d="M0 64 H1000 V98 H0 Z"/>
+    <text class="tiny" x="34" y="34">场景渲染图</text>
+    <text class="title" x="34" y="66">按方案查看已生成图片</text>
+    <text class="small" x="292" y="66">显示阶段二和阶段四保存到当前会议的渲染图</text>
+    <rect class="button" x="850" y="28" width="78" height="36" rx="12"/>
+    <text class="small" x="876" y="51">刷新</text>
+    <rect class="button" x="940" y="28" width="36" height="36" rx="12"/>
+    <text class="key" x="953" y="52">×</text>
+
+    <rect class="panel-soft" x="0" y="98" width="1000" height="714"/>
+
+    <g transform="translate(40 134)">
+      <rect class="panel" x="0" y="0" width="920" height="250" rx="24"/>
+      <text class="section" x="26" y="38">流线科技组</text>
+      <text class="label" x="26" y="62">Alice / Bob | 5 张</text>
+      <rect class="muted" x="820" y="28" width="46" height="28" rx="14"/>
+      <text class="label" x="835" y="47">图</text>
+
+      <text class="key" x="26" y="104">方案 A / 流线科技涂装</text>
+      <rect class="muted" x="818" y="82" width="54" height="24" rx="12"/>
+      <text class="tiny" x="834" y="99">3张</text>
+      <g transform="translate(26 124)">
+        <rect class="panel-soft" x="0" y="0" width="192" height="94" rx="16"/>
+        <path class="dash" d="M34 70 C56 22, 136 22, 160 70"/>
+        <rect class="panel-soft" x="214" y="0" width="192" height="94" rx="16"/>
+        <path class="dash" d="M248 70 C272 24, 350 22, 374 70"/>
+        <rect class="panel-soft" x="428" y="0" width="192" height="94" rx="16"/>
+        <path class="dash" d="M462 70 C486 24, 562 24, 590 70"/>
+        <rect class="dash" x="642" y="0" width="192" height="94" rx="16"/>
+        <text class="tiny" x="706" y="52">更多历史</text>
+      </g>
+    </g>
+
+    <g transform="translate(40 410)">
+      <rect class="panel" x="0" y="0" width="920" height="234" rx="24"/>
+      <text class="section" x="26" y="38">共享导入组</text>
+      <text class="label" x="26" y="62">Bob | 2 张</text>
+      <rect class="muted" x="820" y="28" width="46" height="28" rx="14"/>
+      <text class="label" x="835" y="47">图</text>
+
+      <text class="key" x="26" y="104">方案 D / 深蓝腰线</text>
+      <rect class="muted" x="818" y="82" width="54" height="24" rx="12"/>
+      <text class="tiny" x="834" y="99">2张</text>
+      <g transform="translate(26 124)">
+        <rect class="panel-soft" x="0" y="0" width="192" height="94" rx="16"/>
+        <path class="dash" d="M34 70 C58 22, 136 24, 160 70"/>
+        <rect class="panel-soft" x="214" y="0" width="192" height="94" rx="16"/>
+        <path class="dash" d="M248 70 C276 22, 350 24, 374 70"/>
+        <rect class="dash" x="428" y="0" width="192" height="94" rx="16"/>
+        <text class="tiny" x="500" y="52">空位</text>
+        <rect class="dash" x="642" y="0" width="192" height="94" rx="16"/>
+        <text class="tiny" x="714" y="52">空位</text>
+      </g>
+    </g>
+
+    <g transform="translate(40 678)">
+      <rect class="panel-soft" x="0" y="0" width="920" height="80" rx="20"/>
+      <rect class="muted" x="24" y="24" width="44" height="32" rx="10"/>
+      <text class="section" x="92" y="34">空状态 / 加载状态</text>
+      <text class="label" x="92" y="56">如果暂无渲染图，窗口显示“暂无渲染图”；加载时显示 spinner 和提示。</text>
+    </g>
+  </g>
+
+  <g transform="translate(24 1144)">
+    <rect class="panel-soft" x="0" y="0" width="1392" height="36" rx="8"/>
+    <text class="small" x="18" y="24">低保真说明：当前第三阶段包含方案分组评审、3D 预览与右侧评审指标，并新增“场景渲染图”窗口用于按方案浏览历史渲染图。</text>
+  </g>
+</svg>

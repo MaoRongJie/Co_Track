@@ -8,6 +8,8 @@ interface ModelPreviewPanelProps {
   title?: string;
   subtitle?: string | null;
   loading?: boolean;
+  framed?: boolean;
+  previewClassName?: string;
 }
 
 const PreviewModel: React.FC<{ modelUrl: string }> = ({ modelUrl }) => {
@@ -28,41 +30,75 @@ const PreviewEmptyState: React.FC<{ title: string; subtitle: string }> = ({ titl
     </div>
     <div>
       <p className="text-sm font-semibold text-slate-700">{title}</p>
-      <p className="mt-1 text-xs text-slate-500">{subtitle}</p>
+      {subtitle ? <p className="mt-1 text-xs text-slate-500">{subtitle}</p> : null}
     </div>
   </div>
 );
 
+class PreviewErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback: React.ReactNode; resetKey: string | null },
+  { hasError: boolean; resetKey: string | null }
+> {
+  state = { hasError: false, resetKey: this.props.resetKey };
+
+  static getDerivedStateFromError(): { hasError: boolean } {
+    return { hasError: true };
+  }
+
+  static getDerivedStateFromProps(
+    props: { resetKey: string | null },
+    state: { hasError: boolean; resetKey: string | null },
+  ): { hasError: boolean; resetKey: string | null } | null {
+    if (props.resetKey !== state.resetKey) {
+      return { hasError: false, resetKey: props.resetKey };
+    }
+    return null;
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
 const ModelPreviewPanel: React.FC<ModelPreviewPanelProps> = ({
   modelUrl,
-  title = 'Base Model Preview',
+  title = '基础模型预览',
   subtitle,
   loading = false,
+  framed = true,
+  previewClassName,
 }) => {
   const fallbackSubtitle =
-    subtitle ?? (loading ? 'The uploaded model is being processed and prepared for UV work.' : 'Choose a GLB/GLTF model to preview it here.');
-
-  return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-        <div>
-          <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
-          <p className="mt-1 text-xs text-slate-500">{fallbackSubtitle}</p>
-        </div>
-        {loading ? (
-          <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
-            <LoaderCircle size={13} className="animate-spin" />
-            Processing
-          </span>
-        ) : null}
+    subtitle ?? (loading ? '处理中...' : 'GLB / GLTF');
+  const previewClass = previewClassName ?? 'relative h-80 bg-gradient-to-br from-slate-100 via-white to-blue-50';
+  const header = (
+    <div className={`flex items-center justify-between ${framed ? 'border-b border-slate-200 px-4 py-3' : ''}`}>
+      <div>
+        <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
+        {fallbackSubtitle ? <p className="mt-1 text-xs text-slate-500">{fallbackSubtitle}</p> : null}
       </div>
-
-      <div className="relative h-80 bg-gradient-to-br from-slate-100 via-white to-blue-50">
-        {!modelUrl ? (
-          <PreviewEmptyState title="Preview will appear here" subtitle={fallbackSubtitle} />
-        ) : (
-          <Suspense fallback={<PreviewEmptyState title="Loading 3D preview" subtitle="Rendering the uploaded model in the browser." />}>
-            <Canvas camera={{ position: [3.6, 2.2, 4.6], fov: 42 }}>
+      {loading ? (
+        <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+          <LoaderCircle size={13} className="animate-spin" />
+          处理中
+        </span>
+      ) : null}
+    </div>
+  );
+  const preview = (
+    <div className={previewClass}>
+      {!modelUrl ? (
+        <PreviewEmptyState title="暂无预览" subtitle={fallbackSubtitle} />
+      ) : (
+        <PreviewErrorBoundary
+          resetKey={modelUrl}
+          fallback={<PreviewEmptyState title="模型加载失败" subtitle="请重新上传 GLB / GLTF 文件。" />}
+        >
+          <Suspense fallback={<PreviewEmptyState title="加载中..." subtitle="" />}>
+            <Canvas key={modelUrl} camera={{ position: [3.6, 2.2, 4.6], fov: 42 }}>
               <color attach="background" args={['#f8fafc']} />
               <ambientLight intensity={0.95} />
               <directionalLight intensity={1.15} position={[4, 7, 5]} />
@@ -72,8 +108,24 @@ const ModelPreviewPanel: React.FC<ModelPreviewPanelProps> = ({
               <OrbitControls makeDefault enablePan enableRotate enableZoom />
             </Canvas>
           </Suspense>
-        )}
+        </PreviewErrorBoundary>
+      )}
+    </div>
+  );
+
+  if (!framed) {
+    return (
+      <div>
+        {header}
+        {preview}
       </div>
+    );
+  }
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      {header}
+      {preview}
     </div>
   );
 };

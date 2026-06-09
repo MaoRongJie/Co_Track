@@ -42,8 +42,20 @@ class Settings(BaseSettings):
     openai_base_url: str = "https://api.openai.com/v1"
     openai_text_model: str = "gpt-4.1-free"
     openai_vision_model: str = "gpt-4.1-free"
+    openai_review_model: str = "gpt-4o"
     openai_image_model: str = "gpt-image-1"
     openai_timeout_ms: int = 45000
+    pattern_provider: str = "openai_compatible"
+    pattern_api_key: str = ""
+    pattern_base_url: str = ""
+    pattern_text_model: str = ""
+    pattern_vision_model: str = ""
+    pattern_image_model: str = ""
+    pattern_timeout_ms: int = 0
+
+    aihubmix_api_key: str = ""
+    aihubmix_base_url: str = "https://aihubmix.com/v1"
+    aihubmix_poll_timeout_sec: int = 600
 
     tripo_api_key: str = ""
     tripo_base_url: str = "https://api.tripo3d.ai/v2"

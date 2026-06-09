@@ -21,18 +21,22 @@ def build_fallback_model_generation_plan(
     brief_json: dict[str, Any] | None,
 ) -> ThreeDModelGenerationPlan:
     _ = product_profile
-    theme = "industrial appearance"
+    theme = "工业外观"
     if isinstance(brief_json, dict):
         raw_theme = brief_json.get("theme")
         if isinstance(raw_theme, str) and raw_theme.strip():
             theme = raw_theme.strip()
+        elif isinstance(brief_json.get("why"), dict):
+            core_experience = brief_json["why"].get("coreExperienceIntent")
+            if isinstance(core_experience, str) and core_experience.strip():
+                theme = core_experience.strip()
 
     prompt = (
-        "Create an approximate industrial product reference model for collaborative coating design. "
-        f"Product category: {product_category}. Theme: {theme}. "
-        "Prioritize simple topology and UV stability."
+        "请为协同涂层设计创建一个近似的工业产品参考模型。"
+        f"产品类别：{product_category}。主题：{theme}。"
+        "优先保证简单拓扑和 UV 稳定性。"
     )
-    negative_prompt = "No text logo, no interior details, avoid tiny parts."
+    negative_prompt = "不要出现文字标识或内部细节，避免细小零件。"
 
     return ThreeDModelGenerationPlan(
         provider_route="fallback",
@@ -73,4 +77,3 @@ async def run_stage2_plan_3d_model(
         brief_json=brief_json,
         provider_availability=provider_availability,
     )
-

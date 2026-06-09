@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-labelledby="title desc">
+  <title id="title">Co-Track 前端技术栈框架图</title>
+  <desc id="desc">简洁展示 Co-Track 前端技术栈：React、TypeScript、Fabric.js、Three.js、React Three Fiber、Socket.IO Client 和 WebRTC。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .card { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.2; }
+      .core { fill: #0f172a; stroke: #0f172a; stroke-width: 1.2; }
+      .module-a { fill: #f1f5f9; stroke: #64748b; stroke-width: 1.2; }
+      .module-b { fill: #eef6f5; stroke: #3f7f7a; stroke-width: 1.2; }
+      .module-c { fill: #f3f0fa; stroke: #6d5a9c; stroke-width: 1.2; }
+      .module-d { fill: #f5f2ea; stroke: #8a7447; stroke-width: 1.2; }
+      .backend { fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-dasharray: 8 6; }
+      .title { font: 700 28px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 500 14px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #64748b; }
+      .core-title { font: 700 23px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #ffffff; }
+      .core-text { font: 500 13px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #cbd5e1; }
+      .h { font: 700 18px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #111827; }
+      .t { font: 500 13px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #475569; }
+      .small { font: 500 12px "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif; fill: #64748b; }
+      .line { stroke: #334155; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="620"/>
+
+  <text x="64" y="58" class="title">Co-Track 前端技术栈框架</text>
+  <text x="64" y="84" class="subtitle">阶段化界面、二维绘制、三维预览与实时协作的前端实现结构</text>
+
+  <!-- Core -->
+  <rect x="280" y="125" width="560" height="92" rx="10" class="core"/>
+  <text x="360" y="166" class="core-title">React + TypeScript</text>
+  <text x="360" y="193" class="core-text">组件化界面组织 · 类型化数据约束</text>
+
+  <!-- Modules -->
+  <rect x="80" y="290" width="220" height="118" rx="10" class="module-a"/>
+  <text x="112" y="330" class="h">阶段化界面</text>
+  <text x="112" y="360" class="t">入口 / S1 / S2 / S3 / S4</text>
+  <text x="112" y="385" class="small">组织协作流程</text>
+
+  <rect x="330" y="290" width="220" height="118" rx="10" class="module-b"/>
+  <text x="362" y="330" class="h">二维绘制</text>
+  <text x="362" y="360" class="t">Fabric.js</text>
+  <text x="362" y="385" class="small">UV 画布 · 图案编辑</text>
+
+  <rect x="580" y="290" width="220" height="118" rx="10" class="module-c"/>
+  <text x="612" y="330" class="h">三维预览</text>
+  <text x="612" y="360" class="t">Three.js / R3F</text>
+  <text x="612" y="385" class="small">GLB 模型 · 视角灯光</text>
+
+  <rect x="830" y="290" width="220" height="118" rx="10" class="module-d"/>
+  <text x="862" y="330" class="h">实时协作</text>
+  <text x="862" y="360" class="t">Socket.IO / WebRTC</text>
+  <text x="862" y="385" class="small">状态同步 · 音视频沟通</text>
+
+  <!-- Backend -->
+  <rect x="220" y="485" width="680" height="72" rx="10" class="backend"/>
+  <text x="466" y="515" class="h">后端服务接口</text>
+  <text x="414" y="542" class="small">REST API · Socket.IO 事件 · WebRTC 信令</text>
+
+  <!-- Lines -->
+  <path d="M560 217 L560 250" class="line"/>
+  <path d="M560 250 L190 250 L190 290" class="line"/>
+  <path d="M560 250 L440 250 L440 290" class="line"/>
+  <path d="M560 250 L690 250 L690 290" class="line"/>
+  <path d="M560 250 L940 250 L940 290" class="line"/>
+
+  <path d="M190 408 L190 450 L560 450 L560 485" class="line"/>
+  <path d="M440 408 L440 450 L560 450" class="line"/>
+  <path d="M690 408 L690 450 L560 450" class="line"/>
+  <path d="M940 408 L940 450 L560 450" class="line"/>
+</svg>

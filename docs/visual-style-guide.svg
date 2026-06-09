@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="860" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc">
+  <title id="title">Co-Track 简化视觉规范图</title>
+  <desc id="desc">用主题色、辅助色、点缀色和简化字体层级说明 Co-Track 当前网页视觉规范。</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="22" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <linearGradient id="pageBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="50%" stop-color="#eff6ff"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <style>
+      text {
+        font-family: Inter, "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      }
+      .h1 { font-size: 42px; font-weight: 800; fill: #0f172a; letter-spacing: -0.02em; }
+      .h2 { font-size: 24px; font-weight: 800; fill: #0f172a; }
+      .body { font-size: 15px; font-weight: 500; fill: #475569; }
+      .label { font-size: 13px; font-weight: 800; fill: #64748b; letter-spacing: 0.12em; }
+      .small { font-size: 12px; font-weight: 600; fill: #64748b; }
+      .white { fill: #ffffff; }
+      .dark { fill: #0f172a; }
+      .muted { fill: #64748b; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="860" fill="url(#pageBg)"/>
+
+  <g transform="translate(64 54)">
+    <text class="label" x="0" y="0">CO-TRACK VISUAL GUIDE</text>
+    <text class="h1" x="0" y="54">简化视觉规范</text>
+    <text class="body" x="0" y="88">把当前网页视觉压缩为三类颜色、一个使用比例图和四档字体层级。</text>
+  </g>
+
+  <g transform="translate(64 160)">
+    <rect width="1072" height="360" rx="30" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <text class="h2" x="36" y="54">色彩使用比例</text>
+    <text class="body" x="36" y="84">按界面可见面积估算：大部分是白色与灰阶，蓝色只用于关键操作和当前状态，语义色保持少量点缀。</text>
+
+    <g transform="translate(36 124)">
+      <rect x="0" y="0" width="640" height="172" rx="20" fill="#f8fafc" stroke="#e2e8f0"/>
+      <rect x="0" y="0" width="640" height="86" rx="20" fill="#ffffff"/>
+      <rect x="0" y="76" width="640" height="96" rx="20" fill="#f1f5f9"/>
+      <rect x="22" y="22" width="170" height="42" rx="14" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect x="214" y="22" width="110" height="42" rx="14" fill="#e2e8f0"/>
+      <rect x="346" y="22" width="72" height="42" rx="14" fill="#cbd5e1"/>
+      <text x="24" y="128" style="font-size:28px;font-weight:800;fill:#1e293b;">辅助色 约 75%</text>
+      <text class="small" x="24" y="154">白色 / slate 灰阶：页面背景、卡片、边框、正文层级</text>
+    </g>
+
+    <g transform="translate(712 124)">
+      <rect x="0" y="0" width="210" height="172" rx="20" fill="#2563eb"/>
+      <rect x="28" y="28" width="118" height="38" rx="13" fill="#ffffff" fill-opacity="0.18"/>
+      <rect x="28" y="82" width="154" height="38" rx="13" fill="#1d4ed8"/>
+      <text x="24" y="128" style="font-size:24px;font-weight:800;fill:#ffffff;">主题色 约 20%</text>
+      <text x="24" y="154" style="font-size:12px;font-weight:600;fill:#dbeafe;">blue-600：主按钮、阶段进度、选中态</text>
+    </g>
+
+    <g transform="translate(942 124)">
+      <rect x="0" y="0" width="94" height="52" rx="16" fill="#ecfdf5" stroke="#a7f3d0"/>
+      <circle cx="24" cy="26" r="9" fill="#10b981"/>
+      <rect x="0" y="60" width="94" height="52" rx="16" fill="#fffbeb" stroke="#fde68a"/>
+      <circle cx="24" cy="86" r="9" fill="#f59e0b"/>
+      <rect x="0" y="120" width="94" height="52" rx="16" fill="#fff1f2" stroke="#fecdd3"/>
+      <circle cx="24" cy="146" r="9" fill="#e11d48"/>
+      <text x="118" y="42" style="font-size:20px;font-weight:800;fill:#0f172a;">点缀色</text>
+      <text x="118" y="70" style="font-size:20px;font-weight:800;fill:#0f172a;">约 5%</text>
+      <text class="small" x="118" y="102">成功 / 提示 / 错误</text>
+      <text class="small" x="118" y="124">只在状态反馈中出现</text>
+    </g>
+  </g>
+
+  <g transform="translate(64 560)">
+    <rect width="520" height="230" rx="30" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <text class="h2" x="36" y="54">字体大小</text>
+    <text class="body" x="36" y="84">保留四档，便于设计和开发对齐。</text>
+
+    <text x="36" y="132" style="font-size:30px;font-weight:800;fill:#1e293b;letter-spacing:-0.03em;">主标题 30px</text>
+    <text x="300" y="132" class="small">页面入口 / 重要标题</text>
+
+    <text x="36" y="168" style="font-size:20px;font-weight:700;fill:#0f172a;">小标题 18-20px</text>
+    <text x="300" y="168" class="small">弹窗 / 区域标题</text>
+
+    <text x="36" y="200" style="font-size:14px;font-weight:600;fill:#334155;">正文 14px</text>
+    <text x="300" y="200" class="small">表单 / 卡片 / 说明</text>
+
+    <text x="36" y="228" style="font-size:11px;font-weight:800;fill:#64748b;letter-spacing:0.12em;">标签 10-12px</text>
+    <text x="300" y="228" class="small">按钮 / 徽标 / 元信息</text>
+  </g>
+
+  <g transform="translate(616 560)">
+    <rect width="520" height="230" rx="30" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <text class="h2" x="36" y="54">界面气质</text>
+    <text class="body" x="36" y="86">轻量、清晰、偏工具台。颜色不追求强装饰，而是服务协作状态、操作优先级和可读性。</text>
+
+    <g transform="translate(36 124)">
+      <rect width="448" height="62" rx="18" fill="#f8fafc" stroke="#e2e8f0"/>
+      <rect x="20" y="16" width="94" height="30" rx="15" fill="#2563eb"/>
+      <text x="47" y="36" style="font-size:10px;font-weight:800;fill:#ffffff;letter-spacing:0.1em;">当前</text>
+      <rect x="130" y="16" width="94" height="30" rx="15" fill="#f1f5f9"/>
+      <text x="157" y="36" style="font-size:10px;font-weight:800;fill:#94a3b8;letter-spacing:0.1em;">未完成</text>
+      <rect x="252" y="15" width="80" height="32" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+      <text x="276" y="36" style="font-size:11px;font-weight:800;fill:#475569;">返回</text>
+      <rect x="350" y="15" width="78" height="32" rx="12" fill="#2563eb"/>
+      <text x="372" y="36" style="font-size:11px;font-weight:800;fill:#ffffff;">下一步</text>
+    </g>
+  </g>
+</svg>

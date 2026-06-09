@@ -65,6 +65,11 @@ type TextureModelsUpdatedPayload = {
   texture_models?: unknown;
 };
 
+type SessionMembersUpdatedPayload = {
+  session_id: number;
+  updated_at?: string;
+};
+
 interface UseMeetingRtcOptions {
   enabled: boolean;
   token: string | null;
@@ -83,6 +88,7 @@ interface UseMeetingRtcOptions {
   onModelLocked?: (payload: ModelLockedPayload) => void;
   onTexturePlanUpdated?: (payload: TexturePlanUpdatedPayload) => void;
   onTextureModelsUpdated?: (payload: TextureModelsUpdatedPayload) => void;
+  onSessionMembersUpdated?: (payload: SessionMembersUpdatedPayload) => void;
 }
 
 interface UseMeetingRtcResult {
@@ -137,6 +143,7 @@ export const useMeetingRtc = (options: UseMeetingRtcOptions): UseMeetingRtcResul
     onModelLocked,
     onTexturePlanUpdated,
     onTextureModelsUpdated,
+    onSessionMembersUpdated,
   } = options;
 
   const socketRef = useRef<Socket | null>(null);
@@ -168,6 +175,7 @@ export const useMeetingRtc = (options: UseMeetingRtcOptions): UseMeetingRtcResul
   const onModelLockedRef = useRef(onModelLocked);
   const onTexturePlanUpdatedRef = useRef(onTexturePlanUpdated);
   const onTextureModelsUpdatedRef = useRef(onTextureModelsUpdated);
+  const onSessionMembersUpdatedRef = useRef(onSessionMembersUpdated);
 
   useEffect(() => {
     sessionIdRef.current = sessionId ?? 0;
@@ -216,6 +224,10 @@ export const useMeetingRtc = (options: UseMeetingRtcOptions): UseMeetingRtcResul
   useEffect(() => {
     onTextureModelsUpdatedRef.current = onTextureModelsUpdated;
   }, [onTextureModelsUpdated]);
+
+  useEffect(() => {
+    onSessionMembersUpdatedRef.current = onSessionMembersUpdated;
+  }, [onSessionMembersUpdated]);
 
   useEffect(() => {
     const publishAllowed = role !== 'observer';
@@ -570,9 +582,9 @@ export const useMeetingRtc = (options: UseMeetingRtcOptions): UseMeetingRtcResul
             setConnecting(false);
             if (ack?.error === 'ROOM_FULL') {
               setRoomLimitReached(true);
-              setError('会议人数已达上限（6 人）。');
+              setError('协作空间人数已达上限（6 人）。');
             } else {
-              setError(`加入会议失败：${ack?.error ?? 'UNKNOWN'}`);
+              setError(`进入协作空间失败：${ack?.error ?? 'UNKNOWN'}`);
             }
             return;
           }
@@ -765,6 +777,13 @@ export const useMeetingRtc = (options: UseMeetingRtcOptions): UseMeetingRtcResul
         return;
       }
       onTextureModelsUpdatedRef.current?.(payload);
+    });
+
+    socket.on('session_members:updated', (payload: SessionMembersUpdatedPayload) => {
+      if (payload.session_id !== sessionId) {
+        return;
+      }
+      onSessionMembersUpdatedRef.current?.(payload);
     });
 
     socket.on('connect_error', () => {

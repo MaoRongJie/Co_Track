@@ -1,23 +1,17 @@
 from __future__ import annotations
 
-import json
 from datetime import datetime, timezone
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.db.models import AiMessage, MeetingSession, ModelAsset, SessionMember
+from app.db.models import MeetingSession, ModelAsset, SessionMember
 from app.model_runtime import get_transient_model
-from app.graph.nodes import to_ai_message_out
-from app.schemas.ai import AiMessageOut
 
 
 class WorkflowController:
     def __init__(self) -> None:
         self._transient_session_state: dict[int, dict[str, object]] = {}
-
-    def build_sse_event(self, event: str, payload: dict[str, object]) -> str:
-        return f"event: {event}\ndata: {json.dumps(payload, ensure_ascii=False)}\n\n"
 
     def should_persist_session_data(self, db: Session, session_id: int) -> bool:
         invite_code = db.execute(
@@ -37,6 +31,8 @@ class WorkflowController:
             "product_profile": meeting.product_profile,
             "brief_json": meeting.brief_json,
             "texture_plan_json": meeting.texture_plan_json,
+            "session_settings_json": meeting.session_settings_json,
+            "stage3_shared_refs_json": meeting.stage3_shared_refs_json,
             "base_model_id": meeting.base_model_id,
             "model_locked_at": meeting.model_locked_at,
         }
@@ -59,6 +55,8 @@ class WorkflowController:
         meeting.product_profile = state["product_profile"]  # type: ignore[assignment]
         meeting.brief_json = state["brief_json"]  # type: ignore[assignment]
         meeting.texture_plan_json = state["texture_plan_json"]  # type: ignore[assignment]
+        meeting.session_settings_json = state["session_settings_json"]  # type: ignore[assignment]
+        meeting.stage3_shared_refs_json = state["stage3_shared_refs_json"]  # type: ignore[assignment]
         meeting.base_model_id = state["base_model_id"]  # type: ignore[assignment]
         meeting.model_locked_at = state["model_locked_at"]  # type: ignore[assignment]
 
@@ -76,6 +74,8 @@ class WorkflowController:
         product_profile: dict[str, object] | None = None,
         brief_json: dict[str, object] | None = None,
         texture_plan_json: dict[str, object] | None = None,
+        session_settings_json: dict[str, object] | None = None,
+        stage3_shared_refs_json: list[dict[str, object]] | None = None,
         base_model_id: int | None = None,
         model_locked_at: datetime | None = None,
     ) -> None:
@@ -92,6 +92,10 @@ class WorkflowController:
             updates["brief_json"] = brief_json
         if texture_plan_json is not None:
             updates["texture_plan_json"] = texture_plan_json
+        if session_settings_json is not None:
+            updates["session_settings_json"] = session_settings_json
+        if stage3_shared_refs_json is not None:
+            updates["stage3_shared_refs_json"] = stage3_shared_refs_json
         if base_model_id is not None:
             updates["base_model_id"] = base_model_id
         if model_locked_at is not None:
@@ -138,56 +142,6 @@ class WorkflowController:
             raise ValueError("Session not found")
         return meeting
 
-    def save_ai_message(
-        self,
-        db: Session,
-        *,
-        session_id: int,
-        user_id: int | None,
-        role: str,
-        mode: str | None,
-        content: str,
-        metadata_json: dict[str, object] | None = None,
-    ) -> AiMessage:
-        if not self.should_persist_session_data(db, session_id):
-            row = AiMessage(
-                session_id=session_id,
-                user_id=user_id,
-                role=role,
-                mode=mode,
-                content=content,
-                metadata_json=metadata_json,
-            )
-            row.id = 0
-            row.created_at = datetime.now(timezone.utc)
-            return row
-
-        row = AiMessage(
-            session_id=session_id,
-            user_id=user_id,
-            role=role,
-            mode=mode,
-            content=content,
-            metadata_json=metadata_json,
-        )
-        db.add(row)
-        db.commit()
-        db.refresh(row)
-        return row
-
-    def fetch_recent_history(self, db: Session, session_id: int, *, limit: int = 10) -> list[dict[str, str]]:
-        if not self.should_persist_session_data(db, session_id):
-            return []
-
-        rows = db.execute(
-            select(AiMessage).where(AiMessage.session_id == session_id).order_by(AiMessage.id.desc()).limit(limit)
-        ).scalars().all()
-        history: list[dict[str, str]] = []
-        for row in reversed(rows):
-            message_out = to_ai_message_out(row)
-            history.append({"role": message_out.role, "content": message_out.content})
-        return history
-
     def build_base_model_summary(self, db: Session, meeting: MeetingSession) -> str:
         if not meeting.base_model_id:
             return "none"
@@ -205,9 +159,6 @@ class WorkflowController:
             f"id={model.id}, source={model.source_type}, precision={model.precision_level}, "
             f"surface_area_m2={model.surface_area_m2:.2f}"
         )
-
-    def to_message_out(self, item: AiMessage) -> AiMessageOut:
-        return to_ai_message_out(item)
 
 
 _WORKFLOW_CONTROLLER = WorkflowController()

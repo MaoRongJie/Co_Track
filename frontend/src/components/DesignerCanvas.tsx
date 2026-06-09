@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, Circle, Ellipse, FabricImage, Line, PencilBrush, Rect } from 'fabric';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { ActiveSelection, Canvas, Circle, Ellipse, FabricImage, Line, PencilBrush, Rect } from 'fabric';
 import { Check } from 'lucide-react';
 import type { CanvasTool, UvFocusPoint } from '../types/design.ts';
 
@@ -13,6 +13,7 @@ interface DesignerCanvasProps {
   sessionId: number | null;
   schemeId: string;
   baseModelId: number | null;
+  storageUserKey?: string | number | null;
   uvTemplateUrl: string | null;
   uvTemplateMode?: string | null;
   textureCanvasSize?: TextureCanvasSize | null;
@@ -28,6 +29,12 @@ interface DesignerCanvasProps {
   applyEditedTexturePending?: boolean;
   onApplyEditedTexture?: (payload: { workspaceId: string; dataUrl: string }) => void;
   onWorkspaceContentChange?: (workspaceId: string, hasContent: boolean) => void;
+  onSelectionChange?: (hasSelection: boolean) => void;
+}
+
+export interface DesignerCanvasHandle {
+  exportVisibleCanvasDataUrl: () => string | null;
+  duplicateActiveSelection: () => Promise<boolean>;
 }
 
 const DEFAULT_TEXTURE_CANVAS_SIZE: TextureCanvasSize = { width: 2048, height: 1024 };
@@ -40,6 +47,15 @@ const SPECIAL_JSON_PROPS = ['name'];
 const TEMPLATE_NAME = 'uv-template';
 const BASE_TEXTURE_NAME = 'base-texture-layer';
 const FOCUS_NAME = 'uv-focus-marker';
+const DUPLICATE_OFFSET = 36;
+
+const isEditableTarget = (target: EventTarget | null): boolean => {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+  const tagName = target.tagName.toLowerCase();
+  return tagName === 'input' || tagName === 'textarea' || target.isContentEditable;
+};
 
 const clampZoom = (value: number) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, value));
 const isValidSize = (value: TextureCanvasSize | null | undefined): value is TextureCanvasSize =>
@@ -64,17 +80,18 @@ const blobToDataUrl = (blob: Blob): Promise<string> =>
         resolve(reader.result);
         return;
       }
-      reject(new Error('Failed to convert blob to data URL.'));
+      reject(new Error('图片转换失败。'));
     };
-    reader.onerror = () => reject(reader.error ?? new Error('Failed to read blob.'));
+    reader.onerror = () => reject(reader.error ?? new Error('读取图片失败。'));
     reader.readAsDataURL(blob);
   });
 
-const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
+const DesignerCanvas = forwardRef<DesignerCanvasHandle, DesignerCanvasProps>(({
   tool,
   sessionId,
   schemeId,
   baseModelId,
+  storageUserKey,
   uvTemplateUrl,
   uvTemplateMode,
   textureCanvasSize,
@@ -90,7 +107,8 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
   applyEditedTexturePending = false,
   onApplyEditedTexture,
   onWorkspaceContentChange,
-}) => {
+  onSelectionChange,
+}, ref) => {
   const resolvedCanvasSize = useMemo(
     () => (isValidSize(textureCanvasSize) ? textureCanvasSize : DEFAULT_TEXTURE_CANVAS_SIZE),
     [textureCanvasSize],
@@ -236,6 +254,33 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     (canvas: Canvas) => onWorkspaceContentChange?.(schemeId, getCanvasHasUserContent(canvas)),
     [getCanvasHasUserContent, onWorkspaceContentChange, schemeId],
   );
+  const emitSelectionChange = useCallback(
+    (canvas: Canvas) => onSelectionChange?.(Boolean(canvas.getActiveObject())),
+    [onSelectionChange],
+  );
+  const removeActiveSelectionOnCanvas = useCallback(
+    (canvas: Canvas) => {
+      const activeObject = canvas.getActiveObject();
+      if (!activeObject) {
+        return false;
+      }
+
+      if (activeObject instanceof ActiveSelection) {
+        activeObject.getObjects().forEach((item) => canvas.remove(item));
+      } else {
+        canvas.remove(activeObject);
+      }
+
+      canvas.discardActiveObject();
+      normalizeSpecialLayerStack(canvas);
+      canvas.renderAll();
+      emitSelectionChange(canvas);
+      emitWorkspaceContentChange(canvas);
+      scheduleSnapshotPersist(canvas, 80);
+      return true;
+    },
+    [emitSelectionChange, emitWorkspaceContentChange, normalizeSpecialLayerStack, scheduleSnapshotPersist],
+  );
   const syncCanvasDimensions = useCallback(
     (canvas: Canvas) => {
       canvas.setDimensions({ width: resolvedCanvasSize.width, height: resolvedCanvasSize.height });
@@ -290,7 +335,7 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     async (canvas: Canvas) => {
       removeNamedObjects(canvas, TEMPLATE_NAME);
       if (!uvTemplateUrl) {
-        setTemplateError('Base model UV template is missing. Please prepare and lock a valid model first.');
+        setTemplateError('缺少 UV 模板。');
         canvas.requestRenderAll();
         return;
       }
@@ -316,7 +361,7 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
         refreshTemplatePresentation(canvas);
       } catch (error) {
         console.error('Failed to load UV template:', error);
-        setTemplateError('Failed to load UV template from backend.');
+        setTemplateError('UV 加载失败。');
       } finally {
         setTemplateLoading(false);
       }
@@ -362,10 +407,10 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
         refreshTemplatePresentation(canvas);
         emitWorkspaceContentChange(canvas);
         scheduleSnapshotPersist(canvas, 80);
-        showLayerNotice('success', `Loaded texture layer: ${requestedLayer.label ?? 'Current texture'}`);
+        showLayerNotice('success', '底图层已加载。');
       } catch (error) {
         console.error('Failed to attach base texture layer to canvas:', error);
-        showLayerNotice('error', 'Failed to load the selected texture into the canvas.');
+        showLayerNotice('error', '纹理加载失败。');
       }
     },
     [
@@ -463,13 +508,24 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     applyCurrentTool(canvas);
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.code !== 'Space' || spacePressedRef.current) return;
+      if ((event.key === 'Delete' || event.key === 'Backspace') && !isEditableTarget(event.target)) {
+        if (removeActiveSelectionOnCanvas(canvas)) {
+          event.preventDefault();
+        }
+        return;
+      }
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'd' && !isEditableTarget(event.target)) {
+        event.preventDefault();
+        void duplicateSelectionOnCanvas(canvas);
+        return;
+      }
+      if (event.code !== 'Space' || spacePressedRef.current || isEditableTarget(event.target)) return;
       event.preventDefault();
       spacePressedRef.current = true;
       setCanvasCursor(canvas, 'grab');
     };
     const onKeyUp = (event: KeyboardEvent) => {
-      if (event.code !== 'Space') return;
+      if (event.code !== 'Space' || isEditableTarget(event.target)) return;
       spacePressedRef.current = false;
       panStartRef.current = null;
       canvas.selection = true;
@@ -606,6 +662,10 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     canvas.on('object:added', handleCanvasMutation as never);
     canvas.on('object:removed', handleCanvasMutation as never);
     canvas.on('object:modified', handleCanvasMutation as never);
+    canvas.on('selection:created', () => emitSelectionChange(canvas));
+    canvas.on('selection:updated', () => emitSelectionChange(canvas));
+    canvas.on('selection:cleared', () => emitSelectionChange(canvas));
+    emitSelectionChange(canvas);
 
     return () => {
       canvas.off('mouse:down', onMouseDown as never);
@@ -615,6 +675,9 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
       canvas.off('object:added', handleCanvasMutation as never);
       canvas.off('object:removed', handleCanvasMutation as never);
       canvas.off('object:modified', handleCanvasMutation as never);
+      canvas.off('selection:created');
+      canvas.off('selection:updated');
+      canvas.off('selection:cleared');
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
       canvas.dispose();
@@ -629,6 +692,8 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     emitWorkspaceContentChange,
     getInteractionScale,
     onUvInspect,
+    emitSelectionChange,
+    removeActiveSelectionOnCanvas,
     resolvedCanvasSize.height,
     resolvedCanvasSize.width,
     setCanvasCursor,
@@ -674,9 +739,11 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     const canvas = fabricCanvasRef.current;
     if (!canvas) return;
     let cancelled = false;
-    snapshotsRef.current[lastSnapshotKeyRef.current] = serializeCanvas(canvas);
+    if (lastSnapshotKeyRef.current !== snapshotKey) {
+      snapshotsRef.current[lastSnapshotKeyRef.current] = serializeCanvas(canvas);
+    }
     resetViewport(canvas);
-    const storageKey = `co-track:snapshot:${sessionId ?? 'no-session'}:${baseModelId ?? 'none'}:${schemeId}`;
+    const storageKey = `co-track:snapshot:${sessionId ?? 'no-session'}:${baseModelId ?? 'no-model'}:${storageUserKey ?? 'anon'}:${schemeId}`;
     const nextSnapshot = snapshotsRef.current[snapshotKey] ?? window.localStorage.getItem(storageKey) ?? undefined;
     const restore = async () => {
       if (nextSnapshot) {
@@ -692,6 +759,7 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
       if (cancelled) return;
       applyCurrentTool(canvas);
       canvas.renderAll();
+      emitSelectionChange(canvas);
       emitWorkspaceContentChange(canvas);
     };
     void restore();
@@ -709,6 +777,7 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     sessionId,
     serializeCanvas,
     snapshotKey,
+    storageUserKey,
     syncBaseTextureLayer,
   ]);
 
@@ -747,7 +816,7 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     let cancelled = false;
     void (async () => {
       try {
-        const image = preserveSerializedImageSource(await loadCanvasImage(insertAsset.imageUrl), insertAsset.imageUrl);
+        const image = await loadCanvasImage(insertAsset.imageUrl);
         if (cancelled || !sameImageRequest(insertAsset, insertAssetRef.current)) return;
         const safeWidth = image.width ?? 512;
         const safeHeight = image.height ?? 512;
@@ -784,27 +853,108 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     scheduleSnapshotPersist,
   ]);
 
-  const handleApplyEditedTextureClick = useCallback(() => {
+  const duplicateSelectionOnCanvas = useCallback(
+    async (canvas: Canvas) => {
+      const activeObject = canvas.getActiveObject();
+      if (!activeObject) {
+        return false;
+      }
+
+      const offset = Math.max(DUPLICATE_OFFSET * getInteractionScale(canvas), DUPLICATE_OFFSET);
+      const clonedObject = await (activeObject as typeof activeObject & {
+        clone: (propertiesToInclude?: string[]) => Promise<typeof activeObject>;
+      }).clone(SPECIAL_JSON_PROPS);
+
+      canvas.discardActiveObject();
+
+      if (clonedObject instanceof ActiveSelection) {
+        clonedObject.canvas = canvas;
+        const clonedItems = clonedObject.getObjects();
+        clonedItems.forEach((item) => {
+          item.set({
+            left: (item.left ?? 0) + offset,
+            top: (item.top ?? 0) + offset,
+          });
+          item.setCoords();
+          canvas.add(item);
+        });
+        const nextSelection = new ActiveSelection(clonedItems, { canvas });
+        nextSelection.setCoords();
+        canvas.setActiveObject(nextSelection);
+      } else {
+        clonedObject.set({
+          left: (clonedObject.left ?? 0) + offset,
+          top: (clonedObject.top ?? 0) + offset,
+        });
+        clonedObject.setCoords();
+        canvas.add(clonedObject);
+        canvas.setActiveObject(clonedObject);
+      }
+
+      normalizeSpecialLayerStack(canvas);
+      canvas.renderAll();
+      emitSelectionChange(canvas);
+      emitWorkspaceContentChange(canvas);
+      scheduleSnapshotPersist(canvas, 80);
+      return true;
+    },
+    [
+      emitSelectionChange,
+      emitWorkspaceContentChange,
+      getInteractionScale,
+      normalizeSpecialLayerStack,
+      scheduleSnapshotPersist,
+    ],
+  );
+
+  const exportVisibleCanvasDataUrl = useCallback(() => {
     const canvas = fabricCanvasRef.current;
-    if (!canvas || !onApplyEditedTexture) return;
+    if (!canvas) return null;
     const hiddenObjects = canvas.getObjects().filter((item) => {
       const name = getObjectName(item as { name?: string });
       return name === TEMPLATE_NAME || name === FOCUS_NAME;
     });
     const visibility = hiddenObjects.map((item) => item.visible);
+    const activeObject = canvas.getActiveObject();
+    if (activeObject) {
+      canvas.discardActiveObject();
+    }
     hiddenObjects.forEach((item) => {
       item.visible = false;
     });
     canvas.renderAll();
     try {
-      onApplyEditedTexture({ workspaceId: schemeId, dataUrl: canvas.toDataURL({ format: 'png', multiplier: 1 }) });
+      return canvas.toDataURL({ format: 'png', multiplier: 1 });
     } finally {
       hiddenObjects.forEach((item, index) => {
         item.visible = visibility[index];
       });
+      if (activeObject) {
+        canvas.setActiveObject(activeObject);
+      }
       canvas.renderAll();
     }
-  }, [getObjectName, onApplyEditedTexture, schemeId]);
+  }, [getObjectName]);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      exportVisibleCanvasDataUrl,
+      duplicateActiveSelection: async () => {
+        const canvas = fabricCanvasRef.current;
+        if (!canvas) return false;
+        return duplicateSelectionOnCanvas(canvas);
+      },
+    }),
+    [duplicateSelectionOnCanvas, exportVisibleCanvasDataUrl],
+  );
+
+  const handleApplyEditedTextureClick = useCallback(() => {
+    if (!onApplyEditedTexture) return;
+    const dataUrl = exportVisibleCanvasDataUrl();
+    if (!dataUrl) return;
+    onApplyEditedTexture({ workspaceId: schemeId, dataUrl });
+  }, [exportVisibleCanvasDataUrl, onApplyEditedTexture, schemeId]);
 
   const handleZoomIn = useCallback(() => {
     const canvas = fabricCanvasRef.current;
@@ -838,24 +988,24 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
             disabled={!canApplyEditedTexture || applyEditedTexturePending}
             className={`mr-1 inline-flex items-center gap-1.5 rounded px-2.5 py-1 font-semibold transition ${
               canApplyEditedTexture && !applyEditedTexturePending
-                ? 'bg-slate-900 text-white hover:bg-slate-800'
+                ? 'bg-blue-600 text-white hover:bg-blue-700'
                 : 'cursor-not-allowed bg-slate-100 text-slate-400'
             }`}
           >
-            {applyEditedTexturePending ? 'Applying...' : <><Check size={14} /> Apply Edited Texture</>}
+            {applyEditedTexturePending ? '应用中...' : <><Check size={14} /> 应用</>}
           </button>
         ) : null}
-        <button type="button" onClick={handleZoomOut} className="rounded px-2 py-1 font-semibold text-slate-700 hover:bg-slate-100" aria-label="Zoom out canvas">-</button>
-        <button type="button" onClick={handleZoomReset} className="rounded px-2 py-1 font-semibold text-slate-600 hover:bg-slate-100" aria-label="Reset canvas zoom">{Math.round(zoomLevel * 100)}%</button>
-        <button type="button" onClick={handleZoomIn} className="rounded px-2 py-1 font-semibold text-slate-700 hover:bg-slate-100" aria-label="Zoom in canvas">+</button>
+        <button type="button" onClick={handleZoomOut} className="rounded px-2 py-1 font-semibold text-slate-700 hover:bg-slate-100" aria-label="缩小画布">-</button>
+        <button type="button" onClick={handleZoomReset} className="rounded px-2 py-1 font-semibold text-slate-600 hover:bg-slate-100" aria-label="重置画布缩放">{Math.round(zoomLevel * 100)}%</button>
+        <button type="button" onClick={handleZoomIn} className="rounded px-2 py-1 font-semibold text-slate-700 hover:bg-slate-100" aria-label="放大画布">+</button>
       </div>
       <div className="absolute bottom-8 left-8 z-10 max-w-[50%] rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-[11px] text-slate-600 shadow-sm">
         {drawingEnabled
-          ? `UV canvas ${resolvedCanvasSize.width} x ${resolvedCanvasSize.height}. Use Select to inspect UV <-> 3D. Hold Space and drag to pan. Ctrl + wheel to zoom.`
-          : 'Waiting for a valid UV template.'}
+          ? `UV ${resolvedCanvasSize.width} x ${resolvedCanvasSize.height}`
+          : '缺少 UV 模板'}
       </div>
       {templateLoading ? (
-        <div className="absolute left-8 top-20 z-10 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-[11px] text-blue-700">Loading UV template from backend...</div>
+        <div className="absolute left-8 top-20 z-10 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-[11px] text-blue-700">正在加载 UV...</div>
       ) : null}
       {templateError ? (
         <div className="absolute left-8 top-20 z-10 max-w-sm rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-[11px] text-rose-700">{templateError}</div>
@@ -871,11 +1021,10 @@ const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
           {layerNotice.message}
         </div>
       ) : null}
-      <div className="absolute bottom-8 right-8 rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-[11px] text-slate-600">
-        Layer tip: base texture / pattern / text / annotation.
-      </div>
     </div>
   );
-};
+});
+
+DesignerCanvas.displayName = 'DesignerCanvas';
 
 export default DesignerCanvas;

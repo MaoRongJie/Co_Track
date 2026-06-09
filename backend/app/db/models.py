@@ -42,6 +42,8 @@ class MeetingSession(Base):
     product_profile: Mapped[dict[str, object] | None] = mapped_column(JSON, nullable=True)
     brief_json: Mapped[dict[str, object] | None] = mapped_column(JSON, nullable=True)
     texture_plan_json: Mapped[dict[str, object] | None] = mapped_column(JSON, nullable=True)
+    session_settings_json: Mapped[dict[str, object] | None] = mapped_column(JSON, nullable=True)
+    stage3_shared_refs_json: Mapped[list[dict[str, object]] | None] = mapped_column(JSON, nullable=True)
     base_model_id: Mapped[int | None] = mapped_column(ForeignKey("model_assets.id"), nullable=True)
     model_locked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
@@ -58,6 +60,8 @@ class SessionMember(Base):
     session_id: Mapped[int] = mapped_column(ForeignKey("sessions.id"), nullable=False)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     role: Mapped[str] = mapped_column(String(20), default="designer")
+    workspace_json: Mapped[dict[str, object] | None] = mapped_column(JSON, nullable=True)
+    shared_result_ids_json: Mapped[list[str] | None] = mapped_column(JSON, nullable=True)
     joined_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     session: Mapped[MeetingSession] = relationship(back_populates="members")
@@ -135,6 +139,25 @@ class GeneratedImage(Base):
     image_url: Mapped[str] = mapped_column(String(4000), nullable=False)
     provider: Mapped[str] = mapped_column(String(40), nullable=False)
     model_name: Mapped[str] = mapped_column(String(120), nullable=False)
+    metadata_json: Mapped[dict[str, object] | None] = mapped_column(JSON, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), index=True)
+
+
+class GeneratedMediaAsset(Base):
+    __tablename__ = "generated_media_assets"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    session_id: Mapped[int] = mapped_column(ForeignKey("sessions.id"), nullable=False, index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    result_id: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
+    scheme_name: Mapped[str | None] = mapped_column(String(240), nullable=True)
+    media_type: Mapped[str] = mapped_column(String(20), nullable=False, index=True)
+    media_url: Mapped[str] = mapped_column(String(4000), nullable=False)
+    prompt: Mapped[str] = mapped_column(Text, nullable=False)
+    provider: Mapped[str] = mapped_column(String(40), nullable=False)
+    model_name: Mapped[str] = mapped_column(String(120), nullable=False)
+    prediction_id: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    source_image_url: Mapped[str | None] = mapped_column(String(4000), nullable=True)
     metadata_json: Mapped[dict[str, object] | None] = mapped_column(JSON, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), index=True)
 

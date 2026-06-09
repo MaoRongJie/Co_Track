@@ -4,41 +4,14 @@ import json
 import re
 from dataclasses import asdict, dataclass
 from difflib import SequenceMatcher
-from typing import Any, Literal, TypedDict
+from typing import Any
 
 from app.agents.providers.openai_text_image_provider import OpenAITextImageProvider
 from app.texture_planning import TEXTURE_SCHEME_IDS, extract_brief_keywords
 
-try:
-    from langgraph.graph import END, START, StateGraph
-
-    HAS_LANGGRAPH = True
-except Exception:
-    END = "__end__"
-    START = "__start__"
-    StateGraph = None
-    HAS_LANGGRAPH = False
-
-RouteMode = Literal["creative", "image"]
-
 
 class AgentRuntimeDependencyError(RuntimeError):
     pass
-
-
-@dataclass(slots=True)
-class SessionAiContext:
-    session_id: int
-    product_category: str | None
-    brief_json: dict[str, Any] | None
-    base_model_summary: str
-    recent_messages: list[dict[str, str]]
-
-
-@dataclass(slots=True)
-class CreativeRoutePlan:
-    route: RouteMode
-    system_prompt: str
 
 
 @dataclass(slots=True)
@@ -79,14 +52,6 @@ class TexturePlanResult:
         }
 
 
-class _GraphState(TypedDict):
-    mode: str
-    message: str
-    context_summary: str
-    route: RouteMode
-    system_prompt: str
-
-
 def _safe_text(value: Any, *, default: str = "") -> str:
     if isinstance(value, str):
         text = value.strip()
@@ -105,38 +70,6 @@ def _safe_list(value: Any, *, max_items: int = 8) -> list[str]:
         if len(picked) >= max_items:
             break
     return picked
-
-
-def _build_context_summary(context: SessionAiContext) -> str:
-    brief = context.brief_json or {}
-    theme = str(brief.get("theme", "")).strip() if isinstance(brief, dict) else ""
-    main_colors = brief.get("mainColors") if isinstance(brief, dict) else None
-    style_keywords = brief.get("styleKeywords") if isinstance(brief, dict) else None
-
-    color_text = ""
-    if isinstance(main_colors, list):
-        picked = [str(item).strip() for item in main_colors if str(item).strip()]
-        if picked:
-            color_text = ", ".join(picked[:4])
-
-    style_text = ""
-    if isinstance(style_keywords, list):
-        picked = [str(item).strip() for item in style_keywords if str(item).strip()]
-        if picked:
-            style_text = ", ".join(picked[:5])
-
-    parts: list[str] = []
-    if context.product_category:
-        parts.append(f"Product category: {context.product_category}")
-    if theme:
-        parts.append(f"Theme: {theme}")
-    if color_text:
-        parts.append(f"Main colors: {color_text}")
-    if style_text:
-        parts.append(f"Style keywords: {style_text}")
-    if context.base_model_summary:
-        parts.append(f"Base model: {context.base_model_summary}")
-    return "\n".join(parts)
 
 
 def _build_texture_context_summary(context: TexturePlanningContext) -> dict[str, Any]:
@@ -162,7 +95,10 @@ def _normalize_texture_schemes(raw: Any) -> list[TextureSchemePlan]:
         prompt_text = _safe_text(source.get("prompt_text"))
         key_points = _safe_list(source.get("key_points"), max_items=6)
         if not prompt_text:
-            prompt_text = f"{title}. Build a manufacturable model texture direction with clear theme, color rhythm, and graphic logic."
+            prompt_text = (
+                f"{title}. Build a manufacturable model texture direction with clear theme, "
+                "color rhythm, and graphic logic."
+            )
         schemes.append(
             TextureSchemePlan(
                 id=scheme_id,
@@ -204,38 +140,38 @@ def _schemes_are_sufficiently_distinct(schemes: list[TextureSchemePlan]) -> bool
 
 def _fallback_texture_schemes(context: TexturePlanningContext) -> list[TextureSchemePlan]:
     brief_keywords = extract_brief_keywords(context.brief_json)
-    theme = _safe_text(brief_keywords.get("theme"), default="industrial appearance")
+    theme = _safe_text(brief_keywords.get("theme"), default="工业外观")
     colors = ", ".join(_safe_list(brief_keywords.get("main_colors"), max_items=4))
     styles = ", ".join(_safe_list(brief_keywords.get("style_keywords"), max_items=4))
     elements = ", ".join(_safe_list(brief_keywords.get("design_elements"), max_items=4))
     image_keywords = ", ".join(context.selected_image_keywords[:6])
 
     prompt_bases = [
-        f"Build a clean primary direction around {theme}, emphasizing large-scale recognition and manufacturability.",
-        f"Build a more dynamic direction around {theme}, emphasizing rhythm changes, movement, and layered transitions.",
-        f"Build a more stylized direction around {theme}, emphasizing material mood, texture detail, and memorability.",
+        f"围绕 {theme} 建立清晰主方向，强调大尺度识别度和制造可行性。",
+        f"围绕 {theme} 建立更具动势的方向，强调节奏变化、速度感和层次过渡。",
+        f"围绕 {theme} 建立更具风格化的方向，强调材质氛围、纹理细节和记忆点。",
     ]
 
     schemes: list[TextureSchemePlan] = []
     for index, prompt_base in enumerate(prompt_bases, start=1):
         prompt_text = (
-            f"{prompt_base} Main color reference: {colors or 'derive from the brief'}. "
-            f"Style keywords: {styles or 'modern industrial'}. "
-            f"Design elements: {elements or 'keep the composition restrained'}. "
-            f"Image style reinforcement: {image_keywords or 'none'}. "
-            "Ensure the texture direction remains readable on a large 3D model surface and feasible to manufacture."
+            f"{prompt_base} 主色参考：{colors or '根据设计简报推导'}。"
+            f"风格关键词：{styles or '现代工业'}。"
+            f"设计元素：{elements or '保持构图克制'}。"
+            f"图像风格强化：{image_keywords or '无'}。"
+            "确保纹理方向在大型 3D 模型表面上清晰可读，并具备制造可行性。"
         )
         schemes.append(
             TextureSchemePlan(
                 id=f"scheme_{index}",
-                title=f"Scheme {index}",
-                strategy=f"Differentiated direction {index}",
+                title=f"方案 {index}",
+                strategy=f"差异化方向 {index}",
                 prompt_text=prompt_text,
                 key_points=[
                     theme,
-                    colors or "clear primary color structure",
-                    styles or "modern industrial",
-            image_keywords or "no selected image keywords",
+                    colors or "清晰主色结构",
+                    styles or "现代工业",
+                    image_keywords or "未选择图像关键词",
                 ],
             )
         )
@@ -243,81 +179,6 @@ def _fallback_texture_schemes(context: TexturePlanningContext) -> list[TextureSc
 
 
 class CreativeDialogueAndImageAgent:
-    def __init__(self) -> None:
-        if not HAS_LANGGRAPH or StateGraph is None:
-            raise AgentRuntimeDependencyError(
-                "LangGraph is required but not installed. Install `langgraph` to enable AI agent runtime."
-            )
-
-        builder = StateGraph(_GraphState)
-        builder.add_node("route", self._route_node)
-        builder.add_node("creative_agent_prompt", self._creative_prompt_node)
-        builder.add_node("image_agent_prompt", self._image_prompt_node)
-        builder.add_edge(START, "route")
-        builder.add_conditional_edges(
-            "route",
-            self._route_branch,
-            {
-                "creative": "creative_agent_prompt",
-                "image": "image_agent_prompt",
-            },
-        )
-        builder.add_edge("creative_agent_prompt", END)
-        builder.add_edge("image_agent_prompt", END)
-        self._graph = builder.compile()
-
-    def _route_node(self, state: _GraphState) -> _GraphState:
-        declared_mode = str(state.get("mode", "creative")).strip().lower()
-        route: RouteMode = "image" if declared_mode == "image" else "creative"
-        return {**state, "route": route}
-
-    @staticmethod
-    def _route_branch(state: _GraphState) -> RouteMode:
-        route = state.get("route")
-        return "image" if route == "image" else "creative"
-
-    def _creative_prompt_node(self, state: _GraphState) -> _GraphState:
-        summary = state.get("context_summary", "")
-        prompt = (
-            "You are Co-Track Creative Assistant Agent.\n"
-            "You support industrial appearance design teams with actionable advice.\n"
-            "Be concise, practical, and design-oriented.\n"
-            "When useful, provide palette ratio, element placement, and risk reminders.\n"
-            "Reply in Chinese unless the user explicitly requests another language.\n"
-        )
-        if summary:
-            prompt = f"{prompt}\nContext:\n{summary}"
-        return {**state, "system_prompt": prompt}
-
-    def _image_prompt_node(self, state: _GraphState) -> _GraphState:
-        summary = state.get("context_summary", "")
-        prompt = (
-            "You are Co-Track Pattern Generation Agent.\n"
-            "Help users refine prompt wording for 2D coating pattern generation.\n"
-            "Prioritize manufacturability, readability at long distance, and brand consistency.\n"
-            "Provide concrete prompt refinements and constraints.\n"
-            "Reply in Chinese unless the user explicitly requests another language.\n"
-        )
-        if summary:
-            prompt = f"{prompt}\nContext:\n{summary}"
-        return {**state, "system_prompt": prompt}
-
-    async def plan_chat(self, *, mode: str, message: str, context: SessionAiContext) -> CreativeRoutePlan:
-        context_summary = _build_context_summary(context)
-        state = _GraphState(
-            mode=mode,
-            message=message,
-            context_summary=context_summary,
-            route="creative",
-            system_prompt="",
-        )
-        result = await self._graph.ainvoke(state)
-        route = "image" if result.get("route") == "image" else "creative"
-        system_prompt = str(result.get("system_prompt", "")).strip()
-        if not system_prompt:
-            system_prompt = "You are Co-Track AI Assistant."
-        return CreativeRoutePlan(route=route, system_prompt=system_prompt)
-
     async def plan_texture_schemes(
         self,
         *,
@@ -327,13 +188,87 @@ class CreativeDialogueAndImageAgent:
         brief_keywords = extract_brief_keywords(context.brief_json)
         payload = _build_texture_context_summary(context)
         system_prompt = (
-            "You are Co-Track Model Texture Planning Agent.\n"
-            "You create three clearly differentiated model texture prompt schemes for industrial appearance design.\n"
-            "You must synthesize the brief keywords, user text, document text, image style keywords, and base model context.\n"
-            "Decide the three most valuable differentiated directions by yourself instead of using preset categories.\n"
-            "Each scheme must be meaningfully different in concept, visual language, graphic rhythm, material feeling, or color deployment.\n"
-            "Prioritize manufacturability, readability on large surfaces, brand consistency, and texture continuity on a 3D model.\n"
-            "Return strict JSON only.\n"
+            "你是 Co-Track 模型纹理规划 Agent，专注于高速列车、动车组和轨道交通车辆外观的工业设计。\n"
+            "你的任务是综合关键词、用户意图、文档内容、图像风格线索和基准模型特征，为高速列车 3D 模型生成三套差异化纹理提示词方案。每个 `prompt_text` 会直接写入 Meshy Retexture API 的 `text_style_prompt` 字段。\n"
+            "\n"
+            "严格技术约束，请优先遵守：\n"
+            "1. 每个 `prompt_text` 不得超过 600 个字符，这是 API 的硬性限制。\n"
+            "2. 不要在提示词中使用数字化 PBR 参数。\n"
+            "3. 不要使用工程单位、汽车底漆层、清漆层、聚氨酯化学组成等工业或材料科学术语，因为 Meshy 难以稳定解析。\n"
+            "4. 高速列车标准外观应主要理解为工业级半光泽或丝缎质感。整体应清晰、平整、致密、均匀，并带有轻微柔和反射。不要生成镜面反射、拉丝金属、强珠光闪烁、电镀效果或改装车质感。\n"
+            "5. 材质描述应服务于高速列车整体外观，不要压过涂装结构和图形组织。\n"
+            "6. 默认色彩倾向：除非用户文本、上传文档或选中图像关键词明确要求深色外观方向，例如黑色、炭灰、石墨、深海军蓝或其他以深色车身为主的方案，否则避免生成深色主导的列车外观。默认优先使用浅色或中浅色车身色盘。\n"
+            "7. 默认饱和度倾向：除非用户输入明确要求大胆、高鲜艳度或节庆感色彩，否则避免过度饱和的车身颜色。优先使用可控、适中、精致、稳定并适合高速列车外观的饱和度。\n"
+            "\n"
+            "领域知识：高速列车外观设计\n"
+            "高速列车涂装设计遵循严格工业标准，方案需要从以下维度推理：\n"
+            "涂装结构：全包覆、腰线条带、渐变融合、车头重点装饰。\n"
+            "图形语言：硬边几何线条、有机速度曲线、文化来源图案。\n"
+            "品牌锚点：标识放置区域、主色线位置、辅助强调带。\n"
+            "\n"
+            "材质表达：只使用视觉语言\n"
+            "请把材质质感转译为 Meshy 能理解、且符合高速列车标准涂装的视觉描述。\n"
+            "推荐短语：\n"
+            "smooth semi-gloss surface\n"
+            "silky satin sheen\n"
+            "clean controlled reflections\n"
+            "crisp even finish\n"
+            "refined soft reflection\n"
+            "ultra-smooth body panels\n"
+            "tight uniform surface\n"
+            "glass-like clarity without mirror shine\n"
+            "subtle fine paint texture\n"
+            "faint tactile granularity\n"
+            "even sprayed finish\n"
+            "factory-new, zero wear, pristine surface\n"
+            "light service patina, faint dust on undercarriage panels\n"
+            "slight UV fade on roof surfaces, sun-softened top panels\n"
+            "\n"
+            "禁止或严格避免：\n"
+            "mirror-polished\n"
+            "reflective gloss finish\n"
+            "chrome-like\n"
+            "brushed metal\n"
+            "metallic flake\n"
+            "iridescent shimmer\n"
+            "sparkling finish\n"
+            "anodized\n"
+            "electroplated\n"
+            "carbon fiber look\n"
+            "\n"
+            "表面图形必须被明确描述：\n"
+            "必须清楚说明方案是否包含明确的表面图形元素，不能只描述颜色或材质。\n"
+            "如果某个方案没有具体图案要求，就不要强行提及具体图形元素。\n"
+            "如果包含图形元素，必须包含以下一种或多种描述：\n"
+            "条带：说明宽度、角度、收束点、在车身上的起止位置。\n"
+            "涂装腰线：说明位于车身上部、中部还是下部三分之一，边缘是硬切还是柔和渐变。\n"
+            "车头图形：V 形箭头、后掠翼形、放射线、居中标识装饰区域。\n"
+            "车窗包围：框线颜色、阴影边线。\n"
+            "面板接缝：齐平或内凹、边缘强调、同色或对比色接缝。\n"
+            "重复图案：说明图案间距相对于车厢长度的比例，以及跨车厢对齐方式。\n"
+            "\n"
+            "方案差异化要求：\n"
+            "你必须自主判断最有价值的三个差异化方向。不要使用“科技感、自然感、商务感”这类泛化预设类别。\n"
+            "三套方案至少需要在以下三个维度上存在实质差异：\n"
+            "涂装结构类型\n"
+            "图形语言与节奏\n"
+            "材质表面质感\n"
+            "色温与色彩比例\n"
+            "使用痕迹或涂层状态\n"
+            "文化叙事或品牌语义\n"
+            "\n"
+            "提示词自检清单：\n"
+            "不超过 600 个字符。\n"
+            "包含涂装结构描述。\n"
+            "包含至少一个明确图形元素。\n"
+            "包含符合高速列车标准的视觉材质表达。\n"
+            "包含状态描述，例如全新、轻微使用痕迹或车顶轻微 UV 褪色。\n"
+            "不包含镜面反射、拉丝金属、强珠光或电镀描述。\n"
+            "不只使用模糊氛围词；任何“速度感、秩序感、力量感”都必须由具体视觉结构支撑。\n"
+            "三个 prompt 必须能独立执行，彼此之间不能相互引用。\n"
+            "\n"
+            "输出格式：\n"
+            "只返回严格 JSON。不要使用 Markdown，也不要追加解释性文字。\n"
         )
         user_prompt = json.dumps(
             {
@@ -351,13 +286,13 @@ class CreativeDialogueAndImageAgent:
                     ]
                 },
                 "rules": [
-                    "return exactly 3 schemes in fixed order",
-                    "ids must be scheme_1, scheme_2, scheme_3",
-                    "do not use markdown",
-                    "title and strategy should be short",
-                    "prompt_text should be concrete and editable",
-                    "key_points should be concise and non-repetitive",
-                    "the three schemes must be clearly different, not just light rewrites",
+                    "必须按固定顺序返回 exactly 3 schemes",
+                    "ids 必须是 scheme_1, scheme_2, scheme_3",
+                    "不要使用 markdown",
+                    "title 和 strategy 应简短",
+                    "prompt_text 应具体且便于编辑",
+                    "key_points 应简洁且避免重复",
+                    "三套方案必须明显不同，不能只是轻微改写",
                 ],
             },
             ensure_ascii=False,
@@ -373,9 +308,8 @@ class CreativeDialogueAndImageAgent:
 
         if not _schemes_are_sufficiently_distinct(schemes):
             retry_prompt = (
-                f"{user_prompt}\n\nAdditional requirement: "
-                "The previous schemes were too similar. Please regenerate and significantly increase the differences "
-                "between the three schemes in concept, visual language, composition rhythm, and prompt wording."
+                f"{user_prompt}\n\n附加要求："
+                "上一轮方案过于相似。请重新生成，并显著拉开三套方案在概念、视觉语言、构图节奏和提示词措辞上的差异。"
             )
             retry_parsed = await provider.complete_json(
                 system_prompt=system_prompt,
@@ -399,6 +333,4 @@ class CreativeDialogueAndImageAgent:
         )
 
 
-# Backward-compatible aliases for existing imports.
-ChatPlan = CreativeRoutePlan
 AgentRuntime = CreativeDialogueAndImageAgent

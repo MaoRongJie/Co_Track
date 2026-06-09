@@ -10,10 +10,6 @@ from app.stages.stage2_plan_3d_model import (
     get_stage2_dependencies,
     run_stage2_plan_3d_model,
 )
-from app.stages.stage3_generate_creative_reply import (
-    get_stage3_agent,
-    run_stage3_generate_creative_reply,
-)
 from app.stages.stage4_generate_image_assets import (
     get_stage4_provider,
     run_stage4_generate_image_assets,
@@ -26,9 +22,6 @@ __all__ = [
     "build_fallback_model_generation_plan",
     "get_stage2_dependencies",
     "run_stage2_plan_3d_model",
-    "get_stage3_agent",
-    "run_stage3_generate_creative_reply",
     "get_stage4_provider",
     "run_stage4_generate_image_assets",
 ]
-

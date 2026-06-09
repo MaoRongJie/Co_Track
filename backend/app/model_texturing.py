@@ -5,6 +5,7 @@ import io
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from uuid import uuid4
 
 from app.model_processing import NORMALIZED_MODEL_DIR, TEXTURE_MAP_DIR, to_model_url, to_texture_url
 from app.texture_planning import utcnow_iso
@@ -42,7 +43,7 @@ def apply_edited_texture_to_model(
     safe_scheme_id = _slugify(scheme_id, fallback="scheme")
     safe_task_id = _slugify(meshy_task_id or "manual", fallback="manual")
     applied_at = utcnow_iso()
-    output_token = f"session_{abs(session_id)}_{safe_scheme_id}_{safe_task_id}"
+    output_token = f"session_{abs(session_id)}_{safe_scheme_id}_{safe_task_id}_{uuid4().hex[:10]}"
     edited_base_color_path = TEXTURE_MAP_DIR / f"{output_token}_base_color.png"
     packed_metallic_roughness_path = TEXTURE_MAP_DIR / f"{output_token}_metallic_roughness.png"
     edited_model_path = NORMALIZED_MODEL_DIR / f"{output_token}_edited.glb"

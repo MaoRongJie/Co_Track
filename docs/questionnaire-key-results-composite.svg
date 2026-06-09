@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <defs>
+    <style>
+      text {
+        font-family: "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", Arial, sans-serif;
+      }
+      .main-title {
+        font-size: 34px;
+        font-weight: 700;
+        fill: #243447;
+      }
+      .main-subtitle {
+        font-size: 18px;
+        fill: #65727F;
+      }
+      .panel-title {
+        font-size: 22px;
+        font-weight: 700;
+        fill: #243447;
+      }
+      .panel-subtitle {
+        font-size: 15px;
+        fill: #6C7785;
+      }
+      .small {
+        font-size: 13px;
+        fill: #7B8490;
+      }
+      .label {
+        font-size: 15px;
+        fill: #2F3A45;
+      }
+      .label-strong {
+        font-size: 15px;
+        font-weight: 700;
+        fill: #2F3A45;
+      }
+      .count {
+        font-size: 18px;
+        font-weight: 700;
+        fill: #243447;
+      }
+      .bubble-label {
+        font-size: 16px;
+        font-weight: 700;
+        fill: #FFFFFF;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .bubble-count {
+        font-size: 15px;
+        fill: #FFFFFF;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .panel {
+        fill: #FFFFFF;
+        stroke: #D8DEE6;
+        stroke-width: 1.2;
+      }
+      .axis {
+        stroke: #9AA5B1;
+        stroke-width: 1;
+      }
+      .grid {
+        stroke: #E2E7EE;
+        stroke-width: 1;
+      }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1200" fill="#FFFFFF"/>
+  <text x="800" y="58" class="main-title" text-anchor="middle">问卷关键结果可视化建议</text>
+  <text x="800" y="91" class="main-subtitle" text-anchor="middle">有效样本 n=25；以下均为多选题，百分比按选择人数 / 25 计算</text>
+
+  <!-- Panel A -->
+  <g transform="translate(70 125)">
+    <rect class="panel" x="0" y="0" width="700" height="465"/>
+    <text x="28" y="42" class="panel-title">A. 设计开始前需共同确认的信息</text>
+    <text x="28" y="70" class="panel-subtitle">建议图形：气泡图。用于突出团队级信息的相对重要性。</text>
+
+    <circle cx="138" cy="178" r="47" fill="#3F6F9F"/>
+    <text class="bubble-label" x="138" y="166">设计定位</text>
+    <text class="bubble-count" x="138" y="192">20人</text>
+
+    <circle cx="332" cy="164" r="45" fill="#496F67"/>
+    <text class="bubble-label" x="332" y="152">视觉方向</text>
+    <text class="bubble-count" x="332" y="178">19人</text>
+
+    <circle cx="544" cy="190" r="43" fill="#5E7F98"/>
+    <text class="bubble-label" x="544" y="176">产品载体</text>
+    <text class="bubble-label" x="544" y="198">/基准模型</text>
+    <text class="bubble-count" x="544" y="222">18人</text>
+
+    <circle cx="222" cy="318" r="41" fill="#7B6A9E"/>
+    <text class="bubble-label" x="222" y="306">情感意图</text>
+    <text class="bubble-count" x="222" y="332">16人</text>
+
+    <circle cx="424" cy="316" r="37" fill="#8A7A62"/>
+    <text class="bubble-label" x="424" y="304">品牌要求</text>
+    <text class="bubble-count" x="424" y="330">14人</text>
+
+    <circle cx="588" cy="330" r="35" fill="#A26F64"/>
+    <text class="bubble-label" x="588" y="318">工程约束</text>
+    <text class="bubble-count" x="588" y="344">13人</text>
+
+    <circle cx="86" cy="360" r="32" fill="#718096"/>
+    <text class="bubble-label" x="86" y="348">评审</text>
+    <text class="bubble-label" x="86" y="368">关注点</text>
+    <text class="bubble-count" x="86" y="392">11人</text>
+
+    <circle cx="488" cy="410" r="29" fill="#9AA5B1"/>
+    <text class="bubble-label" x="488" y="398">输出要求</text>
+    <text class="bubble-count" x="488" y="424">9人</text>
+  </g>
+
+  <!-- Panel B -->
+  <g transform="translate(830 125)">
+    <rect class="panel" x="0" y="0" width="700" height="465"/>
+    <text x="28" y="42" class="panel-title">B. 有助于理解方案的呈现方式</text>
+    <text x="28" y="70" class="panel-subtitle">建议图形：多模态表达链。体现从文字、二维到三维与渲染的转换。</text>
+
+    <line x1="78" y1="236" x2="620" y2="236" stroke="#C8D0DA" stroke-width="3"/>
+
+    <circle cx="78" cy="236" r="20" fill="#9AA5B1"/>
+    <text x="78" y="242" class="bubble-label">7</text>
+    <text x="78" y="304" class="label" text-anchor="middle">文字说明</text>
+
+    <circle cx="186" cy="236" r="35" fill="#3F6F9F"/>
+    <text x="186" y="242" class="bubble-label">18</text>
+    <text x="186" y="304" class="label" text-anchor="middle">二维画布</text>
+
+    <circle cx="294" cy="236" r="28" fill="#5E7F98"/>
+    <text x="294" y="242" class="bubble-label">13</text>
+    <text x="294" y="304" class="label" text-anchor="middle">UV / 贴图</text>
+
+    <circle cx="408" cy="236" r="39" fill="#496F67"/>
+    <text x="408" y="242" class="bubble-label">21</text>
+    <text x="408" y="304" class="label" text-anchor="middle">三维模型预览</text>
+
+    <circle cx="524" cy="236" r="34" fill="#7B6A9E"/>
+    <text x="524" y="242" class="bubble-label">17</text>
+    <text x="524" y="304" class="label" text-anchor="middle">渲染图</text>
+
+    <circle cx="620" cy="236" r="23" fill="#8A7A62"/>
+    <text x="620" y="242" class="bubble-label">9</text>
+    <text x="620" y="304" class="label" text-anchor="middle">渲染视频</text>
+
+    <text x="350" y="386" class="small" text-anchor="middle">读法：圆点越大，表示选择该呈现方式的人数越多。</text>
+  </g>
+
+  <!-- Panel C -->
+  <g transform="translate(70 660)">
+    <rect class="panel" x="0" y="0" width="700" height="465"/>
+    <text x="28" y="42" class="panel-title">C. 希望 AI / Agent 提供帮助的环节</text>
+    <text x="28" y="70" class="panel-subtitle">建议图形：流程节点图。把 Agent 支持映射到设计过程。</text>
+
+    <line x1="75" y1="230" x2="625" y2="230" stroke="#C8D0DA" stroke-width="3"/>
+    <polygon points="626,230 612,222 612,238" fill="#C8D0DA"/>
+
+    <circle cx="82" cy="230" r="34" fill="#3F6F9F"/>
+    <text x="82" y="236" class="bubble-label">18</text>
+    <text x="82" y="296" class="label" text-anchor="middle">整理</text>
+    <text x="82" y="318" class="label" text-anchor="middle">设计任务</text>
+
+    <circle cx="190" cy="230" r="38" fill="#496F67"/>
+    <text x="190" y="236" class="bubble-label">20</text>
+    <text x="190" y="296" class="label" text-anchor="middle">生成图案</text>
+    <text x="190" y="318" class="label" text-anchor="middle">灵感</text>
+
+    <circle cx="302" cy="230" r="36" fill="#5E7F98"/>
+    <text x="302" y="236" class="bubble-label">19</text>
+    <text x="302" y="296" class="label" text-anchor="middle">生成纹理</text>
+    <text x="302" y="318" class="label" text-anchor="middle">方案</text>
+
+    <circle cx="414" cy="230" r="30" fill="#8A7A62"/>
+    <text x="414" y="236" class="bubble-label">14</text>
+    <text x="414" y="296" class="label" text-anchor="middle">辅助三维</text>
+    <text x="414" y="318" class="label" text-anchor="middle">预览</text>
+
+    <circle cx="526" cy="230" r="32" fill="#7B6A9E"/>
+    <text x="526" y="236" class="bubble-label">16</text>
+    <text x="526" y="296" class="label" text-anchor="middle">多角色</text>
+    <text x="526" y="318" class="label" text-anchor="middle">评审意见</text>
+
+    <circle cx="626" cy="230" r="24" fill="#A26F64"/>
+    <text x="626" y="236" class="bubble-label">10</text>
+    <text x="626" y="296" class="label" text-anchor="middle">最终方案</text>
+    <text x="626" y="318" class="label" text-anchor="middle">说明</text>
+
+    <text x="350" y="386" class="small" text-anchor="middle">读法：节点大小表示该环节对 AI / Agent 支持的需求强度。</text>
+  </g>
+
+  <!-- Panel D -->
+  <g transform="translate(830 660)">
+    <rect class="panel" x="0" y="0" width="700" height="465"/>
+    <text x="28" y="42" class="panel-title">D. 当前远程设计评审中的主要问题</text>
+    <text x="28" y="70" class="panel-subtitle">建议图形：排序柱状图。用于比较不同问题类型的选择人数。</text>
+
+    <g transform="translate(70 100)">
+      <line class="grid" x1="0" y1="245" x2="560" y2="245"/>
+      <line class="grid" x1="0" y1="180" x2="560" y2="180"/>
+      <line class="grid" x1="0" y1="115" x2="560" y2="115"/>
+      <line class="grid" x1="0" y1="50" x2="560" y2="50"/>
+      <line class="axis" x1="0" y1="245" x2="560" y2="245"/>
+      <line class="axis" x1="0" y1="0" x2="0" y2="245"/>
+      <text x="-14" y="250" class="small" text-anchor="end">0</text>
+      <text x="-14" y="185" class="small" text-anchor="end">5</text>
+      <text x="-14" y="120" class="small" text-anchor="end">10</text>
+      <text x="-14" y="55" class="small" text-anchor="end">15</text>
+
+      <rect x="22" y="11" width="52" height="234" fill="#3F6F9F"/>
+      <rect x="109" y="24" width="52" height="221" fill="#496F67"/>
+      <rect x="196" y="37" width="52" height="208" fill="#5E7F98"/>
+      <rect x="283" y="50" width="52" height="195" fill="#7B6A9E"/>
+      <rect x="370" y="63" width="52" height="182" fill="#8A7A62"/>
+      <rect x="457" y="128" width="52" height="117" fill="#A26F64"/>
+
+      <text x="48" y="-2" class="count" text-anchor="middle">18</text>
+      <text x="135" y="11" class="count" text-anchor="middle">17</text>
+      <text x="222" y="24" class="count" text-anchor="middle">16</text>
+      <text x="309" y="37" class="count" text-anchor="middle">15</text>
+      <text x="396" y="50" class="count" text-anchor="middle">14</text>
+      <text x="483" y="115" class="count" text-anchor="middle">9</text>
+
+      <text x="48" y="286" class="label" text-anchor="middle">反馈</text>
+      <text x="48" y="306" class="label" text-anchor="middle">分散</text>
+      <text x="135" y="286" class="label" text-anchor="middle">反馈</text>
+      <text x="135" y="306" class="label" text-anchor="middle">太晚</text>
+      <text x="222" y="286" class="label" text-anchor="middle">难对应</text>
+      <text x="222" y="306" class="label" text-anchor="middle">具体方案</text>
+      <text x="309" y="286" class="label" text-anchor="middle">反馈</text>
+      <text x="309" y="306" class="label" text-anchor="middle">不具体</text>
+      <text x="396" y="286" class="label" text-anchor="middle">难转化</text>
+      <text x="396" y="306" class="label" text-anchor="middle">修改方向</text>
+      <text x="483" y="286" class="label" text-anchor="middle">角色意见</text>
+      <text x="483" y="306" class="label" text-anchor="middle">冲突</text>
+    </g>
+  </g>
+</svg>

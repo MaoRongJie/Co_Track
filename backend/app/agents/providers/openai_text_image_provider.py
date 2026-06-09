@@ -2,6 +2,7 @@
 
 import json
 from typing import Any, AsyncIterator
+from urllib.parse import urlsplit, urlunsplit
 
 import httpx
 
@@ -22,6 +23,13 @@ def _extract_openai_error(payload: Any) -> str | None:
     if isinstance(message, str) and message.strip():
         return message
     return None
+
+
+def _build_httpx_error_message(base_message: str, exc: Exception) -> str:
+    detail = str(exc).strip()
+    if detail:
+        return f"{base_message}: {exc.__class__.__name__}: {detail}"
+    return f"{base_message}: {exc.__class__.__name__}"
 
 
 def _append_text_fragments_from_content(value: Any, output: list[str]) -> None:
@@ -141,6 +149,28 @@ def _extract_json_object(raw: str) -> dict[str, Any] | None:
     return None
 
 
+def _candidate_base_urls(base_url: str) -> list[str]:
+    normalized = base_url.rstrip("/")
+    candidates = [normalized]
+    try:
+        parsed = urlsplit(normalized)
+    except Exception:
+        return candidates
+
+    host = (parsed.hostname or "").strip().lower()
+    if host not in {"aihubmix.com", "api.aihubmix.com"}:
+        return candidates
+
+    alternate_host = "api.aihubmix.com" if host == "aihubmix.com" else "aihubmix.com"
+    netloc = alternate_host
+    if parsed.port:
+        netloc = f"{alternate_host}:{parsed.port}"
+    alternate = urlunsplit((parsed.scheme, netloc, parsed.path, parsed.query, parsed.fragment)).rstrip("/")
+    if alternate and alternate not in candidates:
+        candidates.append(alternate)
+    return candidates
+
+
 class OpenAITextImageProvider:
     def __init__(
         self,
@@ -162,6 +192,15 @@ class OpenAITextImageProvider:
         self.image_timeout = max(self.timeout, 120.0)
         self.model_name = text_model
 
+    def _base_url_candidates(self) -> list[str]:
+        return _candidate_base_urls(self.base_url)
+
+    @staticmethod
+    def _should_failover(exc: Exception, *, attempt_index: int, base_urls: list[str]) -> bool:
+        if attempt_index >= len(base_urls) - 1:
+            return False
+        return isinstance(exc, (httpx.TimeoutException, httpx.NetworkError))
+
     def _headers(self) -> dict[str, str]:
         if not self.api_key:
             raise ModelProviderNotConfiguredError("OPENAI_API_KEY is not configured")
@@ -171,25 +210,40 @@ class OpenAITextImageProvider:
         }
 
     async def _post_chat_completion(self, *, payload: dict[str, Any]) -> dict[str, Any]:
-        try:
-            async with httpx.AsyncClient(timeout=self.timeout) as client:
-                response = await client.post(
-                    f"{self.base_url}/chat/completions",
-                    headers=self._headers(),
-                    json=payload,
-                )
-        except httpx.TimeoutException as exc:
+        base_urls = self._base_url_candidates()
+        response: httpx.Response | None = None
+        for index, base_url in enumerate(base_urls):
+            try:
+                async with httpx.AsyncClient(timeout=self.timeout) as client:
+                    response = await client.post(
+                        f"{base_url}/chat/completions",
+                        headers=self._headers(),
+                        json=payload,
+                    )
+                break
+            except httpx.TimeoutException as exc:
+                if self._should_failover(exc, attempt_index=index, base_urls=base_urls):
+                    continue
+                raise ModelProviderError(
+                    _build_httpx_error_message("OpenAI text API timed out", exc),
+                    status_code=504,
+                    provider_code="OPENAI_TEXT_TIMEOUT",
+                ) from exc
+            except httpx.HTTPError as exc:
+                if self._should_failover(exc, attempt_index=index, base_urls=base_urls):
+                    continue
+                raise ModelProviderError(
+                    _build_httpx_error_message("OpenAI text API request failed", exc),
+                    status_code=502,
+                    provider_code="OPENAI_TEXT_NETWORK_ERROR",
+                ) from exc
+
+        if response is None:
             raise ModelProviderError(
-                "OpenAI text API timed out",
-                status_code=504,
-                provider_code="OPENAI_TEXT_TIMEOUT",
-            ) from exc
-        except httpx.HTTPError as exc:
-            raise ModelProviderError(
-                "OpenAI text API request failed",
+                "OpenAI text API request failed: no response",
                 status_code=502,
                 provider_code="OPENAI_TEXT_NETWORK_ERROR",
-            ) from exc
+            )
 
         if response.status_code >= 400:
             raw = response.text
@@ -200,7 +254,9 @@ class OpenAITextImageProvider:
                 if parsed:
                     error_message = parsed
             except Exception:
-                pass
+                raw_excerpt = raw.strip()
+                if raw_excerpt:
+                    error_message = f"{error_message}: {raw_excerpt[:400]}"
             raise ModelProviderError(error_message, status_code=502, provider_code="OPENAI_TEXT_ERROR")
 
         try:
@@ -284,9 +340,9 @@ class OpenAITextImageProvider:
     ) -> dict[str, Any] | None:
         context_text = json.dumps(brief_keywords or {}, ensure_ascii=False)
         system_prompt = (
-            "You are Co-Track image style analyzer. "
-            "Read the reference image and extract style keywords useful for industrial coating texture planning. "
-            "Return strict JSON only."
+            "你是 Co-Track 图像风格分析 Agent。"
+            "请读取参考图像，提取有助于工业外观涂层纹理规划的风格关键词。"
+            "只返回严格 JSON。"
         )
         messages = [
             {"role": "system", "content": system_prompt},
@@ -296,12 +352,12 @@ class OpenAITextImageProvider:
                     {
                         "type": "text",
                         "text": (
-                            "Analyze the uploaded image style for texture planning.\n"
-                            "Extract both visible content cues and style cues useful for texture planning.\n"
-                            "Use the brief context only as optional grounding.\n"
-                            f"Brief context: {context_text}\n"
-                            'Return JSON with schema: {"content_keywords":["string"],"style_keywords":["string"],"content_summary":"string","style_summary":"string"}. '
-                            "Keep keywords concise and practical."
+                            "请分析上传图像的风格，以服务纹理规划。\n"
+                            "同时提取可见内容线索和有助于纹理规划的风格线索。\n"
+                            "设计简报上下文只作为可选参照，不要强行套用。\n"
+                            f"设计简报上下文：{context_text}\n"
+                            '请按以下 schema 返回 JSON：{"content_keywords":["string"],"style_keywords":["string"],"content_summary":"string","style_summary":"string"}。'
+                            "关键词应简洁、实用。"
                         ),
                     },
                     {"type": "image_url", "image_url": {"url": image_url}},
@@ -342,52 +398,59 @@ class OpenAITextImageProvider:
         }
         emitted_any = False
 
-        try:
-            async with httpx.AsyncClient(timeout=self.timeout) as client:
-                async with client.stream(
-                    "POST",
-                    f"{self.base_url}/chat/completions",
-                    headers=self._headers(),
-                    json=payload,
-                ) as response:
-                    if response.status_code >= 400:
-                        raw = await response.aread()
-                        error_message = f"OpenAI text API error ({response.status_code})"
-                        try:
-                            decoded = json.loads(raw.decode("utf-8"))
-                            parsed = _extract_openai_error(decoded)
-                            if parsed:
-                                error_message = parsed
-                        except Exception:
-                            pass
-                        raise ModelProviderError(error_message, status_code=502, provider_code="OPENAI_TEXT_ERROR")
+        base_urls = self._base_url_candidates()
+        for index, base_url in enumerate(base_urls):
+            try:
+                async with httpx.AsyncClient(timeout=self.timeout) as client:
+                    async with client.stream(
+                        "POST",
+                        f"{base_url}/chat/completions",
+                        headers=self._headers(),
+                        json=payload,
+                    ) as response:
+                        if response.status_code >= 400:
+                            raw = await response.aread()
+                            error_message = f"OpenAI text API error ({response.status_code})"
+                            try:
+                                decoded = json.loads(raw.decode("utf-8"))
+                                parsed = _extract_openai_error(decoded)
+                                if parsed:
+                                    error_message = parsed
+                            except Exception:
+                                pass
+                            raise ModelProviderError(error_message, status_code=502, provider_code="OPENAI_TEXT_ERROR")
 
-                    async for line in response.aiter_lines():
-                        text = line.strip()
-                        if not text or not text.startswith("data:"):
-                            continue
-                        data = text[5:].strip()
-                        if data == "[DONE]":
-                            break
-                        try:
-                            parsed = json.loads(data)
-                        except json.JSONDecodeError:
-                            continue
-                        for chunk in _extract_text_fragments(parsed):
-                            emitted_any = True
-                            yield chunk
-        except httpx.TimeoutException as exc:
-            raise ModelProviderError(
-                "OpenAI text API timed out",
-                status_code=504,
-                provider_code="OPENAI_TEXT_TIMEOUT",
-            ) from exc
-        except httpx.HTTPError as exc:
-            raise ModelProviderError(
-                "OpenAI text API request failed",
-                status_code=502,
-                provider_code="OPENAI_TEXT_NETWORK_ERROR",
-            ) from exc
+                        async for line in response.aiter_lines():
+                            text = line.strip()
+                            if not text or not text.startswith("data:"):
+                                continue
+                            data = text[5:].strip()
+                            if data == "[DONE]":
+                                break
+                            try:
+                                parsed = json.loads(data)
+                            except json.JSONDecodeError:
+                                continue
+                            for chunk in _extract_text_fragments(parsed):
+                                emitted_any = True
+                                yield chunk
+                break
+            except httpx.TimeoutException as exc:
+                if self._should_failover(exc, attempt_index=index, base_urls=base_urls):
+                    continue
+                raise ModelProviderError(
+                    "OpenAI text API timed out",
+                    status_code=504,
+                    provider_code="OPENAI_TEXT_TIMEOUT",
+                ) from exc
+            except httpx.HTTPError as exc:
+                if self._should_failover(exc, attempt_index=index, base_urls=base_urls):
+                    continue
+                raise ModelProviderError(
+                    "OpenAI text API request failed",
+                    status_code=502,
+                    provider_code="OPENAI_TEXT_NETWORK_ERROR",
+                ) from exc
 
         if not emitted_any:
             fallback_text = await self._complete_text_once(payload=payload)
@@ -400,14 +463,16 @@ class OpenAITextImageProvider:
         prompt: str,
         style_hint: str | None = None,
         reference_images: list[str] | None = None,
+        background: str | None = None,
+        output_format: str | None = None,
     ) -> list[ImageGenerationResult]:
         full_prompt = prompt.strip()
         if style_hint:
-            full_prompt = f"{full_prompt}\n\nStyle hint: {style_hint.strip()}"
+            full_prompt = f"{full_prompt}\n\n风格提示：{style_hint.strip()}"
         if reference_images:
             refs = [item for item in reference_images if isinstance(item, str) and item.strip()]
             if refs:
-                full_prompt = f"{full_prompt}\n\nReference images:\n" + "\n".join(f"- {item}" for item in refs[:4])
+                full_prompt = f"{full_prompt}\n\n参考图像：\n" + "\n".join(f"- {item}" for item in refs[:4])
 
         payload: dict[str, Any] = {
             "model": self.image_model,
@@ -415,26 +480,45 @@ class OpenAITextImageProvider:
             "size": "1024x1024",
             "quality": "high",
         }
+        if background:
+            payload["background"] = background.strip()
+        if output_format:
+            payload["output_format"] = output_format.strip()
 
-        try:
-            async with httpx.AsyncClient(timeout=self.image_timeout) as client:
-                response = await client.post(
-                    f"{self.base_url}/images/generations",
-                    headers=self._headers(),
-                    json=payload,
-                )
-        except httpx.TimeoutException as exc:
+        base_urls = self._base_url_candidates()
+        response: httpx.Response | None = None
+        for index, base_url in enumerate(base_urls):
+            try:
+                async with httpx.AsyncClient(timeout=self.image_timeout) as client:
+                    response = await client.post(
+                        f"{base_url}/images/generations",
+                        headers=self._headers(),
+                        json=payload,
+                    )
+                break
+            except httpx.TimeoutException as exc:
+                if self._should_failover(exc, attempt_index=index, base_urls=base_urls):
+                    continue
+                raise ModelProviderError(
+                    "OpenAI image API timed out",
+                    status_code=504,
+                    provider_code="OPENAI_IMAGE_TIMEOUT",
+                ) from exc
+            except httpx.HTTPError as exc:
+                if self._should_failover(exc, attempt_index=index, base_urls=base_urls):
+                    continue
+                raise ModelProviderError(
+                    "OpenAI image API request failed",
+                    status_code=502,
+                    provider_code="OPENAI_IMAGE_NETWORK_ERROR",
+                ) from exc
+
+        if response is None:
             raise ModelProviderError(
-                "OpenAI image API timed out",
-                status_code=504,
-                provider_code="OPENAI_IMAGE_TIMEOUT",
-            ) from exc
-        except httpx.HTTPError as exc:
-            raise ModelProviderError(
-                "OpenAI image API request failed",
+                "OpenAI image API request failed: no response",
                 status_code=502,
                 provider_code="OPENAI_IMAGE_NETWORK_ERROR",
-            ) from exc
+            )
 
         if response.status_code >= 400:
             error_message = f"OpenAI image API error ({response.status_code})"

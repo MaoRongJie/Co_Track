@@ -42,6 +42,44 @@ class TextAndImageProvider(Protocol):
         prompt: str,
         style_hint: str | None = None,
         reference_images: list[str] | None = None,
+        background: str | None = None,
+        output_format: str | None = None,
+    ) -> list[ImageGenerationResult]:
+        ...
+
+
+class PatternImageProvider(Protocol):
+    model_name: str
+    vision_model: str
+    image_model: str
+
+    async def complete_json(
+        self,
+        *,
+        system_prompt: str,
+        user_message: str,
+        history: list[dict[str, str]] | None = None,
+        temperature: float = 0.2,
+    ) -> dict[str, Any] | None:
+        ...
+
+    async def complete_json_with_messages(
+        self,
+        *,
+        messages: list[dict[str, Any]],
+        temperature: float = 0.2,
+        model: str | None = None,
+    ) -> dict[str, Any] | None:
+        ...
+
+    async def generate_image(
+        self,
+        *,
+        prompt: str,
+        style_hint: str | None = None,
+        reference_images: list[str] | None = None,
+        background: str | None = None,
+        output_format: str | None = None,
     ) -> list[ImageGenerationResult]:
         ...
 

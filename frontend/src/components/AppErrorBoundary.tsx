@@ -17,7 +17,7 @@ class AppErrorBoundary extends React.Component<AppErrorBoundaryProps, AppErrorBo
   };
 
   static getDerivedStateFromError(error: unknown): AppErrorBoundaryState {
-    const message = error instanceof Error ? error.message : 'Unknown rendering error';
+    const message = error instanceof Error ? error.message : '未知渲染错误';
     return { hasError: true, message };
   }
 
@@ -33,7 +33,7 @@ class AppErrorBoundary extends React.Component<AppErrorBoundaryProps, AppErrorBo
 
     return (
       <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">
-        <p className="font-semibold">{this.props.title ?? 'UI rendering failed'}</p>
+        <p className="font-semibold">{this.props.title ?? '界面渲染失败'}</p>
         <p className="mt-1 text-xs">{this.state.message}</p>
       </div>
     );
